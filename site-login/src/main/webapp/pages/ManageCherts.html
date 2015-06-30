@@ -1,0 +1,205 @@
+<script type="text/javascript"> 
+var accountRegister = new AccountRegister();
+
+$(document).ready(function() {
+	 $('#defaultForm')
+     .bootstrapValidator({
+         message: 'This value is not valid',
+         feedbackIcons: {
+             valid: 'glyphicon glyphicon-ok',
+             invalid: 'glyphicon glyphicon-remove',
+             validating: 'glyphicon glyphicon-refresh'
+         },
+         fields: {
+        	 company: {
+                 message: 'The Comapny Name is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The username is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         min: 3,
+                         max: 30,
+                         message: 'The username must be more than 3 and less than 30 characters long'
+                     },
+                 }
+             },
+             firstName: {
+                 message: 'The First Name is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The First name is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         min: 3,
+                         max: 30,
+                         message: 'The First name must be more than 3 and less than 30 characters long'
+                     },
+                     regexp: {
+                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                         message: 'The First Name can only consist of alphabetical, number, dot and underscore'
+                     }
+                 }
+             },
+             lastName: {
+                 message: 'The Last Name is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The Last Name is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         min: 3,
+                         max: 30,
+                         message: 'The Last Name must be more than 3 and less than 30 characters long'
+                     },
+                     regexp: {
+                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                         message: 'The username can only consist of alphabetical, number, dot and underscore'
+                     }
+                 }
+             },
+             userName: {
+                 message: 'The username is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The username is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         min: 3,
+                         max: 30,
+                         message: 'The username must be more than 3 and less than 30 characters long'
+                     },
+                     regexp: {
+                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                         message: 'The username can only consist of alphabetical, number, dot and underscore'
+                     }
+                 }
+             },
+             password: {
+                 validators: {
+                     notEmpty: {
+                         message: 'The password is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         min: 6,
+                         max: 30,
+                         message: 'The password must be greater than 6 charecters'
+                     }
+                 }
+             },
+             confirmPassword: {
+                     validators: {
+                         notEmpty: {
+                             message: 'Confirm password is required and must be same as password'
+                         },
+                         stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: 'Confirm password must be greater than 6 charecters'
+                         }
+                    }
+             },
+             email: {
+                 validators: {
+                     notEmpty: {
+                         message: 'The email address is required and can\'t be empty'
+                     },
+                     emailAddress: {
+                         message: 'The input is not a valid email address'
+                     }
+                 }
+             }
+         }
+     })
+     .on('success.form.bv', function(e) {
+         // Prevent form submission
+         e.preventDefault();
+
+         // Get the form instance
+         var $form = $(e.target);
+
+         // Get the BootstrapValidator instance
+         var bv = $form.data('bootstrapValidator');
+        accountRegister.registerAccount();
+     });
+});
+
+</script>
+ 
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-9 col-lg-offset-2">
+            <div class="page-header">
+                <h3>Manage CEHRTs</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+         <div class="col-md-2 col-lg-offset-2">
+            <button type="button" class="btn btn-success">
+  					<span class="glyphicon glyphicon-plus"></span> Add CEHRT
+			</button>
+		</div>
+		<div class="col-md-3">
+		 	<div class="page-header" style="padding-bottom: 0px;">
+                <h4>Basic Information</h4>
+            </div>
+            <form id="loginForm" method="post">
+                <div class="form-group">
+                    <label class="control-label">CEHRT Label &nbsp;</label><span class=" glyphicon glyphicon-question-sign"></span>
+                    <input type="text" class="form-control" name="userName" id="userName"/>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label">Direct Email address &nbsp;</label><span class=" glyphicon glyphicon-question-sign"></span>
+                    <input type="password" class="form-control" name="password" id="password"/>
+                </div>
+                
+                 <div class="form-group">
+                    <label class="control-label">Time Zone &nbsp;</label><span class=" glyphicon glyphicon-question-sign"></span>
+                    <select class="form-control" id="timezone" name="timezone">
+                            <option value="America/St_Lucia"></option>
+      						<option value="America/St_Lucia">America/St_Lucia</option>
+      						<option value="Europe/Nicosia">Europe/Nicosia</option>
+    				</select>
+                </div>
+                
+                 <div class="form-group">
+                    <label class="control-label">Developer &nbsp;</label><span class=" glyphicon glyphicon-question-sign"></span>
+                     <select class="form-control" id="timezone" name="timezone">
+                            <option value="America/St_Lucia"></option>
+      						<option value="America/St_Lucia">America/St_Lucia</option>
+      						<option value="Europe/Nicosia">Europe/Nicosia</option>
+    				</select>
+                </div>
+                
+                <div class="form-group">
+                    <div>
+                        <button type="submit" class="btn btn-success">Save</button>
+                         <button type="submit" class="btn btn-primary">Return to Original State</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="col-sm-1"></div>
+        
+        <div class="col-md-3">
+		 	<div class="page-header" style="padding-bottom: 0px;">
+                <h4>Direct Trust Membership</h4>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="control-label">Is your CEHRT currently accredited by Direct Trust &nbsp;<span class=" glyphicon glyphicon-question-sign"></span></label>
+                    <div class="radio">
+      					<label><input type="radio" name="optradio">Yes</label>
+    				</div>
+    				<div class="radio selected">
+      					<label><input type="radio" name="optradio">No</label>
+    				</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,238 @@
+<script type="text/javascript"> 
+var accountRegister = new AccountRegister();
+
+$(document).ready(function() {
+	//$('#signupForm').reset();
+	 $('#form')
+     .bootstrapValidator({
+         message: 'This value is not valid',
+         feedbackIcons: {
+             valid: 'glyphicon glyphicon-ok',
+             invalid: 'glyphicon glyphicon-remove',
+             validating: 'glyphicon glyphicon-refresh'
+         },
+         fields: {
+        	 company: {
+                 message: 'The Comapny Name is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The Comapny Name is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         max: 30,
+                         message: 'The Comapny Name must be more than 3 and less than 30 characters long'
+                     },
+                 }
+             },
+             companyPoc: {
+                 message: 'The Comapny Point of contact value is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The Comapny Point of contact is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         min: 3,
+                         max: 30,
+                         message: 'The Comapny Point of contact must be less than 30 characters long'
+                     },
+                 }
+             },
+             firstName: {
+                 message: 'The First Name is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The First name is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         max: 30,
+                         message: 'The First name must be less than 30 characters long'
+                     },
+                     regexp: {
+                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                         message: 'The First Name can only consist of alphabetical, number, dot and underscore'
+                     }
+                 }
+             },
+             lastName: {
+                 message: 'The Last Name is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The Last Name is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         max: 30,
+                         message: 'The Last Name must be less than 30 characters long'
+                     },
+                     regexp: {
+                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                         message: 'The username can only consist of alphabetical, number, dot and underscore'
+                     }
+                 }
+             },
+             userName: {
+                 message: 'The username is not valid',
+                 validators: {
+                     notEmpty: {
+                         message: 'The username is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         min: 3,
+                         max: 30,
+                         message: 'The username must be more than 3 and less than 30 characters long'
+                     },
+                     regexp: {
+                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                         message: 'The username can only consist of alphabetical, number, dot and underscore'
+                     }
+                 }
+             },
+             password: {
+                 validators: {
+                     notEmpty: {
+                         message: 'The password is required and can\'t be empty'
+                     },
+                     stringLength: {
+                         min: 8,
+                         max: 30,
+                         message: 'The password must be atleast 8 charecters'
+                     },
+                     regexp: {
+                    	 regexp: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\W]).+$/,
+                    	 message: 'The password should contain atleas 1 upper case, 1 number,1 special char'
+                     }
+                 }
+             },
+             confirmPassword: {
+                     validators: {
+                         notEmpty: {
+                             message: 'Confirm password is required and must be same as password'
+                         },
+                        
+                         identical: {
+                        	 field:'password',
+                        	 message:'Password not matching'
+                         }
+                         
+                    }
+             },
+             email: {
+                 validators: {
+                     notEmpty: {
+                         message: 'The email address is required and can\'t be empty'
+                     },
+                     emailAddress: {
+                         message: 'The input is not a valid email address'
+                     }
+                 }
+             }
+         }
+     })
+     .on('success.form.bv', function(e) {
+         // Prevent form submission
+         e.preventDefault();
+
+         // Get the form instance
+         var $form = $(e.target);
+
+         // Get the BootstrapValidator instance
+         var bv = $form.data('bootstrapValidator');
+        accountRegister.registerAccount();
+     });
+	 
+	 
+	 $("#submitBtn").click(function (e) {
+		 var jform = $('#signupForm');
+			//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
+			if(jform.validationEngine('validate'))
+			{
+				accountRegister.registerAccount();
+			}else 
+			{
+				$('#signupForm .formError').show(0);
+			}
+	 });
+});
+
+
+
+
+</script>
+
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h2 class="modal-title">Sign Up</h2>
+		</div>
+		<div class="modal-body">
+
+			<form id="signupForm" method="post" class="form-horizontal">
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Company</label>
+					<div class="col-lg-7">
+						<input type="text" class="form-control validate[required,maxSize[30]]" name="company"
+							id="company" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Company POC</label>
+					<div class="col-lg-7">
+						<input type="text" class="form-control validate[required,maxSize[30]]" name="companyPoc"
+							id="companyPoc" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-3 control-label">First Name</label>
+					<div class="col-lg-7">
+						<input type="text" class="form-control validate[required,maxSize[30]]" name="firstName"
+							id="firstName" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Last Name</label>
+					<div class="col-lg-7">
+						<input type="text" class="form-control validate[required,maxSize[30]]" name="lastName"
+							id="lastName" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Email (This will be your username for registering Vendor Services)</label>
+					<div class="col-lg-7">
+						<input type="text" class="form-control validate[required,custom[email]]" name="emailAddress" id="emailAddress" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Password</label>
+					<div class="col-lg-7">
+						<input type="password" class="form-control validate[required,minSize[8],maxSize[30],custom[passwordVal]]" name="password"
+							id="password" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Confirm Password</label>
+					<div class="col-lg-7">
+						<input type="password" class="form-control validate[required,equals[password],minSize[8],maxSize[30]]" name="confirmPassword"
+							id="confirmPassword" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-lg-9 col-lg-offset-3">
+						<button  onclick="return false;"  id="submitBtn" class="btn btn-success">Sign up</button>
+						<button type="button"  id="signupCloseId" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer" style="margin-top: 0px;">
+			
+		</div>
+	</div>
+</div>

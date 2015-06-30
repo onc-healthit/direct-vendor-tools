@@ -1,0 +1,46 @@
+@font-face {
+	font-family: 'SITE-glyphs';
+	src:url('../fonts/SITE-glyphs.eot?-a8s1la');
+	src:url('../fonts/SITE-glyphs.eot?#iefix-a8s1la') format('embedded-opentype'),
+		url('../fonts/SITE-glyphs.woff?-a8s1la') format('woff'),
+		url('../fonts/SITE-glyphs.ttf?-a8s1la') format('truetype'),
+		url('../fonts/SITE-glyphs.svg?-a8s1la#SITE-glyphs') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.thumbnail .siteglyphs {
+	font-size: 100px;
+	position: relative;
+	top: 1px;
+	display: inline-block;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	font-family: 'SITE-glyphs';
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+.site-Ai:before {
+	content: "\61";
+}
+.site-CCDA:before {
+	content: "\e600";
+}
+.site-CQM:before {
+	content: "\e601";
+}
+.site-Direct:before {
+	content: "\e602";
+}
+.site-PD:before {
+	content: "\e603";
+}
+.site-QRDA:before {
+	content: "\e604";
+}

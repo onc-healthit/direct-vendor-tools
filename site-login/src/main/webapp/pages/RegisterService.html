@@ -1,0 +1,360 @@
+<script>
+var registerService = new RegisterService();
+	
+	function showAggrementPage(data) {
+		$("#aggrementModel").modal('show');
+	}
+
+	function enableRegister() {
+		$("#regLinkId").hide();
+		document.getElementById("registerForm").reset();
+		$('#registerDiv').show();
+	}
+	
+
+	$(document).ready(function() {
+		if(MODEL.userLoggedIn == 1)
+		{
+			$('#panelId').show();
+		}else 
+		{
+			$('#panelId').hide();
+		}
+		
+		 $(".date-picker").datepicker({ dateFormat: 'yy-mm-dd' });
+		
+		 $("#availFromDate").on("change", function () {
+			 $('#registerForm').formValidation('revalidateField', 'availFromDate');
+		}); 
+		 
+		 $("#availToDate").on("change", function () {
+			 $('#registerForm').formValidation('revalidateField', 'availToDate');
+		}); 
+		 
+		
+		$('#form')
+	     .formValidation({
+	         message: 'This value is not valid',
+	         feedbackIcons: {
+	             valid: 'glyphicon glyphicon-ok',
+	             invalid: 'glyphicon glyphicon-remove',
+	             validating: 'glyphicon glyphicon-refresh'
+	         },
+	         fields: {
+	        	 cehrtLabel: {
+	                 message: 'CEHRT Label is not valid',
+	                 validators: {
+	                     notEmpty: {
+	                         message: 'CEHRT Label is required and can\'t be empty'
+	                     },
+	                     stringLength: {
+	                         min: 3,
+	                         max: 30,
+	                         message: 'CEHRT Label must be more than 3 and less than 30 characters long'
+	                     },
+	                 }
+	             },
+	             orgName: {
+	                 message: 'The Organization name is not valid',
+	                 validators: {
+	                     notEmpty: {
+	                         message: 'The Organization name is required and can\'t be empty'
+	                     },
+	                     stringLength: {
+	                         min: 3,
+	                         max: 30,
+	                         message: 'The Organization name must be more than 3 and less than 30 characters long'
+	                     },
+	                     regexp: {
+	                         regexp: /^[a-zA-Z0-9_\.]+$/,
+	                         message: 'The Organization Name can only consist of alphabetical, number, dot and underscore'
+	                     }
+	                 }
+	             },
+	             email: {
+	                 validators: {
+	                     notEmpty: {
+	                         message: 'The email address is required and can\'t be empty'
+	                     },
+	                     emailAddress: {
+	                         message: 'The input is not a valid email address'
+	                     }
+	                 }
+	             },
+	             pocEmail: {
+	                 validators: {
+	                     notEmpty: {
+	                         message: 'The Point of contact e-mail address is required and can\'t be empty'
+	                     },
+	                     emailAddress: {
+	                         message: 'The input is not a valid email address'
+	                     }
+	                 }
+	             },
+	             pocFirstName: {
+	                 message: 'The POC first name is not valid',
+	                 validators: {
+	                     notEmpty: {
+	                         message: 'The POC first name is required and can\'t be empty'
+	                     },
+	                     stringLength: {
+	                         max: 30,
+	                         message: 'The POC first name less than 30 characters long'
+	                     }
+	                 }
+	             },
+	             pocLastName: {
+	                 message: 'The POC last name is not valid',
+	                 validators: {
+	                     notEmpty: {
+	                         message: 'The POC last name is required and can\'t be empty'
+	                     },
+	                     stringLength: {
+	                         max: 30,
+	                         message: 'The POC last name less than 30 characters long'
+	                     }
+	                 }
+	             },
+	             availFromDate: {
+	                 message: 'Availability from date is not valid, enter date in MM/DD/YYYY format',
+	                 validators: {
+	                     notEmpty: {
+	                         message: 'Availability from date is required and can\'t be empty'
+	                     },
+	                     date: {
+	                         format: 'MM/DD/YYYY',
+	                         message: 'Availability from date format is MM/DD/YYYY and should be less than TO date',
+	                         min:new Date(),
+	                         max:'availToDate'
+	                     }
+	                 }
+	             },
+	             
+	             availToDate: {
+	                 validators: {
+	                     notEmpty: {
+	                         message: 'Availability To date is required and can\'t be empty'
+	                     },
+	                     date: {
+	                         format: 'MM/DD/YYYY',
+	                         message: 'Availability To date format is MM/DD/YYYY and should be greater than FROM date',
+	                         min:'availFromDate'
+	                     }
+	                 }
+	             }
+	         }
+	     })
+	     .on('success.form.fv', function(e) {
+	            // Prevent form submission
+	            e.preventDefault();
+
+	            // Get the form instance
+	            var $form = $(e.target);
+
+	            // Get the FormValidation instance
+	            var bv = $form.data('formValidation');
+
+	            // Use Ajax to submit form data
+	            $.post($form.attr('action'), $form.serialize(), function(result) {
+	                console.log(result);
+	            }, 'json');
+	        });
+		
+		$("#submitButton").click(function (e) {
+			 var jform = $('#registerForm');
+				//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
+				if(jform.validationEngine('validate'))
+				{
+					registerService.registerService();
+				}else 
+				{
+					$('#signupForm .formError').show(0);
+				}
+		 });
+	});
+</script>
+
+
+  <div class="container" style="padding-top: 30px;">
+     <div>		
+	    <p>Welcome to the Vendor Registration page. This page provides the capability for Vendors to register 
+	    their Direct systems that can be used for interoperability testing 
+	    by implementers (providers, hospitals etc) to verify interoperability with their Direct implementation. 
+	    To see which vendors are available for interoperability testing please click on Direct Services..</p>
+	</div>
+
+	<div id="panelId" class="panel panel-default" hidden="true">
+		<div class="panel-heading">
+			<h3 class="panel-title">Direct System Registration</h3>
+		</div>
+
+		<div class="panel-body">
+
+			<a href="#" onclick="showAggrementPage()" id="regLinkId">Click here to register
+				your Direct System</a>
+
+			<div id="registerDiv" style="padding-top: 20px;" hidden="true">
+				<form id="registerForm" class="form-horizontal">
+					<div class="form-group">
+						<label class="col-lg-3 control-label">CEHRT Label </label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control validate[required,maxSize[30]]" name="cehrtLabel"
+								id="cehrtLabel" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Organization Name </label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control validate[required,maxSize[30]]" name="orgName"
+								id="orgName" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Direct Email Address</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control validate[required,custom[email]]" name="directEmail"
+								id="directEmail" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Point of Contact
+							Email (This will also be used as your User Name for SITE Interop Portal)</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control validate[required,custom[email],custom[notEqual]]" name="pocEmail"
+								id="pocEmail" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Point of Contact First Name</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control validate[required,maxSize[30]]" name="pocFirstName"
+								id="pocFirstName" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Point of Contact Last Name</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control validate[required,maxSize[30]]" name="pocLastName"
+								id="pocLastName" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Timezone</label>
+						<div class="col-lg-5">
+							<select name="country" class="form-control validate[required]" id="timezone" data-toggle="tooltip" data-placement="right"
+								data-original-title="This is the timezone which indicates availability of the POC from 9am to 5pm" 
+								required data-fv-notempty-message="Timezone is required">
+								    <option value="">Please select timezone</option>
+                                    <option value="est">EST</option>
+                                    <option value="AU">Pacific</option>
+                                    <option value="CA">Central</option>
+                            </select>
+						</div>
+					</div>
+
+
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Direct Trust
+							Membership</label>
+						<div class="col-lg-5">
+							<div class="radio">
+								<label><input type="radio" name="optradio" value="Yes" 
+								              required data-fv-notempty-message="Direct Trust membership value is required">Yes</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="optradio" value="No">No</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Availability
+							(Availability indicates the dates during which system is
+							available for interoperability testing during weekdays). </label>
+						<div class="col-lg-5">
+							<div class="control-group">
+        						<label class="control-label">From</label>
+        						<div class="controls">
+            						<div class="input-group">
+                						<input  type="text" class="date-picker form-control validate[required,custom[date]]" id="availFromDate" name="availFromDate"/>
+                						<label  for="availFromDate" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span>
+                						</label>
+            						</div>
+        						</div>
+    						</div>
+    						
+    					   <div class="control-group">
+        						<label class="control-label">To</label>
+        						<div class="controls">
+            						<div class="input-group">
+                						<input  type="text" class="date-picker form-control validate[required,custom[date]]" id="availToDate" name="availToDate"/>
+                						<label  for="availToDate" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span>
+                						</label>
+            						</div>
+        						</div>
+    						</div>
+    						
+							<!-- <label>From</label>
+							<div class='input-group date' id='datetimepickerFrom'>
+								<input type='text' class="form-control date-picker" id="availFromDate" name="availFromDate"/> <span
+									class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+							<label>To</label>
+							<div class='input-group date' id='datetimepickerFrom'>
+								<input type='text' class="form-control date-picker" id="availToDate" name="availToDate"/> <span
+									class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div> -->
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-9 col-lg-offset-3">
+							<button type="submit" id="submitButton" class="btn btn-success" onclick="return false;">Register 
+								Service</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="aggrementModel" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h2 class="modal-title">Agreement</h2>
+			</div>
+			<div class="modal-body">
+				<p>As a Participant of Cross Vendor Exchange, Parties shall not
+					reveal Confidential Information, directly or indirectly, to any
+					external persons, entities or organizations not involved with the
+					respective Cross Vendor Exchange. Parties shall not use
+					Confidential Information, except for the purpose of carrying out
+					Cross Vendor Exchange. Parties shall use test data only.Parties
+					shall not use live or real data that is actual data about living,
+					identifiable individuals. Parties shall adhere to all Federal
+					Regulations including, but not limited to the Health Insurance
+					Portability and Accountability Act of 1996(HIPAA)</p>
+			</div>
+			<div class="modal-footer" style="margin-top: 0px;">
+				<button type="button" class="btn btn-success" data-dismiss="modal"
+					onclick="enableRegister()">Accept</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
