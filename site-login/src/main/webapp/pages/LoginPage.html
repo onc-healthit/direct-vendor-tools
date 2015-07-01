@@ -3,6 +3,12 @@
 var login = new Login();
 
 $(document).ready(function() {
+	$('.alert .close').click(function() {
+
+		   $(this).closest('.alert').hide();
+
+		});
+	
 	  $("#loginBtn").click(function (e) {
 		 $("#passwordErrorId").hide();
 		 var jform = $('#loginForm');
@@ -56,8 +62,7 @@ function loginSuccessHandler(successJson)
 		</div>
 		<div class="modal-body">
 			<div class="alert alert-danger alert-dismissible" role="alert"
-				id="passwordErrorId" style="padding: 11px;" hidden="true">
-				<button type="button" class="close" data-dismiss="alert"
+				id="passwordErrorId" style="padding: 11px;" hidden="true"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -65,7 +70,7 @@ function loginSuccessHandler(successJson)
 			</div>
 			<form id="loginForm" method="post" class="form-horizontal">
 				<div class="form-group">
-					<label class="col-lg-3 control-label">Email</label>
+					<label class="col-lg-3 control-label" for="userName">Email</label>
 					<div class="col-lg-5">
 						<input type="text" class="form-control validate[required]"
 							name="userName" id="userName" />
@@ -73,15 +78,14 @@ function loginSuccessHandler(successJson)
 				</div>
 
 				<div>
-					<label class="col-lg-3 control-label"></label>
-					<div class="col-lg-9">
+					<div class="col-lg-9 col-lg-offset-3">
 						<p>This is your email address that you provided during Sign Up
 							process</p>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-3 control-label">Password</label>
+					<label class="col-lg-3 control-label" for="password">Password</label>
 					<div class="col-lg-5">
 						<input type="password" class="form-control validate[required]"
 							name="password" id="password" />

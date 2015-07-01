@@ -6,10 +6,11 @@ import java.sql.SQLException;
 
 import org.sitenv.directvendortools.web.dao.AccountRegisterDAO;
 import org.sitenv.directvendortools.web.dto.AccountRegisterTO;
+import org.sitenv.directvendortools.web.util.HashException;
 
 public class AccountRegisterProcess {
 	
-	public static int registerAccount(final AccountRegisterTO accountRegisterTO)throws SQLException,PropertyVetoException
+	public static int registerAccount(final AccountRegisterTO accountRegisterTO)throws SQLException,PropertyVetoException, HashException
 	{
 		return AccountRegisterDAO.registerAccount(accountRegisterTO);
 	}

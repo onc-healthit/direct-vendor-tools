@@ -58,19 +58,13 @@
   		$(function(){
   			loadHeaderPage();
   			setInteroperabilityServicesPage();
-	  		$('ul.navbar-nav li').click(function(e) {
-	  			var id = $(this).attr('id');
-	  			if((id != 'signupID' && id != 'loginID' && id != 'logoutLI'))
-	  			{
-	  				$('.navbar-nav li.active').removeClass('active');
-	  		        $(this).addClass('active');	
-	  			}
-  		        e.preventDefault();
-  		    });
+	  		
   			
   			$('#contactUs').click(function(){
   			    $(location).attr('href', 'mailto:admin@sitenv.org');
   			});
+  			
+  			
   		});
   		
   		function setRegisterServicePage(){
@@ -83,6 +77,7 @@
   		}
   		
   		function setRegisterServicePageContent(data){
+  			$('ul.navbar-nav li').removeClass('active');
   			$("#vendorRegLIId").addClass('active');
 			$("#mainPageContent").html(data);
   		}
@@ -98,6 +93,8 @@
   		}
   		
   		function setInteroperabilityServicesPageContent(data){
+
+  			$('ul.navbar-nav li').removeClass('active');
   			$("#interopLIId").addClass('active');
 			$("#mainPageContent").html(data);
   		}
@@ -157,19 +154,18 @@
 			<div id="navbar" class="navbar-collapse collapse in"
 				aria-expanded="true">
 				<ul class="nav navbar-nav">
-				 <li  id="interopLIId"><a href="#" onclick="setInteroperabilityServicesPage()" style="text-decoration: none;">Direct
+				 <li  id="interopLIId"><a href="javascript:setInteroperabilityServicesPage()" style="text-decoration: none;">Direct
 							Services</a></li>
-				<li id="vendorRegLIId"><a href="#" style="text-decoration: none;"
-						onclick="setRegisterServicePage()">Vendor Registration</a></li>
-					<li onclick="javascript:location.href='http://54.200.44.56/'">
-						<a href="#" style="text-decoration: none;">Home</a></li>
+				<li id="vendorRegLIId"><a href="javascript:setRegisterServicePage()" style="text-decoration: none;">Vendor Registration</a></li>
+					<li>
+						<a href="http://sitenv.org/" style="text-decoration: none;">Home</a></li>
 					
 					
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right" id="rightNavbarID">
-					<li id="signupID"><a href="#" onclick="openSignUpPage()" style="text-decoration: none;">Sign Up </a></li>
-					<li id="loginID"><a href="#" onclick="openLoginPage()" style="text-decoration: none;">Login</a></li>
+					<li id="signupID"><a href="javascript:openSignUpPage()" style="text-decoration: none;">Sign Up </a></li>
+					<li id="loginID"><a href="javascript:openLoginPage()" style="text-decoration: none;">Login</a></li>
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right" id="logoutId" hidden="true">
@@ -179,7 +175,7 @@
 			<!--/.nav-collapse -->
 		</div>
 	</nav>
-	<div id="mainPageContent"></div>
+	<div id="mainPageContent" aria-live="assertive"></div>
 	<footer class="panel-footer" style="padding-bottom: 0px;">
 		<div class="container" role="contentinfo">
 			<div class="row">

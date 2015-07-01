@@ -2,6 +2,12 @@
 	var accountRegister = new AccountRegister();
 
 	$(document).ready(function() {
+		
+		$('.alert .close').click(function() {
+
+			   $(this).closest('.alert').hide();
+
+			});
 
 		$("#submitBtn").click(function(e) {
 			var jform = $('#signupForm');
@@ -27,7 +33,7 @@
 
 			<div class="alert alert-danger alert-dismissible" role="alert"
 				id="emailExistAlertID" style="padding: 11px;" hidden="true">
-				<button type="button" class="close" data-dismiss="alert"
+				<button type="button" class="close"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -36,7 +42,7 @@
 
 			<div class="alert alert-success alert-dismissible" role="alert"
 				id="emailRegAlertID" style="padding: 11px;" hidden="true">
-				<button type="button" class="close" data-dismiss="alert"
+				<button type="button" class="close" 
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -44,7 +50,7 @@
 			</div>
 			<form id="signupForm" method="post" class="form-horizontal">
 				<div class="form-group">
-					<label class="col-lg-3 control-label">Company</label>
+					<label class="col-lg-3 control-label" for="company">Company</label>
 					<div class="col-lg-7">
 						<input type="text"
 							class="form-control validate[required,maxSize[30]]"
@@ -61,7 +67,7 @@
 				</div> -->
 
 				<div class="form-group">
-					<label class="col-lg-3 control-label">POC First Name</label>
+					<label class="col-lg-3 control-label" for="firstName">POC First Name</label>
 					<div class="col-lg-7">
 						<input type="text"
 							class="form-control validate[required,maxSize[30]]"
@@ -70,7 +76,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-3 control-label">POC Last Name</label>
+					<label class="col-lg-3 control-label" for="lastName">POC Last Name</label>
 					<div class="col-lg-7">
 						<input type="text"
 							class="form-control validate[required,maxSize[30]]"
@@ -79,7 +85,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-3 control-label">Email (This will be
+					<label class="col-lg-3 control-label" for="emailAddress">Email (This will be
 						your username for registering Direct Services)</label>
 					<div class="col-lg-7">
 						<input type="text"
@@ -89,7 +95,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-3 control-label">Password</label>
+					<label class="col-lg-3 control-label" for="password">Password</label>
 					<div class="col-lg-7">
 						<input type="password"
 							class="form-control validate[required,minSize[8],maxSize[30],custom[passwordVal]]"
@@ -98,7 +104,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-3 control-label">Confirm Password</label>
+					<label class="col-lg-3 control-label" for="confirmPassword">Confirm Password</label>
 					<div class="col-lg-7">
 						<input type="password"
 							class="form-control validate[required,equals[password],minSize[8],maxSize[30]]"

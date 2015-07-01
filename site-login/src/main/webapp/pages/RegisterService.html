@@ -16,7 +16,16 @@
 
 	$(document)
 			.ready(
+					
+					
 					function() {
+						
+						$('.alert .close').click(function() {
+
+				  			   $(this).closest('.alert').hide();
+
+				  			});
+						
 						if (MODEL.userLoggedIn == 1) {
 							
 							$('#vendorReg').show();
@@ -33,153 +42,7 @@
 							dateFormat : 'yy-mm-dd'
 						});
 
-						/* $("#availFromDate")
-								.on(
-										"change",
-										function() {
-											$('#registerForm').formValidation(
-													'revalidateField',
-													'availFromDate');
-										});
-
-						$("#availToDate").on(
-								"change",
-								function() {
-									$('#registerForm').formValidation(
-											'revalidateField', 'availToDate');
-								});
-
-						// Change this to the location of your server-side upload handler:
-						$('#anchoruploadprogress').hide();
-						$('#anchoruploadfile')
-								.fileupload(
-										{
-											url : httpAjaxService.UPLOAD_FILE,
-											dataType : 'json',
-											autoUpload : false,
-											type : 'POST',
-											contenttype : false,
-											replaceFileInput : false,
-											done : function(e, data) {
-
-												$('#progressText')
-														.html(
-																"Cert uploaded successfully");
-												$('#anchoruploadfiles').empty();
-											},
-											progressall : function(e, data) {
-												var progressval = parseInt(
-														data.loaded
-																/ data.total
-																* 100, 10);
-												//$('#progress').fadeIn();
-												//$('#progress .progress-bar').css('width', progress + '%');
-
-												if (progressval < 99) {
-													$(
-															'#anchoruploadwidget .blockMsg .progressorpanel .lbl')
-															.text(
-																	'Uploading...');
-													$(
-															'#anchoruploadwidget .blockMsg .progressorpanel .progressor')
-															.text(
-																	floorFigure(
-																			data.loaded
-																					/ data.total
-																					* 100,
-																			0)
-																			.toString()
-																			+ "%");
-												} else {
-													$(
-															'.blockMsg .progressorpanel .lbl')
-															.text(
-																	'Updating Bundle...');
-													$(
-															'.blockMsg .progressorpanel .progressor')
-															.text('');
-												}
-											}
-										})
-								.on(
-										'fileuploadadd',
-										function(e, data) {
-											$('#anchoruploadsubmit').unbind(
-													"click");
-											$('#anchoruploadfiles').empty();
-											data.context = $('<div/>')
-													.appendTo(
-															'#anchoruploadfiles');
-											$.each(data.files, function(index,
-													file) {
-
-												var node = $('<p/>').append(
-														$('<span/>').text(
-																file.name));
-
-												node.appendTo(data.context);
-											});
-
-											$('#anchoruploadform .formError')
-													.hide(0);
-
-											data.context = $(
-													'#anchoruploadsubmit')
-													.click(
-															function(e) {
-																var jform = $('#anchoruploadform');
-																//jform.validationEngine('hideAll');
-																jform
-																		.validationEngine({
-																			promptPosition : "centerRight",
-																			validateNonVisibleFields : true,
-																			updatePromptsPosition : true
-																		});
-																if (jform
-																		.validationEngine('validate')) {
-																	$(
-																			'#anchoruploadform .formError')
-																			.hide(
-																					0);
-																	data
-																			.submit();
-																} else {
-																	//jform.validationEngine({validateNonVisibleFields: true, updatePromptsPosition:true});
-																	$(
-																			'#anchoruploadform .formError')
-																			.show(
-																					0);
-
-																	$(
-																			'#anchoruploadform .anchoruploadfileformError')
-																			.prependTo(
-																					'#anchoruploaderrorlock');
-																}
-															});
-										}).prop('disabled',
-										!$.support.fileInput).parent()
-								.addClass(
-										$.support.fileInput ? undefined
-												: 'disabled');
-
-						$('#anchoruploadfile').bind('fileuploaddrop',
-								function(e, data) {
-									e.preventDefault();
-								}).bind('fileuploaddragover', function(e) {
-							e.preventDefault();
-						});
-
-						$('#anchoruploadfile-btn').bind('click',
-								function(e, data) {
-									$('#anchoruploadform').trigger('reset');
-									$('#anchoruploadsubmit').unbind("click");
-
-									$('#anchoruploadfiles').empty();
-
-									$('#anchoruploadform .formError').hide(0);
-									$('#progressText').html("");
-
-								}); */
+						
 
 						$("#submitButton").click(function(e) {
 							var jform = $('#registerForm');
@@ -206,8 +69,18 @@
 	<div id="vendorReg" hidden="true" class="text-center">
 		<br/>
 		<a href="#" onclick="showAggrementPage()" id="regLinkId" class="btn btn-primary">Register your Direct System</a>
-		<br/><br/>
+		<br/>
+				
+		<br/>
 	</div>
+	<div class="alert alert-success alert-dismissible" role="alert"
+				id="DirectSystemRegAlertID" style="padding: 11px;" hidden="true" style="margin-bottom:30px;">
+				<button type="button" class="close"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				Direct System was successfully registered.
+			</div>
 	
 	
 	<div id="panelId" class="panel panel-default" hidden="true">
@@ -217,19 +90,12 @@
 
 		<div class="panel-body">
 
-			<div class="alert alert-success alert-dismissible" role="alert"
-				id="DirectSystemRegAlertID" style="padding: 11px;" hidden="true">
-				<button type="button" class="close" data-dismiss="alert"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				Direct System Registered Successfully!!
-			</div>	
+			
 
 			<div id="registerDiv" style="padding-top: 20px;" hidden="true">
 				<form id="registerForm" class="form-horizontal">
 					<div class="form-group">
-						<label class="col-lg-3 control-label">CEHRT Label </label>
+						<label class="col-lg-3 control-label" for="cehrtLabel">CEHRT Label </label>
 						<div class="col-lg-5">
 							<input type="text"
 								class="form-control validate[required,maxSize[30]]"
@@ -238,7 +104,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">Organization Name </label>
+						<label class="col-lg-3 control-label" for="orgName">Organization Name </label>
 						<div class="col-lg-5">
 							<input type="text"
 								class="form-control validate[required,maxSize[30]]"
@@ -247,7 +113,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">Direct Email Address</label>
+						<label class="col-lg-3 control-label" for="directEmail">Direct Email Address</label>
 						<div class="col-lg-5">
 							<input type="text"
 								class="form-control validate[required,custom[email]]"
@@ -256,7 +122,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">Point of Contact
+						<label class="col-lg-3 control-label" for="pocEmail">Point of Contact
 							Email (This will also be used as your User Name for SITE Interop
 							Portal)</label>
 						<div class="col-lg-5">
@@ -267,7 +133,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">Point of Contact
+						<label class="col-lg-3 control-label" for="pocFirstName">Point of Contact
 							First Name</label>
 						<div class="col-lg-5">
 							<input type="text"
@@ -277,7 +143,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">Point of Contact
+						<label class="col-lg-3 control-label" for="pocLastName">Point of Contact
 							Last Name</label>
 						<div class="col-lg-5">
 							<input type="text"
@@ -287,14 +153,14 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">Timezone</label>
+						<label class="col-lg-3 control-label" for="timezone">Timezone</label>
 						<div class="col-lg-5">
 							<select name="country" class="form-control validate[required]"
 								id="timezone" data-toggle="tooltip" data-placement="right"
 								data-original-title="This is the timezone which indicates availability of the POC from 9am to 5pm"
 								required data-fv-notempty-message="Timezone is required">
 								<option value="">Please select timezone</option>
-								<option value="est">EST</option>
+								<option value="est">Eastern</option>
 								<option value="AU">Pacific</option>
 								<option value="CA">Central</option>
 							</select>
@@ -304,47 +170,50 @@
 
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">Direct Trust
-							Membership</label>
+					
+						<fieldset>
+						<legend class="col-lg-3 control-label" style="font-size: inherit; border-bottom: none;">Direct Trust
+							Membership</legend>
 						<div class="col-lg-5">
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="Yes"
+								<label for="option_yes"><input type="radio" name="optradio" id="option_yes" value="Yes"
 									required
 									data-fv-notempty-message="Direct Trust membership value is required">Yes</label>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="No">No</label>
+								<label for="option_no"><input type="radio" name="optradio" id="option_no" value="No">No</label>
 							</div>
 						</div>
+						</fieldset>
 					</div>
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">Availability
+						<div class="col-lg-3 control-label">Availability
 							(Availability indicates the dates during which system is
-							available for interoperability testing during weekdays). </label>
+							available for interoperability testing during weekdays).</div>
 						<div class="col-lg-5">
 							<div class="control-group">
-								<label class="control-label">From</label>
+								<label class="control-label" for="availFromDate">From</label>
 								<div class="controls">
 									<div class="input-group">
 										<input type="text"
 											class="date-picker form-control validate[required,custom[date]]"
-											id="availFromDate" name="availFromDate" /> <label
+											id="availFromDate" name="availFromDate" /> <div
 											for="availFromDate" class="input-group-addon btn"><span
-											class="glyphicon glyphicon-calendar"></span> </label>
+											class="glyphicon glyphicon-calendar"></span> </div>
 									</div>
 								</div>
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">To</label>
+								<label class="control-label" for="availToDate">To</label>
 								<div class="controls">
 									<div class="input-group">
 										<input type="text"
 											class="date-picker form-control validate[required,custom[date]]"
-											id="availToDate" name="availToDate" /> <label
+											id="availToDate" name="availToDate" /> <div
 											for="availToDate" class="input-group-addon btn"><span
-											class="glyphicon glyphicon-calendar"></span> </label>
+											class="glyphicon glyphicon-calendar"></span> </div>
 									</div>
 								</div>
 							</div>
@@ -359,48 +228,16 @@
 					</div>
 				</form>
 				
-				<!-- <div class="col-lg-9 col-lg-offset-3" id="certUploadId">
-					<form id="anchoruploadform" method="POST"
-						enctype="multipart/form-data">
-						<noscript>
-							<input type="hidden" name="redirect" value="true" tabindex="1" />
-						</noscript>
-						<div id="anchoruploaderrorlock" style="position: relative;">
-							<div class="row">
-								<div class="col-lg-7">
-									<label for="anchoruploadfile">Select a Local Trust
-										Anchor Certificate (binary or PEM encoded): </label><br /> <span
-										class="btn btn-success fileinput-button"
-										id="anchoruploadfile-btn"> <i
-										class="glyphicon glyphicon-plus"></i>&nbsp;<span>Select
-											a Certificate...</span> <input id="anchoruploadfile" type="file"
-										name="anchoruploadfile"
-										class="validate[required, custom[derencncodedfileextension[der|crt|cer|pem|DER|CRT|CER|PEM]], custom[maxCertFileSize]]"
-										tabindex="1" />
-									</span>
-									<button id="anchoruploadsubmit" type="submit"
-										class="btn btn-primary start" onclick="return false;"
-										tabindex="1">
-										<i class="glyphicon glyphicon-ok"></i> <span>Submit
-											Anchor</span>
-									</button>
-									<div id="anchoruploadfiles" class="files"></div>
-									<p id="progressText"></p>
-								</div>
-							</div>
-						</div>
-						<br>
-					</form>
-				</div> -->
+				
 			</div>
 			
 			<div class="alert alert-danger alert-dismissible" role="alert"
 				id="directEmailExistAlertID" style="padding: 11px;" hidden="true">
-				<button type="button" class="close" data-dismiss="alert"
+				<button type="button" class="close"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				Direct System Email already registered!!
+				The direct email address has already been registered.
 			</div>	
 		</div>
 	</div>
