@@ -61,17 +61,21 @@ function loginSuccessHandler(successJson)
 			<h2 class="modal-title">Login</h2>
 		</div>
 		<div class="modal-body">
+			
 			<div class="alert alert-danger alert-dismissible" role="alert"
-				id="passwordErrorId" style="padding: 11px;" hidden="true"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				Email address is either not registered or does not match the password provided.
-			</div>
+								id="passwordErrorId" style="padding: 11px;" hidden="true">
+								<button type="button" class="close"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								Email address is either not registered or does not match the password provided.
+							</div>
+			
+			
 			<form id="loginForm" method="post" class="form-horizontal">
 				<div class="form-group">
 					<label class="col-lg-3 control-label" for="userName">Email</label>
-					<div class="col-lg-5">
+					<div class="col-lg-9">
 						<input type="text" class="form-control validate[required]"
 							name="userName" id="userName" />
 					</div>
@@ -86,7 +90,7 @@ function loginSuccessHandler(successJson)
 
 				<div class="form-group">
 					<label class="col-lg-3 control-label" for="password">Password</label>
-					<div class="col-lg-5">
+					<div class="col-lg-9">
 						<input type="password" class="form-control validate[required]"
 							name="password" id="password" />
 					</div>

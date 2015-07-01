@@ -2,9 +2,9 @@
 
 
 /* Z-INDEX */
- .formError { z-index: 990; }
-    .formError .formErrorContent { z-index: 991; }
-    .formError .formErrorArrow { z-index: 996; }
+ .formError { z-index: 1200; }
+    .formError .formErrorContent { z-index: 1201; }
+    .formError .formErrorArrow { z-index: 1206; }
 
     .ui-dialog .formError { z-index: 5000; }
     .ui-dialog .formError .formErrorContent { z-index: 5001; }

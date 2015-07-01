@@ -29,7 +29,7 @@ function RegisterService()
 		if(successJson.isEmailAvailable)
 		{
 			$("#vendorReg").show();
-			$('#panelId').hide();
+			$('#registrationModal').modal('hide');
 			$('#DirectSystemRegAlertID').show();
 			registerService.readUserDirectSystems();
 			
