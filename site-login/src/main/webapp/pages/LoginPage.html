@@ -4,7 +4,7 @@ var login = new Login();
 
 $(document).ready(function() {
 	  $("#loginBtn").click(function (e) {
-		  $("#passwordErrorId").show();
+		 $("#passwordErrorId").hide();
 		 var jform = $('#loginForm');
 			//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
 			if(jform.validationEngine('validate'))
@@ -61,7 +61,7 @@ function loginSuccessHandler(successJson)
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				Email address and password doesn't match !!
+				Email address is either not registered or does not match the password provided.
 			</div>
 			<form id="loginForm" method="post" class="form-horizontal">
 				<div class="form-group">

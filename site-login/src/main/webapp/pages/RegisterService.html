@@ -7,7 +7,8 @@
 	}
 
 	function enableRegister() {
-		$("#regLinkId").hide();
+		$("#vendorReg").hide();
+		$('#panelId').show();
 		document.getElementById("registerForm").reset();
 		$('#registerDiv').show();
 		$('#DirectSystemRegAlertID').hide();
@@ -17,12 +18,14 @@
 			.ready(
 					function() {
 						if (MODEL.userLoggedIn == 1) {
-							$('#panelId').show();
+							
+							$('#vendorReg').show();
 							$('#directSysPanleId').show();
 							registerService.readUserDirectSystems();
 							
 						} else {
 							$('#panelId').hide();
+							$('#vendorReg').hide();
 							$('#directSysPanleId').hide();
 						}
 
@@ -200,16 +203,19 @@
 			implementation. To see which vendors are available for
 			interoperability testing please click on Direct Services..</p>
 	</div>
-
+	<div id="vendorReg" hidden="true" class="text-center">
+		<br/>
+		<a href="#" onclick="showAggrementPage()" id="regLinkId" class="btn btn-primary">Register your Direct System</a>
+		<br/><br/>
+	</div>
+	
+	
 	<div id="panelId" class="panel panel-default" hidden="true">
 		<div class="panel-heading">
 			<h3 class="panel-title">Direct System Registration</h3>
 		</div>
 
 		<div class="panel-body">
-
-			<a href="#" onclick="showAggrementPage()" id="regLinkId">Click
-				here to register your Direct System</a>
 
 			<div class="alert alert-success alert-dismissible" role="alert"
 				id="DirectSystemRegAlertID" style="padding: 11px;" hidden="true">
