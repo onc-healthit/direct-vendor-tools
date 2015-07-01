@@ -1,4 +1,3 @@
-
 (function($){
     $.fn.validationEngineLanguage = function(){
     };
@@ -72,19 +71,24 @@
                     "regex": "none",
                     "alertText": "* Fields do not match"
                 },
+                "creditCard": {
+                    "regex": "none",
+                    "alertText": "* Invalid credit card number"
+                },
                 "notEqual":  {
                     "func": function(field, rules, i, options){
                         return (field.val() == $('#directEmail').val()) ? false : true;
                     },
                     "alertText": "* Direct Email and POC email  must be different"
                 },
-                "creditCard": {
-                    "regex": "none",
-                    "alertText": "* Invalid credit card number"
-                },
                 "phone": {
                     // credit: jquery.h5validate.js / orefalo
                     "regex": /^([\+][0-9]{1,3}[\ \.\-])?([\(]{1}[0-9]{2,6}[\)])?([0-9\ \.\-\/]{3,20})((x|ext|extension)[\ ]?[0-9]{1,4})?$/,
+                    "alertText": "* Invalid phone number"
+                },
+                "passwordVal": {
+                    // credit: jquery.h5validate.js / orefalo
+                    "regex": /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\W]).+$/,
                     "alertText": "* Invalid phone number"
                 },
                 "email": {
@@ -138,18 +142,13 @@
                     "regex": /^[0-9a-zA-Z]+$/,
                     "alertText": "* No special characters allowed"
                 },
-                "passwordVal": {
-                    "regex": /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\W]).+$/,
-                    "alertText": "* The password should contain atleas 1 upper case, 1 number,1 special char'"
-                },
                 // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
-                    "url": "http://localhost:8082/site-login/rs/accountRegisterService/checkEmailAvailability?isJSon=true",
+                    "url": "ajaxValidateFieldUser",
                     // you may want to pass extra data on the ajax call
-                    "extraDataDynamic": ['#email'],
+                    "extraData": "name=eric",
                     "alertText": "* This user is already taken",
-                    "alertTextLoad": "* Validating, please wait",
-                    "alertTextOk": "* This email is available"
+                    "alertTextLoad": "* Validating, please wait"
                 },
 				"ajaxUserCallPhp": {
                     "url": "phpajax/ajaxValidateFieldUser.php",
@@ -194,12 +193,12 @@
                     "alertText3": "mm/dd/yyyy hh:mm:ss AM|PM or ", 
                     "alertText4": "yyyy-mm-dd hh:mm:ss AM|PM"
 	            },
-	            "xmlfileextension":{
+	            //customized regular expression.
+	            "derencncodedfileextension":{
 	            	"func": function(field, rules, i, options) {
-	            		//var uploadedFile = $('#fileupload');
-	            		var uploadedFile = field;
+	            		var uploadedFile = $('#anchoruploadfile');
 	            		
-	            		if (uploadedFile && $(uploadedFile).val()) {
+	            		if (uploadedFile  && $(uploadedFile).val()) {
 	                        var extensions = rules[i + 2];               
 	                        var mimeFilter = new RegExp(extensions, 'i');
 	                        
@@ -209,16 +208,16 @@
 	                        return true;
 	                    }       
 	            	},
-	            	"alertText" : "* The selected C-CDA file must be an xml file (.xml)."
+	            	"alertText" : "* The selected certificate file must be a binary or Base64 encoded file file (.cer, .crt, .der, or .pem)."
 	            },
-	            "maxCCDAFileSize":{
+	            "maxCertFileSize":{
 	            	"func": function(field, rules, i, options) {
-	            		if ((bowser.msie && bowser.version <= 9)) {
-	                        
-	                        return true;
-	                       } else {
-			                    
-			            		
+	            		
+	            			if (($.browser.msie && $.browser.version <= 9)) {
+	            				return true;
+	                       
+	            			} else {
+	            				
 			            		var uploadedFile = field[0].files[0];
 			            		
 			            		if (uploadedFile && field.val() && uploadedFile.size > (3*1024*1024)) {
@@ -228,14 +227,31 @@
 			                        return true;
 			                    }
 	                       }
-	            		//var uploadedFile = $('#fileupload')[0].files[0];
 	            		
-	            		//if (uploadedFile && $('#fileupload').val() && uploadedFile.size > (3*1024*1024)) {
-	            		//	return false;
-	                    //}
-	                    //else {
-	                    //    return true;
-	                    //}
+	            		/*
+	            		var uploadedFile = $('#anchoruploadfile')[0].files[0];
+	            		
+	            		if (uploadedFile  && $('#anchoruploadfile').val() && uploadedFile.size > (3*1024*1024)) {
+	            			return false;
+	                    }
+	                    else {
+	                        return true;
+	                    } 
+	                    */    
+	            	},
+	            	"alertText" : "* The uploaded file exceeds the maximum file size of 3 MB."
+	            }
+	            ,
+	            "maxCCDAFileSize":{
+	            	"func": function(field, rules, i, options) {
+	            		var uploadedFile = $('#ccdauploadfile')[0].files[0];
+	            		
+	            		if (uploadedFile  && $('#ccdauploadfile').val() && uploadedFile.size > (3*1024*1024)) {
+	            			return false;
+	                    }
+	                    else {
+	                        return true;
+	                    }     
 	            	},
 	            	"alertText" : "* The uploaded file exceeds the maximum file size of 3 MB."
 	            }

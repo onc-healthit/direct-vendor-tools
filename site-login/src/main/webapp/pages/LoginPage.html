@@ -3,45 +3,8 @@
 var login = new Login();
 
 $(document).ready(function() {
-	//$('#loginForm').reset();
-	 $('#form')
-     .bootstrapValidator({
-         message: 'This value is not valid',
-         feedbackIcons: {
-             valid: 'glyphicon glyphicon-ok',
-             invalid: 'glyphicon glyphicon-remove',
-             validating: 'glyphicon glyphicon-refresh'
-         },
-         fields: {
-        	 userName: {
-                 validators: {
-                     notEmpty: {
-                         message: 'The username is required and can\'t be empty'
-                     }
-                 }
-             },
-             password: {
-                 validators: {
-                     notEmpty: {
-                         message: 'The password is required and can\'t be empty'
-                     }
-                 }
-             }
-         }
-     })
-     .on('success.form.bv', function(e) {
-         // Prevent form submission
-         e.preventDefault();
-
-         // Get the form instance
-         var $form = $(e.target);
-
-         // Get the BootstrapValidator instance
-         var bv = $form.data('bootstrapValidator');
-        accountRegister.registerAccount();
-     });
-	 
 	  $("#loginBtn").click(function (e) {
+		  $("#passwordErrorId").show();
 		 var jform = $('#loginForm');
 			//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
 			if(jform.validationEngine('validate'))
@@ -77,57 +40,66 @@ function loginSuccessHandler(successJson)
 		setRegisterServicePage();
     }else if (successJson.userAuthenticated == 'false')
     {
-   	 	alert("OOPS wrong credentials");
+    	$("#passwordErrorId").show();
     }		
 
 }
 
 </script>
- 
-  <div class="modal-dialog">
-       <div class="modal-content">
-            <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                 <h2 class="modal-title">Login</h2>
-            </div>
-            <div class="modal-body">
-                 <form id="loginForm" method="post" class="form-horizontal">
-                    <div class="form-group">
-                    	<label class="col-lg-3 control-label">User Name</label>
-                    	<div class="col-lg-5">
-                        	<input type="text" class="form-control validate[required,custom[email]]" name="userName" id="userName"/>
-                    	</div>
-                	</div>
-                	
-                	 <div>
-                    	<label class="col-lg-3 control-label"></label>
-                    	<div class="col-lg-9">
-                        	<p>This is your email address that you provided during Sign Up process</p>
-                    	</div>
-                	</div>
-                
-                	<div class="form-group">
-                    	<label class="col-lg-3 control-label">Password</label>
-                    	<div class="col-lg-5">
-                        <input type="password" class="form-control validate[required]" name="password" id="password"/>
-                    	</div>
-                	</div>
-                	
-                	<div class="form-group">
-                    	<div class="col-lg-9 col-lg-offset-3">
-							<button  onclick="return false;"  id="loginBtn" class="btn btn-success">Login</button>
-							<button type="button" class="btn btn-primary" data-dismiss="modal" id="closeBtn">Close</button>
-						</div>      
+
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h2 class="modal-title">Login</h2>
+		</div>
+		<div class="modal-body">
+			<div class="alert alert-danger alert-dismissible" role="alert"
+				id="passwordErrorId" style="padding: 11px;" hidden="true">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				Email address and password doesn't match !!
+			</div>
+			<form id="loginForm" method="post" class="form-horizontal">
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Email</label>
+					<div class="col-lg-5">
+						<input type="text" class="form-control validate[required]"
+							name="userName" id="userName" />
 					</div>
-            	</form>
-            	<!-- <div class="row">
-            		<div class="col-lg-9 col-lg-offset-3">
-						<button  onclick="return false;"  id="loginBtn" class="btn btn-success">Login</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" id="closeBtn">Close</button>
+				</div>
+
+				<div>
+					<label class="col-lg-3 control-label"></label>
+					<div class="col-lg-9">
+						<p>This is your email address that you provided during Sign Up
+							process</p>
 					</div>
-			    </div> -->
-            </div>
-            <div class="modal-footer" style="margin-top: 0px;">
-            </div>
-        </div>
-  </div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Password</label>
+					<div class="col-lg-5">
+						<input type="password" class="form-control validate[required]"
+							name="password" id="password" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-lg-9 col-lg-offset-3">
+						<button onclick="return false;" id="loginBtn"
+							class="btn btn-primary">Login</button>
+						<!-- <button type="button" class="btn btn-primary" data-dismiss="modal" id="closeBtn">Close</button>-->
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer" style="margin-top: 0px;">
+			<button type="button" class="btn btn-default" data-dismiss="modal"
+				id="closeBtn">Close</button>
+		</div>
+	</div>
+</div>

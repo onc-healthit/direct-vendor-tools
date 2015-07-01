@@ -9,6 +9,7 @@ function HttpAjaxServices()
 	this.LOGIN_AUTH = APP_CONTEXT+"rs/loginService/validateLogin?isJSon=true";
 	this.REGISTER_DIRECT_SYSTEM = APP_CONTEXT+"rs/registerService/registerDirectSystem?isJSon=true";
 	this.READ_ALL_DIRECT_SYSTEM = APP_CONTEXT+"rs/registerService/readAllDirectSystem?isJSon=true";
+	this.UPLOAD_FILE = APP_CONTEXT + "rs/file/upload?folderName="+MODEL.userEmail;
 	
 	this.registerAccount = function(accountRegisterTO,callback,freezeScreen,screenFreezeMessage)
 	{
@@ -103,9 +104,18 @@ function HttpAjaxServices()
 		});
 	};
 	
-	this.readAllDirectSystem = function(callback,freezeScreen,screenFreezeMessage)
+	this.readAllDirectSystem = function(callback,freezeScreen,userEmail)
 	{
 		var utility = new Utility();
+		var URL = "";
+		if(utility.isEmptyString(userEmail))
+		{
+			URL = currentObject.READ_ALL_DIRECT_SYSTEM + "&userEmail=" + userEmail;
+		}else 
+		{
+			URL = currentObject.READ_ALL_DIRECT_SYSTEM;
+		}
+			
 		if(freezeScreen)
 		{
 			if(utility.isEmptyString(screenFreezeMessage))
@@ -113,7 +123,7 @@ function HttpAjaxServices()
 			   UTILITY.screenFreeze(screenFreezeMessage);
 		}
 		$.ajax({type:"GET",
-			url: currentObject.READ_ALL_DIRECT_SYSTEM,
+			url: URL,
 			cache: false,
 			datatype : CONSTANTS.DATA_TYP_JSON,
 			contentType: CONSTANTS.CONTENT_TYP_JSON,

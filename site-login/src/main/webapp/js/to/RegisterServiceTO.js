@@ -10,4 +10,5 @@ function RegisterServiceTO()
 	this.directTrustMembership;
 	this.availFromDate;
 	this.availToDate;
+	this.userEmailAddress;
 }

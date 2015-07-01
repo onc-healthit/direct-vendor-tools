@@ -20,7 +20,8 @@
 <link rel="stylesheet" href="dist/css/formValidation.min.css" />
 <link rel="stylesheet" href="css/custom.css" />
 <link rel="stylesheet" href="css/validationEngine.jquery.css" />
-
+<link rel="stylesheet" href="css/jquery.fileupload.css" />
+<!-- <link rel="stylesheet" href="css/jquery.fileupload-noscript.css" /> -->
 
 <script type="text/javascript" src="vendor/jquery/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -29,6 +30,10 @@
 <script src="js/json2.js" type="text/javascript"></script>
 <script src="js/jquery.validationEngine.js" type="text/javascript"></script>
 <script src="js/jquery.validationEngine-en.js" type="text/javascript"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js" type="text/javascript"></script>
+<script src="js/jquery.filestyle.js" type="text/javascript"></script>
 
 
 <script type="text/javascript" src="js/pagesjs/AccountRegister.js"></script>
@@ -50,11 +55,15 @@
   		$(function(){
   			loadHeaderPage();
   			setInteroperabilityServicesPage();
-	  		/*$('ul.navbar-nav li').click(function(e) {
-  		        $('.navbar-nav li.active').removeClass('active');
-  		        $(this).addClass('active');;
+	  		$('ul.navbar-nav li').click(function(e) {
+	  			var id = $(this).attr('id');
+	  			if((id != 'signupID' && id != 'loginID' && id != 'logoutLI'))
+	  			{
+	  				$('.navbar-nav li.active').removeClass('active');
+	  		        $(this).addClass('active');	
+	  			}
   		        e.preventDefault();
-  		    });*/
+  		    });
   			
   			$('#contactUs').click(function(){
   			    $(location).attr('href', 'mailto:admin@sitenv.org');
@@ -62,6 +71,7 @@
   		});
   		
   		function setRegisterServicePage(){
+  			
   			if(MODEL.userLoggedIn == 0)
   			{
   				$("#rightNavbarID").show();
@@ -70,11 +80,12 @@
   		}
   		
   		function setRegisterServicePageContent(data){
+  			$("#vendorRegLIId").addClass('active');
 			$("#mainPageContent").html(data);
   		}
   		
   		function setInteroperabilityServicesPage(){
-  		
+  				
   			if(MODEL.userLoggedIn == 0)
   			{
   				$("#rightNavbarID").hide();
@@ -84,6 +95,7 @@
   		}
   		
   		function setInteroperabilityServicesPageContent(data){
+  			$("#interopLIId").addClass('active');
 			$("#mainPageContent").html(data);
   		}
   		
@@ -142,9 +154,9 @@
 			<div id="navbar" class="navbar-collapse collapse in"
 				aria-expanded="true">
 				<ul class="nav navbar-nav">
-				 <li><a href="#" onclick="setInteroperabilityServicesPage()" style="text-decoration: none;">Direct
+				 <li  id="interopLIId"><a href="#" onclick="setInteroperabilityServicesPage()" style="text-decoration: none;">Direct
 							Services</a></li>
-				<li ><a href="#" style="text-decoration: none;"
+				<li id="vendorRegLIId"><a href="#" style="text-decoration: none;"
 						onclick="setRegisterServicePage()">Vendor Registration</a></li>
 					<li onclick="javascript:location.href='http://54.200.44.56/'">
 						<a href="#" style="text-decoration: none;">Home</a></li>
@@ -158,7 +170,7 @@
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right" id="logoutId" hidden="true">
-					<li><a href="#" onclick="onlogout()" style="text-decoration: none;">Logout</a></li>
+					<li id="logoutLI"><a href="#" onclick="onlogout()" style="text-decoration: none;">Logout</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
