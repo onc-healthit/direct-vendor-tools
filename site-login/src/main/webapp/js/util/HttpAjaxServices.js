@@ -2,7 +2,7 @@ function HttpAjaxServices()
 {
 	var currentObject = this;
 	
-	var APP_CONTEXT = "/site-login/";
+	
 	
 	this.REGISTER_ACCOUNT = APP_CONTEXT+"rs/accountRegisterService/registerAccount?isJSon=true";
 	this.CHECK_EMAIL = APP_CONTEXT+"rs/accountRegisterService/checkEmailAvailability?isJSon=true";

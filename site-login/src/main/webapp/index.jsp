@@ -44,6 +44,9 @@
 <script type="text/javascript" src="js/to/UserLoginTO.js"></script>
 <script type="text/javascript" src="js/util/Constants.js"></script>
 <script type="text/javascript" src="js/util/Utility.js"></script>
+<script>
+	var APP_CONTEXT = "${pageContext.request.contextPath}/";
+</script>
 <script type="text/javascript" src="js/util/HttpAjaxServices.js"></script>
 <script type="text/javascript" src="js/to/Model.js"></script>
 
