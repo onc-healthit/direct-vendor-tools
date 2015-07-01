@@ -1,0 +1,89 @@
+@charset "UTF-8";
+/*
+ * jQuery File Upload Plugin CSS 1.3.0
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+
+.fileinput-button {
+	
+  position: relative;
+  overflow: hidden;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  direction: ltr;
+  cursor: pointer;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+  .fileinput-button input {
+    filter: alpha(opacity=0);
+    font-size: 100%;
+    height: 100%;
+  }
+}
+
+.progress
+{
+	margin: auto;
+  	top: 0; left: 0; bottom: 0; right: 0;
+	width: 10em;
+}
+
+
+.files, .files p{
+	display: inline;
+}
+
+ 
+html.no-js .fileinput-button input {
+  position: static;
+  opacity: 1;
+  filter: none;
+  font-size: inherit;
+  direction: inherit;
+}
+html.no-js .fileinput-button span {
+  display: none;
+}
+
+html.no-js .fileinput-button i{
+  display: none;
+}
+
+html.no-js .progress {
+	display: none;
+}
+
+html.no-js .start {
+	display: inline;
+}
+
+.dropdown-toggle, .dropdown-toggle:visited, .dropdown-toggle:hover, .dropdown-toggle:active, .dropdown-toggle:focus,
+.btn-primary, .btn-primary:visited, .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+	background-image: none;
+	text-shadow: none;
+}
+
+.start, .fileinput-button, .dropdown-toggle {
+	width: 180px;
+}
+
+.btn-success input {
+	background: inherit;
+	border: none;
+	background-image: none;
+}

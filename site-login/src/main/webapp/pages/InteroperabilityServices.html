@@ -2,44 +2,25 @@
 	var registerService = new RegisterService();
 
 	$(document).ready(function() {
-	    
+
 		registerService.readAllDirectSystems();
-	
+
 	});
 </script>
 
 <div class="container" style="padding-top: 30px;">
-<!-- 	<form id="defaultForm" method="post" class="form-horizontal"
-		action="target.php">
-		<div class="panel-group" id="steps">
-			Step 1
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#steps" href="#stepOne">Text
-							Portlet</a>
-					</h4>
-				</div>
-				<div id="stepOne" class="panel-collapse collapse in">
-					<div class="panel-body">
-						<p>Welcome to the Interop Portal. The portal provides a list of available vendor systems 
-						and services that can be used by implementers to verify interoperability with their own implementation. 
-						Currently Vendors are exposing their Direct systems that can be used for Interoperability Testing. 
-						For vendors who need to register additional systems or services please click on vendor registration</p>
-					</div>
-				</div>
-			</div> -->
- 
- <div>    
-	<p> Welcome to the Direct Services page. This page provides a list of available vendor systems supporting the Direct protocols. 
-	These systems and services can be used by implementers (providers, hospitals etc) to verify interoperability with their 
-	Direct implementation. Vendors who need to register additional systems or services please click on vendor registration.
-	</p>
+	<div>
+		<p>Welcome to the Direct Services page. This page provides a list
+			of available vendor systems supporting the Direct protocols. These
+			systems and services can be used by implementers (providers,
+			hospitals etc) to verify interoperability with their Direct
+			implementation. Vendors who need to register additional systems or
+			services please click on vendor registration.</p>
 
-</div>
+	</div>
 
-<!-- Step 2 -->
-<div class="panel panel-default">
+	<!-- Step 2 -->
+	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Direct Systems</h3>
 		</div>
@@ -54,6 +35,7 @@
 						<th class="col-sm-2">POC</th>
 						<th class="col-sm-2">Availability Dates</th>
 						<th class="col-sm-2">Direct Trust Member</th>
+						<th class="col-sm-2">Trust Anchor</th>
 					</tr>
 				</thead>
 				<tbody id=tableBody>

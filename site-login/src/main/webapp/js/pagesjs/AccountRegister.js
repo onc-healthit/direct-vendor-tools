@@ -5,9 +5,11 @@ function AccountRegister()
 	
 	this.registerAccount = function()
 	{
+		$('#emailExistAlertID').hide();
+		$('#emailRegAlertID').hide();
 		var accountRegisterTO = new AccountRegisterTO();
 		accountRegisterTO.companyName =  $("#company").val();
-		accountRegisterTO.companyPOC =  $("#companyPoc").val();
+		/*accountRegisterTO.companyPOC =  $("#companyPoc").val();*/
 		accountRegisterTO.firstName =  $("#firstName").val();
 		accountRegisterTO.lastName =  $("#lastName").val();
 		accountRegisterTO.password =  $("#password").val();
@@ -21,7 +23,14 @@ function AccountRegister()
 	
 	this.registerAccountSuccessHandler = function(successJson)
 	{
-		$("#signupCloseId").trigger("click");
-		alert("Account Registered successfully");
+		if(successJson.isEmailAvailable)
+		{
+			$('#emailRegAlertID').show();
+			document.getElementById("signupForm").reset();
+		}else {
+			
+			$('#emailExistAlertID').show();
+		}
+		
 	};
 }
