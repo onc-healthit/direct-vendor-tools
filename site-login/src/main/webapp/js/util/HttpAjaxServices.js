@@ -87,7 +87,7 @@ function HttpAjaxServices()
 		
 		if(register)
 		{
-		  URL = currentObject.REGISTER_ACCOUNT;	
+		  URL = currentObject.REGISTER_DIRECT_SYSTEM;	
 		}else
 		{
 			URL = currentObject.UPDATE_DIRECT_SYSTEM;

@@ -1,3 +1,4 @@
+var editingSystemID  = 0;
 function RegisterService()
 {
 	var currentObject = this;
@@ -25,7 +26,7 @@ function RegisterService()
 		registerServiceTO.directTrustMembership =  $("#registerForm input[type='radio']:checked").val();
 		registerServiceTO.availFromDate =  $("#availFromDate").val();
 		registerServiceTO.availToDate =  $("#availToDate").val();
-		registerServiceTO.id =  $("#directSysId").val();
+		registerServiceTO.id = editingSystemID;
 		registerServiceTO.userEmailAddress = MODEL.userEmail;
 		return registerServiceTO;
 	};
@@ -40,17 +41,6 @@ function RegisterService()
 	
 	this.registerServiceSuccessHandler = function(successJson)
 	{
-		currentObject.afterAjaxCall(successJson);
-	};
-	
-	this.updateServiceSuccessHandler = function(successJson)
-	{
-		currentObject.afterAjaxCall(successJson);
-		$('#DirectSystemRegAlertID').val("Updated Successfully");
-	};
-	
-	this.afterAjaxCall = function(successJson)
-	{
 		if(successJson.isEmailAvailable)
 		{
 			$("#vendorReg").show();
@@ -62,6 +52,22 @@ function RegisterService()
 		{
 			$('#directEmailExistAlertID').show();
 		}
+	};
+	
+	this.updateServiceSuccessHandler = function(successJson)
+	{
+		if(successJson.isEmailAvailable)
+		{
+			$("#vendorReg").show();
+			$('#registrationModal').modal('hide');
+			$('#updateSystemAlertID').show();
+			registerService.readUserDirectSystems();
+			
+		}else 
+		{
+			$('#directEmailExistAlertID').show();
+		}
+	     
 	};
 	
 	this.readAllDirectSystems = function()
@@ -121,12 +127,38 @@ function RegisterService()
 };
 
 
-function selectDropDown(value)
+function onRowClick(object)
 {
-	$("#timezone option").each(function() {
-		  if($(this).text() == value) {
-		    $(this).attr('selected', 'selected');            
-		  }                        
-		});
+	cleanUp();
+	$("#updateServiceButton").show();
+	$("#submitButton").hide();
+	var selectedDirectEmail = $(object).closest('tr').find('td:eq(2)').text();
+	$(registerService.resultSet).each(function(){
+		if(this.directEmailAddress == selectedDirectEmail)
+		{
+			$("#cehrtLabel").val(this.cehrtLabel);
+			editingSystemID = this.id;
+			$("#orgName").val(this.organizationName);
+			$("#directEmail").val(this.directEmailAddress);
+			$("#pocEmail").val(this.pointOfContact);
+			$("#pocFirstName").val(this.pocFirstName);
+			$("#pocLastName").val(this.pocLastName);
+			var text = this.timezone;
+			$('#timezone').val(text);
+			if(this.directTrustMembership == 'Yes')
+			{
+				$("#option_yes").attr('checked', 'checked');	
+			}else
+			{  
+				$("#option_no").attr('checked', 'checked');
+			}
+			$("#availFromDate").val(this.availFromDate);
+			$("#availToDate").val(this.availToDate);
+			
+			
+		   return;
+		}
+	});
 }
+
 
