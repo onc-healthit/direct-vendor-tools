@@ -6,18 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.naming.NamingException;
+
 import org.sitenv.directvendortools.web.dto.UserLoginTO;
 import org.sitenv.directvendortools.web.util.ApplicationQueries;
 import org.sitenv.directvendortools.web.util.ApplicationUtil;
-import org.sitenv.directvendortools.web.util.ConnectionPool;
 import org.sitenv.directvendortools.web.util.HashException;
 import org.sitenv.directvendortools.web.util.SaltedPasswordHashUtil;
 
-public class LoginDAO {
+public class LoginDAO extends BaseDAO {
 	
-public static boolean loginAuthentication(UserLoginTO userLoginTO) throws SQLException,PropertyVetoException, HashException{
+	public static boolean loginAuthentication(UserLoginTO userLoginTO) throws SQLException,NamingException,PropertyVetoException, HashException{
 		
-		final Connection connection = ConnectionPool.getInstance().getConnection();
+		final Connection connection = getDbConnection();
 		final PreparedStatement ps= connection.prepareStatement(ApplicationQueries.LOGIN_AUTH_QUERY);
 		ps.setString(1, userLoginTO.getUserName().toUpperCase());
 		final ResultSet rs = ps.executeQuery();

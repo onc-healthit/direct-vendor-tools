@@ -54,15 +54,9 @@ public class LoginService {
 			loginAuthOutput = ApplicationUtil.getFormattedOutput(
 					new ResponseTO(userAutheticated), isJSon);
 
-		} catch (SQLException sqlException) {
-			loginAuthOutput = ApplicationUtil.getFormattedOutput(sqlException,
-					isJSon);
-		} catch (PropertyVetoException propertyVetoException) {
-			loginAuthOutput = ApplicationUtil.getFormattedOutput(
-					propertyVetoException, isJSon);
-		} catch (HashException hashException) {
-			loginAuthOutput = ApplicationUtil.getFormattedOutput(
-					hashException, isJSon);
+		} catch (Exception e)
+		{
+			loginAuthOutput = ApplicationUtil.getFormattedOutput(e, isJSon);
 		}
 
 		outMessage = new StringBuilder(loginAuthOutput);

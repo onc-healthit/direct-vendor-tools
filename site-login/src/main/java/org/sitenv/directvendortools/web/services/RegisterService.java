@@ -58,12 +58,9 @@ public class RegisterService {
 			    
 			    
 		
-		}catch (SQLException sqlException)
+		}catch (Exception e)
 		{
-			registerSystemOutput = ApplicationUtil.getFormattedOutput(sqlException, isJSon);
-		}catch(PropertyVetoException propertyVetoException)
-		{
-			registerSystemOutput = ApplicationUtil.getFormattedOutput(propertyVetoException, isJSon);
+			registerSystemOutput = ApplicationUtil.getFormattedOutput(e, isJSon);
 		}
 		
 		outMessage = new StringBuilder(registerSystemOutput);
@@ -79,7 +76,7 @@ public class RegisterService {
 	@POST
 	@Path(ApplicationConstants.UPDATE_DIRECT_SYSTEM)
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Response UpdateDirectSystem(
+	public Response updateDirectSystem(
 			@DefaultValue(ApplicationConstants.TRUE) @QueryParam(ApplicationConstants.IS_JSON) final boolean isJSon,
 			final String inputData)
 	{
@@ -110,12 +107,9 @@ public class RegisterService {
 			    
 			    
 		
-		}catch (SQLException sqlException)
+		}catch (Exception e)
 		{
-			registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(sqlException, isJSon);
-		}catch(PropertyVetoException propertyVetoException)
-		{
-			registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(propertyVetoException, isJSon);
+			registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(e, isJSon);
 		}
 		
 		outMessage = new StringBuilder(registerSystemUpdateOutput);
@@ -145,12 +139,9 @@ public class RegisterService {
 			resultSetTO = RegisterServiceProcess.readAllDirectSystems(userEmail);
 			allDirectSystemsOutput = ApplicationUtil.getFormattedOutput(new ResponseTO(resultSetTO), isJSon);
 		
-		}catch (SQLException sqlException)
+		}catch (Exception e)
 		{
-			allDirectSystemsOutput = ApplicationUtil.getFormattedOutput(sqlException, isJSon);
-		}catch(PropertyVetoException propertyVetoException)
-		{
-			allDirectSystemsOutput = ApplicationUtil.getFormattedOutput(propertyVetoException, isJSon);
+			allDirectSystemsOutput = ApplicationUtil.getFormattedOutput(e, isJSon);
 		}
 		
 		outMessage = new StringBuilder(allDirectSystemsOutput);
