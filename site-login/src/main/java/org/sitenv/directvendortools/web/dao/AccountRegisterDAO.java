@@ -6,18 +6,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.naming.NamingException;
+
+import org.postgresql.jdbc2.optional.ConnectionPool;
 import org.sitenv.directvendortools.web.dto.AccountRegisterTO;
 import org.sitenv.directvendortools.web.util.ApplicationQueries;
 import org.sitenv.directvendortools.web.util.ApplicationUtil;
-import org.sitenv.directvendortools.web.util.ConnectionPool;
 import org.sitenv.directvendortools.web.util.HashException;
 import org.sitenv.directvendortools.web.util.SaltedPasswordHashUtil;
 
-public class AccountRegisterDAO {
+public class AccountRegisterDAO extends BaseDAO {
 	
-	public static int registerAccount(final AccountRegisterTO accountRegisterTO) throws SQLException,PropertyVetoException,HashException{
+	public static int registerAccount(final AccountRegisterTO accountRegisterTO) throws SQLException,NamingException,PropertyVetoException,HashException{
 		
-		final Connection connection = ConnectionPool.getInstance().getConnection();
+		final Connection connection = getDbConnection();
 		final PreparedStatement ps= connection.prepareStatement(ApplicationQueries.ACCOUNT_REGISTER_QUERY);
 		ps.setString(1, accountRegisterTO.getCompanyName());
 		ps.setString(2, accountRegisterTO.getFirstName());
@@ -33,9 +35,9 @@ public class AccountRegisterDAO {
 		return applicationStatus;
 	}
 	
-	public static boolean isEmailAvailable(String emailAddress) throws SQLException,PropertyVetoException{
+	public static boolean isEmailAvailable(String emailAddress) throws SQLException,NamingException,PropertyVetoException{
 		
-		final Connection connection = ConnectionPool.getInstance().getConnection();
+		final Connection connection = getDbConnection();
 		final PreparedStatement ps= connection.prepareStatement(ApplicationQueries.EMAIL_CHECK_QUERY);
 		ps.setString(1, emailAddress.toUpperCase());
 		final ResultSet rs = ps.executeQuery();

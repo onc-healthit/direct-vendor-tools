@@ -8,17 +8,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NamingException;
+
+import org.postgresql.jdbc2.optional.ConnectionPool;
 import org.sitenv.directvendortools.web.dto.DirectSystemTO;
 import org.sitenv.directvendortools.web.util.ApplicationConstants;
 import org.sitenv.directvendortools.web.util.ApplicationQueries;
 import org.sitenv.directvendortools.web.util.ApplicationUtil;
-import org.sitenv.directvendortools.web.util.ConnectionPool;
 
-public class RegisterServiceDAO {
+public class RegisterServiceDAO extends BaseDAO {
 
-public static int registerService(final DirectSystemTO directSystemTO) throws SQLException,PropertyVetoException{
+public static int registerService(final DirectSystemTO directSystemTO) throws SQLException,NamingException,PropertyVetoException{
 		
-		final Connection connection = ConnectionPool.getInstance().getConnection();
+		final Connection connection = getDbConnection();
 		final PreparedStatement ps= connection.prepareStatement(ApplicationQueries.REGISTER_SERVICE_QUERY);
 		ps.setString(1, directSystemTO.getCehrtLabel());
 		ps.setString(2, directSystemTO.getOrganizationName());
@@ -38,9 +40,9 @@ public static int registerService(final DirectSystemTO directSystemTO) throws SQ
 		return registerServiceStatus;
 	}
 
-public static int updateRegisterService(final DirectSystemTO directSystemTO) throws SQLException,PropertyVetoException{
+public static int updateRegisterService(final DirectSystemTO directSystemTO) throws SQLException,NamingException,PropertyVetoException{
 	
-	final Connection connection = ConnectionPool.getInstance().getConnection();
+	final Connection connection = getDbConnection();
 	final PreparedStatement ps= connection.prepareStatement(ApplicationQueries.UPDATE_REGISTER_SERVICE_QUERY);
 	ps.setString(1, directSystemTO.getCehrtLabel());
 	ps.setString(2, directSystemTO.getOrganizationName());
@@ -61,9 +63,9 @@ public static int updateRegisterService(final DirectSystemTO directSystemTO) thr
 	return registerServiceStatus;
 }
 
-public static List<DirectSystemTO> readAllDirectSystems(String userEmail) throws SQLException,PropertyVetoException{
+public static List<DirectSystemTO> readAllDirectSystems(String userEmail) throws SQLException,NamingException,PropertyVetoException{
 	
-	final Connection connection = ConnectionPool.getInstance().getConnection();
+	final Connection connection = getDbConnection();
 	final PreparedStatement ps= ApplicationUtil.isEmpty(userEmail) ? connection.prepareStatement(ApplicationQueries.READ_DIRECT_SYSTEMS) : 
 		connection.prepareStatement(prepareQuery(userEmail));
 	if(!ApplicationUtil.isEmpty(userEmail))
@@ -95,9 +97,9 @@ public static List<DirectSystemTO> readAllDirectSystems(String userEmail) throws
 	return directSystemToList;
 }
 
-public static boolean isDirectSysEmailAvailable(String directSysEmail) throws SQLException,PropertyVetoException{
+public static boolean isDirectSysEmailAvailable(String directSysEmail) throws SQLException,NamingException,PropertyVetoException{
 	
-	final Connection connection = ConnectionPool.getInstance().getConnection();
+	final Connection connection = getDbConnection();
 	final PreparedStatement ps= connection.prepareStatement(ApplicationQueries.DIRECT_SYS_EMAIL_CHECK_QUERY);
 	ps.setString(1, directSysEmail.toUpperCase());
 	final ResultSet rs = ps.executeQuery();
@@ -116,9 +118,9 @@ public static String prepareQuery(String userEmail)
 }
 
 
-public static boolean checkUpdatedDirectSysEmail(String directSysEmail,int directSysId) throws SQLException,PropertyVetoException{
+public static boolean checkUpdatedDirectSysEmail(String directSysEmail,int directSysId) throws SQLException,NamingException,PropertyVetoException{
 	
-	final Connection connection = ConnectionPool.getInstance().getConnection();
+	final Connection connection = getDbConnection();
 	final PreparedStatement ps= connection.prepareStatement(ApplicationQueries.UPD_DIRECT_SYS_EMAIL_CHECK_QUERY);
 	ps.setString(1, directSysEmail.toUpperCase());
 	ps.setInt(2, directSysId);

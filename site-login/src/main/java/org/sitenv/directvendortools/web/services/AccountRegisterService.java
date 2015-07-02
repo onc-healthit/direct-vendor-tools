@@ -61,15 +61,9 @@ public class AccountRegisterService {
 			    	accountRegistryOutput = ApplicationUtil.getFormattedOutput(new ResponseTO(false), isJSon);
 			    }
 		
-		}catch (SQLException sqlException)
+		}catch (Exception e)
 		{
-			accountRegistryOutput = ApplicationUtil.getFormattedOutput(sqlException, isJSon);
-		}catch(PropertyVetoException propertyVetoException)
-		{
-			accountRegistryOutput = ApplicationUtil.getFormattedOutput(propertyVetoException, isJSon);
-		}catch(HashException hashException)
-		{
-			accountRegistryOutput = ApplicationUtil.getFormattedOutput(hashException, isJSon);
+			accountRegistryOutput = ApplicationUtil.getFormattedOutput(e, isJSon);
 		}
 		
 		outMessage = new StringBuilder(accountRegistryOutput);
@@ -99,12 +93,9 @@ public class AccountRegisterService {
 			jsonArray.add("email");
 			jsonArray.add(isEmailAvailable);
 		
-		}catch (SQLException sqlException)
+		}catch (Exception e)
 		{
-			emailAvailableOutput = ApplicationUtil.getFormattedOutput(sqlException, isJSon);
-		}catch(PropertyVetoException propertyVetoException)
-		{
-			emailAvailableOutput = ApplicationUtil.getFormattedOutput(propertyVetoException, isJSon);
+			emailAvailableOutput = ApplicationUtil.getFormattedOutput(e, isJSon);
 		}
 		
 		outMessage = new StringBuilder(emailAvailableOutput);
