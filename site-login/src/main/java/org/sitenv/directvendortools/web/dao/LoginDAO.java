@@ -10,10 +10,12 @@ import org.sitenv.directvendortools.web.dto.UserLoginTO;
 import org.sitenv.directvendortools.web.util.ApplicationQueries;
 import org.sitenv.directvendortools.web.util.ApplicationUtil;
 import org.sitenv.directvendortools.web.util.ConnectionPool;
+import org.sitenv.directvendortools.web.util.HashException;
+import org.sitenv.directvendortools.web.util.SaltedPasswordHashUtil;
 
 public class LoginDAO {
 	
-public static boolean loginAuthentication(UserLoginTO userLoginTO) throws SQLException,PropertyVetoException{
+public static boolean loginAuthentication(UserLoginTO userLoginTO) throws SQLException,PropertyVetoException, HashException{
 		
 		final Connection connection = ConnectionPool.getInstance().getConnection();
 		final PreparedStatement ps= connection.prepareStatement(ApplicationQueries.LOGIN_AUTH_QUERY);
@@ -22,7 +24,7 @@ public static boolean loginAuthentication(UserLoginTO userLoginTO) throws SQLExc
 		boolean userAuthentication = false;
 		while(rs.next())
 		{
-			userAuthentication =  rs.getString(2).equals(userLoginTO.getPassword()) ? true : false;	
+			userAuthentication =  SaltedPasswordHashUtil.validatePassword(userLoginTO.getPassword(), rs.getString(2));	
 		}
 		ApplicationUtil.closeAll(rs);
 		return userAuthentication;

@@ -89,7 +89,7 @@
                 "passwordVal": {
                     // credit: jquery.h5validate.js / orefalo
                     "regex": /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\W]).+$/,
-                    "alertText": "* Invalid phone number"
+                    "alertText": "* Password must contain an Uppercase letter, Lowercase letter, digit, and special character."
                 },
                 "email": {
                     // HTML5 compatible email regex ( http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#    e-mail-state-%28type=email%29 )

@@ -1,5 +1,6 @@
 function RegisterServiceTO()
 {
+	this.id;
 	this.cehrtLabel;
 	this.organizationName;
 	this.directEmailAddress;

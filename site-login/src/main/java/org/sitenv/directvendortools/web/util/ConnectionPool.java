@@ -17,6 +17,7 @@ public class ConnectionPool {
     private static ComboPooledDataSource dataSource;
     private static String driverClass = "org.postgresql.Driver";
     private static String dbURL = "jdbc:postgresql://localhost:5432/site_login";
+    //private static String dbURL = "jdbc:postgresql://ec2-54-200-44-56.us-west-2.compute.amazonaws.com:5432/site_login";
     private static String userName = "siteuser";
     private static String password = "siteuser";
     private static int minPoolSize = 5;

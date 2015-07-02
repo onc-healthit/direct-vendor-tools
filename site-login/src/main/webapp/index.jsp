@@ -44,6 +44,9 @@
 <script type="text/javascript" src="js/to/UserLoginTO.js"></script>
 <script type="text/javascript" src="js/util/Constants.js"></script>
 <script type="text/javascript" src="js/util/Utility.js"></script>
+<script>
+	var APP_CONTEXT = "${pageContext.request.contextPath}/";
+</script>
 <script type="text/javascript" src="js/util/HttpAjaxServices.js"></script>
 <script type="text/javascript" src="js/to/Model.js"></script>
 
@@ -55,16 +58,6 @@
   		$(function(){
   			loadHeaderPage();
   			setInteroperabilityServicesPage();
-	  		$('ul.navbar-nav li').click(function(e) {
-	  			var id = $(this).attr('id');
-	  			if((id != 'signupID' && id != 'loginID' && id != 'logoutLI'))
-	  			{
-	  				$('.navbar-nav li.active').removeClass('active');
-	  		        $(this).addClass('active');	
-	  			}
-  		        e.preventDefault();
-  		    });
-  			
   			$('#contactUs').click(function(){
   			    $(location).attr('href', 'mailto:admin@sitenv.org');
   			});
@@ -80,6 +73,7 @@
   		}
   		
   		function setRegisterServicePageContent(data){
+  			$('ul.navbar-nav li').removeClass('active');
   			$("#vendorRegLIId").addClass('active');
 			$("#mainPageContent").html(data);
   		}
@@ -95,6 +89,8 @@
   		}
   		
   		function setInteroperabilityServicesPageContent(data){
+
+  			$('ul.navbar-nav li').removeClass('active');
   			$("#interopLIId").addClass('active');
 			$("#mainPageContent").html(data);
   		}
@@ -103,7 +99,7 @@
   			$.get('pages/LoginPage.html',showLoginPage);
   		}
   		function showLoginPage(data){
-  			$("#loginModel").html(data)
+  			$("#loginModel").html(data);
   			$("#loginModel").modal('show');
   		}
   		
@@ -112,7 +108,7 @@
   		}
   		
   		function showSignUpPage(data){
-  			$("#signupModel").html(data)
+  			$("#signupModel").html(data);
   			$("#signupModel").modal('show');
   		}
   		
@@ -123,7 +119,7 @@
   		
   		function loadHeaderPageContent(data)
   		{
-  			$("#headerId").html(data)
+  			$("#headerId").html(data);
   		}
   		
   		function onlogout(){
@@ -154,19 +150,18 @@
 			<div id="navbar" class="navbar-collapse collapse in"
 				aria-expanded="true">
 				<ul class="nav navbar-nav">
-				 <li  id="interopLIId"><a href="#" onclick="setInteroperabilityServicesPage()" style="text-decoration: none;">Direct
+				 <li  id="interopLIId"><a href="javascript:setInteroperabilityServicesPage()" style="text-decoration: none;">Direct
 							Services</a></li>
-				<li id="vendorRegLIId"><a href="#" style="text-decoration: none;"
-						onclick="setRegisterServicePage()">Vendor Registration</a></li>
-					<li onclick="javascript:location.href='http://54.200.44.56/'">
-						<a href="#" style="text-decoration: none;">Home</a></li>
+				<li id="vendorRegLIId"><a href="javascript:setRegisterServicePage()" style="text-decoration: none;">Vendor Registration</a></li>
+					<li>
+						<a href="http://sitenv.org/" style="text-decoration: none;">Home</a></li>
 					
 					
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right" id="rightNavbarID">
-					<li id="signupID"><a href="#" onclick="openSignUpPage()" style="text-decoration: none;">Sign Up </a></li>
-					<li id="loginID"><a href="#" onclick="openLoginPage()" style="text-decoration: none;">Login</a></li>
+					<li id="signupID"><a href="javascript:openSignUpPage()" style="text-decoration: none;">Sign Up </a></li>
+					<li id="loginID"><a href="javascript:openLoginPage()" style="text-decoration: none;">Login</a></li>
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right" id="logoutId" hidden="true">
@@ -176,21 +171,21 @@
 			<!--/.nav-collapse -->
 		</div>
 	</nav>
-	<div id="mainPageContent"></div>
+	<div id="mainPageContent" aria-live="assertive"></div>
 	<footer class="panel-footer" style="padding-bottom: 0px;">
 		<div class="container" role="contentinfo">
 			<div class="row">
 				<div>
 					<p>
 						This project was funded by a contract from the <a
-							href="http://www.healthit.gov" tabindex="100">Office of the
+							href="http://www.healthit.gov" >Office of the
 							National Coordinator for Health Information Technology (ONC)</a>
 					</p>
 					<p>
-						<a href="http://www.hhs.gov/Privacy.html" tabindex="100">Privacy
+						<a href="http://www.hhs.gov/Privacy.html" >Privacy
 							Policy</a> | <a href="http://www.hhs.gov/Disclaimer.html"
-							tabindex="100">Disclaimer</a> | <a href="#" id="contactUs"
-							tabindex="100">Contact US </a>
+							>Disclaimer</a> | <a href="#" id="contactUs"
+							>Contact US </a>
 					</p>
 				</div>
 			</div>

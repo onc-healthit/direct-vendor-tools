@@ -18,6 +18,7 @@ import org.sitenv.directvendortools.web.dto.AccountRegisterTO;
 import org.sitenv.directvendortools.web.dto.ResponseTO;
 import org.sitenv.directvendortools.web.util.ApplicationConstants;
 import org.sitenv.directvendortools.web.util.ApplicationUtil;
+import org.sitenv.directvendortools.web.util.HashException;
 import org.sitenv.directvendortools.web.util.JSONGenerator;
 import org.sitenv.directvendortools.web.util.XMLGenerator;
 
@@ -66,6 +67,9 @@ public class AccountRegisterService {
 		}catch(PropertyVetoException propertyVetoException)
 		{
 			accountRegistryOutput = ApplicationUtil.getFormattedOutput(propertyVetoException, isJSon);
+		}catch(HashException hashException)
+		{
+			accountRegistryOutput = ApplicationUtil.getFormattedOutput(hashException, isJSon);
 		}
 		
 		outMessage = new StringBuilder(accountRegistryOutput);
