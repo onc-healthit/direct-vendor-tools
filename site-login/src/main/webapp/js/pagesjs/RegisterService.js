@@ -1,8 +1,17 @@
 function RegisterService()
 {
 	var currentObject = this;
+	var resultSet = [];
 	
 	this.registerService = function()
+	{
+		var callbackFunction = $.Callbacks('once');
+		callbackFunction.add(currentObject.registerServiceSuccessHandler);
+		var httpService = new HttpAjaxServices();
+		httpService.registerDirectSystem(currentObject.readValues(), callbackFunction, false,true);
+	};
+	
+	this.readValues = function()
 	{
 		$('#directEmailExistAlertID').hide();
 		var registerServiceTO = new RegisterServiceTO();
@@ -16,15 +25,31 @@ function RegisterService()
 		registerServiceTO.directTrustMembership =  $("#registerForm input[type='radio']:checked").val();
 		registerServiceTO.availFromDate =  $("#availFromDate").val();
 		registerServiceTO.availToDate =  $("#availToDate").val();
+		registerServiceTO.id =  $("#directSysId").val();
 		registerServiceTO.userEmailAddress = MODEL.userEmail;
-		
+		return registerServiceTO;
+	};
+	
+	this.updateService = function()
+	{
 		var callbackFunction = $.Callbacks('once');
-		callbackFunction.add(currentObject.registerServiceSuccessHandler);
+		callbackFunction.add(currentObject.updateServiceSuccessHandler);
 		var httpService = new HttpAjaxServices();
-		httpService.registerDirectSystem(registerServiceTO, callbackFunction, false);
+		httpService.registerDirectSystem(currentObject.readValues(), callbackFunction, false,false);
 	};
 	
 	this.registerServiceSuccessHandler = function(successJson)
+	{
+		currentObject.afterAjaxCall(successJson);
+	};
+	
+	this.updateServiceSuccessHandler = function(successJson)
+	{
+		currentObject.afterAjaxCall(successJson);
+		$('#DirectSystemRegAlertID').val("Updated Successfully");
+	};
+	
+	this.afterAjaxCall = function(successJson)
 	{
 		if(successJson.isEmailAvailable)
 		{
@@ -37,7 +62,6 @@ function RegisterService()
 		{
 			$('#directEmailExistAlertID').show();
 		}
-		
 	};
 	
 	this.readAllDirectSystems = function()
@@ -78,9 +102,10 @@ function RegisterService()
 	{
 		$("#userDirectSysTableBody").empty();
 		var resultArray = successJson.resultSet.results;
+		currentObject.resultSet = resultArray;
 		var rows = "";
 		 $(resultArray).each(function(){
-		   rows += 	"<tr><td>"+this.cehrtLabel+"</td>"
+		   rows += 	"<tr><td><a onclick =onRowClick(this)> <span class='glyphicon glyphicon-edit'></span></a>&nbsp;&nbsp;"+this.cehrtLabel+"</td>"
 			+	"<td>"+this.organizationName+"</td>"
 			+	"<td>"+this.directEmailAddress+"</td>"
 			+	"<td>"+this.pocFirstName + " " + this.pocLastName + " (" +this.pointOfContact +")</td>"
@@ -94,3 +119,14 @@ function RegisterService()
 	};
 	
 };
+
+
+function selectDropDown(value)
+{
+	$("#timezone option").each(function() {
+		  if($(this).text() == value) {
+		    $(this).attr('selected', 'selected');            
+		  }                        
+		});
+}
+

@@ -2,6 +2,11 @@ package org.sitenv.directvendortools.web.util;
 
 public class HashException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public HashException() {
 		super();
 		// TODO Auto-generated constructor stub
