@@ -23,15 +23,17 @@ public class ApplicationConstants {
 	public static final String EMAIL_ADDRESS = "emailAddress";
 	public static final String REGISTER_SERVICE = "registerService";
 	public static final String REGISTER_DIRECT_SYSTEM ="registerDirectSystem";
+	public static final String UPDATE_DIRECT_SYSTEM ="updateDirectSystem";
 	public static final String READ_ALL_DIRECT_SYSTEM ="readAllDirectSystem";
 	public static final String FILE_UPLOAD_DIRECTORY = "C:/FileUploads/";	
 	public static final String EMAIL_REGISTERED_ERROR = "Email already Registered";
 	
 	
-	public static final String DATE_FORMAT = "YYYY-MM-DD";
+	public static final String DATE_FORMAT = "yyyy-MM-dd";
 	
 	
 	//Direct System table column names
+	public static final String SERVICE_ID ="id";
 	public static final String CEHRT_LABEL ="cehrtLabel";
 	public static final String ORG_NAME ="organizationName";
 	public static final String DIRECT_EMAIL_ADDRESS ="directEmailAddress";

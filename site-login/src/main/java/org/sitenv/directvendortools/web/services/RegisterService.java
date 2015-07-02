@@ -27,7 +27,7 @@ public class RegisterService {
 	@POST
 	@Path(ApplicationConstants.REGISTER_DIRECT_SYSTEM)
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Response registerAccount(
+	public Response registerDirectSystem(
 			@DefaultValue(ApplicationConstants.TRUE) @QueryParam(ApplicationConstants.IS_JSON) final boolean isJSon,
 			final String inputData)
 	{
@@ -74,6 +74,61 @@ public class RegisterService {
 				.entity(outMessage.toString()).build();
 
 	}
+	
+	
+	@POST
+	@Path(ApplicationConstants.UPDATE_DIRECT_SYSTEM)
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response UpdateDirectSystem(
+			@DefaultValue(ApplicationConstants.TRUE) @QueryParam(ApplicationConstants.IS_JSON) final boolean isJSon,
+			final String inputData)
+	{
+		int registerSystemUpdateStatus;
+		String registerSystemUpdateOutput ="";
+		StringBuilder outMessage;
+		try
+		{
+			    DirectSystemTO directSystemTO;
+			    if (isJSon)
+				{
+					final JSONGenerator<DirectSystemTO> jsonGenerator = new JSONGenerator<DirectSystemTO>();
+					directSystemTO = jsonGenerator.createObject(inputData,DirectSystemTO.class);
+				}
+				else
+				{
+					directSystemTO = (DirectSystemTO) XMLGenerator.generateTOfromXML(inputData);
+				}
+			    
+			    if(RegisterServiceProcess.isUpdatedDirectSysEmailAvailable(directSystemTO.getDirectEmailAddress(),directSystemTO.getId()))
+			    {
+			    	registerSystemUpdateStatus = RegisterServiceProcess.updateDirectorySystem(directSystemTO);
+			    	registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(new ResponseTO(registerSystemUpdateStatus), isJSon);
+			    }else
+			    {
+			    	registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(new ResponseTO(false), isJSon);
+			    }
+			    
+			    
+		
+		}catch (SQLException sqlException)
+		{
+			registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(sqlException, isJSon);
+		}catch(PropertyVetoException propertyVetoException)
+		{
+			registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(propertyVetoException, isJSon);
+		}
+		
+		outMessage = new StringBuilder(registerSystemUpdateOutput);
+		return Response
+				.status(Response.Status.OK)
+				.type(isJSon ? MediaType.APPLICATION_JSON
+						: MediaType.APPLICATION_XML)
+				.entity(outMessage.toString()).build();
+
+	}
+	
+	
+	
 	
 	@GET
 	@Path(ApplicationConstants.READ_ALL_DIRECT_SYSTEM)

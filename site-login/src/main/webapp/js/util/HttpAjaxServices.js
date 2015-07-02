@@ -8,6 +8,7 @@ function HttpAjaxServices()
 	this.CHECK_EMAIL = APP_CONTEXT+"rs/accountRegisterService/checkEmailAvailability?isJSon=true";
 	this.LOGIN_AUTH = APP_CONTEXT+"rs/loginService/validateLogin?isJSon=true";
 	this.REGISTER_DIRECT_SYSTEM = APP_CONTEXT+"rs/registerService/registerDirectSystem?isJSon=true";
+	this.UPDATE_DIRECT_SYSTEM = APP_CONTEXT+"rs/registerService/updateDirectSystem?isJSon=true";
 	this.READ_ALL_DIRECT_SYSTEM = APP_CONTEXT+"rs/registerService/readAllDirectSystem?isJSon=true";
 	this.UPLOAD_FILE = APP_CONTEXT + "rs/file/upload?folderName="+MODEL.userEmail;
 	
@@ -73,8 +74,9 @@ function HttpAjaxServices()
 		});
 	};
 	
-	this.registerDirectSystem = function(registerServiceTO,callback,freezeScreen,screenFreezeMessage)
+	this.registerDirectSystem = function(registerServiceTO,callback,freezeScreen,register)
 	{
+		var URL = "";
 		var utility = new Utility();
 		if(freezeScreen)
 		{
@@ -82,9 +84,17 @@ function HttpAjaxServices()
 			   screenFreezeMessage =  "Processing. Please wait...";
 			   UTILITY.screenFreeze(screenFreezeMessage);
 		}
+		
+		if(register)
+		{
+		  URL = currentObject.REGISTER_ACCOUNT;	
+		}else
+		{
+			URL = currentObject.UPDATE_DIRECT_SYSTEM;
+		}
 		$.ajax({type:"POST",
 			data:JSON.stringify(registerServiceTO),
-			url: currentObject.REGISTER_DIRECT_SYSTEM,
+			url: URL,
 			cache: false,
 			datatype : CONSTANTS.DATA_TYP_JSON,
 			contentType: CONSTANTS.CONTENT_TYP_JSON,
@@ -104,11 +114,12 @@ function HttpAjaxServices()
 		});
 	};
 	
+	
 	this.readAllDirectSystem = function(callback,freezeScreen,userEmail)
 	{
 		var utility = new Utility();
 		var URL = "";
-		if(utility.isEmptyString(userEmail))
+		if(!utility.isEmptyString(userEmail))
 		{
 			URL = currentObject.READ_ALL_DIRECT_SYSTEM + "&userEmail=" + userEmail;
 		}else 

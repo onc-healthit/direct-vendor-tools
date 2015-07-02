@@ -3,6 +3,7 @@ package org.sitenv.directvendortools.web.dto;
 
 public class DirectSystemTO {
 	
+	private int id;
 	private String cehrtLabel;
 	private String organizationName;
 	private String directEmailAddress;
@@ -14,6 +15,13 @@ public class DirectSystemTO {
 	private String availFromDate;
 	private String availToDate;
 	private String userEmailAddress;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getUserEmailAddress() {
 		return userEmailAddress;

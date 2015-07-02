@@ -58,13 +58,9 @@
   		$(function(){
   			loadHeaderPage();
   			setInteroperabilityServicesPage();
-	  		
-  			
   			$('#contactUs').click(function(){
   			    $(location).attr('href', 'mailto:admin@sitenv.org');
   			});
-  			
-  			
   		});
   		
   		function setRegisterServicePage(){
@@ -103,7 +99,7 @@
   			$.get('pages/LoginPage.html',showLoginPage);
   		}
   		function showLoginPage(data){
-  			$("#loginModel").html(data)
+  			$("#loginModel").html(data);
   			$("#loginModel").modal('show');
   		}
   		
@@ -112,7 +108,7 @@
   		}
   		
   		function showSignUpPage(data){
-  			$("#signupModel").html(data)
+  			$("#signupModel").html(data);
   			$("#signupModel").modal('show');
   		}
   		
@@ -123,7 +119,7 @@
   		
   		function loadHeaderPageContent(data)
   		{
-  			$("#headerId").html(data)
+  			$("#headerId").html(data);
   		}
   		
   		function onlogout(){

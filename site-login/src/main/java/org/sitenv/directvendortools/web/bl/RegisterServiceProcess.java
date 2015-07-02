@@ -28,6 +28,16 @@ public class RegisterServiceProcess {
 		resultSet.initializeCounts();
 		return resultSet;
 	}
+	
+	public static boolean isUpdatedDirectSysEmailAvailable(final String directEmailAddress, final int directSysId)throws SQLException,PropertyVetoException
+	{
+		return RegisterServiceDAO.checkUpdatedDirectSysEmail(directEmailAddress, directSysId);
+	}
+	
+	public static int updateDirectorySystem(final DirectSystemTO directSystemTO)throws SQLException,PropertyVetoException
+	{
+		return RegisterServiceDAO.updateRegisterService(directSystemTO);
+	}
 
 
 }

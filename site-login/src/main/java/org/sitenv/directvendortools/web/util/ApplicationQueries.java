@@ -16,7 +16,14 @@ public class ApplicationQueries {
 			+ "pocLastName,timezone,directTrustMembership,availFromDate,availToDate,useremailaddress)" +
             	"values (?,?,?,?,?,?,?,?,?,?,?)";
 	
+	public static String UPDATE_REGISTER_SERVICE_QUERY = "Update REGISTER_SERVICE  set cehrtLabel = ? , organizationName = ?, "
+			+ "directEmailAddress = ?, pointOfContact = ?,pocFirstName = ?,"
+			+ "pocLastName = ?,timezone = ?,directTrustMembership = ?,availFromDate = ?,availToDate =?,useremailaddress = ?" 
+            + "where ID = ?";
+	
 	public static String DIRECT_SYS_EMAIL_CHECK_QUERY= "Select count(*) from register_service where directemailaddress = ?";
+	
+	public static String UPD_DIRECT_SYS_EMAIL_CHECK_QUERY= "Select count(*) from register_service where directemailaddress = ? and Id != ?";
 	
 	public static String READ_DIRECT_SYSTEMS = "select * from REGISTER_SERVICE";
 	

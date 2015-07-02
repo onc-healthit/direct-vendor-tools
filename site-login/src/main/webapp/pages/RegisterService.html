@@ -7,6 +7,14 @@
 	}
 
 	function enableRegister() {
+		$("#updateServiceButton").hide();
+		$("#submitButton").show();
+		cleanUp();
+		
+	}
+	
+	function cleanUp()
+	{
 		$('#registrationModal').modal('show');
 		$(".date-picker").datepicker({
 			dateFormat : 'yy-mm-dd'
@@ -14,7 +22,9 @@
 		document.getElementById("registerForm").reset();
 		$('#registerDiv').show();
 		$('#DirectSystemRegAlertID').hide();
+		$('#directEmailExistAlertID').hide();
 	}
+	
 
 	$(document)
 			.ready(
@@ -40,13 +50,21 @@
 							$('#directSysPanleId').hide();
 						}
 
-						
-
 						$("#submitButton").click(function(e) {
 							var jform = $('#registerForm');
 							//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
 							if (jform.validationEngine('validate')) {
 								registerService.registerService();
+							} else {
+								$('#signupForm .formError').show(0);
+							}
+						});
+						
+						$("#updateServiceButton").click(function(e) {
+							var jform = $('#registerForm');
+							//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
+							if (jform.validationEngine('validate')) {
+								registerService.updateService();
 							} else {
 								$('#signupForm .formError').show(0);
 							}
@@ -78,7 +96,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				Direct System was successfully registered.
-			</div>
+	</div>
 	
 	
 	
@@ -166,6 +184,12 @@
 												name="cehrtLabel" id="cehrtLabel" />
 										</div>
 									</div>
+									
+									<div class="form-group" hidden="true">
+										<div class="col-lg-7">
+											<input type="text" id="directSysId"/>
+										</div>
+									</div>
 				
 									<div class="form-group">
 										<label class="col-lg-5 control-label" for="orgName">Organization Name </label>
@@ -219,7 +243,7 @@
 									<div class="form-group">
 										<label class="col-lg-5 control-label" for="timezone">Timezone</label>
 										<div class="col-lg-7">
-											<select name="country" class="form-control validate[required]"
+											<select name="timezone" class="form-control validate[required]"
 												id="timezone" data-toggle="tooltip" data-placement="right"
 												data-original-title="This is the timezone which indicates availability of the POC from 9am to 5pm"
 												required data-fv-notempty-message="Timezone is required">
@@ -288,6 +312,8 @@
 										<div class="text-center">
 											<button type="submit" id="submitButton" class="btn btn-success"
 												onclick="return false;">Register Service</button>
+											<button type="submit" id="updateServiceButton" class="btn btn-success"
+												onclick="return false;" hidden="true">Update Service</button>	
 										</div>
 									</div>
 								</form>
