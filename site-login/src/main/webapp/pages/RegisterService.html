@@ -10,7 +10,7 @@
 		$("#updateServiceButton").hide();
 		$("#submitButton").show();
 		cleanUp();
-		
+		$("input:radio").attr("checked", false);
 	}
 	
 	function cleanUp()
@@ -21,8 +21,11 @@
 		});
 		document.getElementById("registerForm").reset();
 		$('#registerDiv').show();
+		$('#updateSystemAlertID').hide();
 		$('#DirectSystemRegAlertID').hide();
 		$('#directEmailExistAlertID').hide();
+		$('#registerForm').validationEngine('hideAll');
+		$('#registerForm .formError').hide(0);
 	}
 	
 
@@ -56,7 +59,7 @@
 							if (jform.validationEngine('validate')) {
 								registerService.registerService();
 							} else {
-								$('#signupForm .formError').show(0);
+								$('#registerForm .formError').show(0);
 							}
 						});
 						
@@ -66,7 +69,7 @@
 							if (jform.validationEngine('validate')) {
 								registerService.updateService();
 							} else {
-								$('#signupForm .formError').show(0);
+								$('#registerForm .formError').show(0);
 							}
 						});
 					});
@@ -95,7 +98,16 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				Direct System was successfully registered.
+				Direct System has been successfully registered.
+	</div>
+	
+	<div class="alert alert-success alert-dismissible" role="alert"
+				id="updateSystemAlertID" style="padding: 11px;" hidden="true" style="margin-bottom:30px;">
+				<button type="button" class="close"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				Direct System has been updated successfully.
 	</div>
 	
 	
@@ -185,11 +197,6 @@
 										</div>
 									</div>
 									
-									<div class="form-group" hidden="true">
-										<div class="col-lg-7">
-											<input type="text" id="directSysId"/>
-										</div>
-									</div>
 				
 									<div class="form-group">
 										<label class="col-lg-5 control-label" for="orgName">Organization Name </label>
@@ -248,9 +255,12 @@
 												data-original-title="This is the timezone which indicates availability of the POC from 9am to 5pm"
 												required data-fv-notempty-message="Timezone is required">
 												<option value="">Please select timezone</option>
-												<option value="est">Eastern</option>
-												<option value="AU">Pacific</option>
-												<option value="CA">Central</option>
+												<option value="EST">EASTERN STANDARD TIME</option>
+												<option value="CST">CENTRAL STANDARD TIME</option>
+												<option value="MST">MOUNTAIN STANDARD TIME</option>
+												<option value="PST">PACIFIC STANDARD TIME</option>
+												<option value="AKST">ALASKA TIME</option>
+												<option value="HST">HAWAII STANDARD TIME</option>
 											</select>
 										</div>
 									</div>
@@ -264,12 +274,11 @@
 											Membership</legend>
 										<div class="col-lg-7">
 											<div class="radio">
-												<label for="option_yes"><input type="radio" name="optradio" id="option_yes" value="Yes"
-													required
-													data-fv-notempty-message="Direct Trust membership value is required">Yes</label>
+												<label for="option_yes">
+												<input type="radio" name="optradio" id="option_yes" value="Yes" class="validate[required]">Yes</label>
 											</div>
 											<div class="radio">
-												<label for="option_no"><input type="radio" name="optradio" id="option_no" value="No">No</label>
+												<label for="option_no"><input type="radio" name="optradio" id="option_no" class="validate[required]" value="No">No</label>
 											</div>
 										</div>
 										</fieldset>
@@ -283,26 +292,18 @@
 											<div class="control-group">
 												<label class="control-label" for="availFromDate">Available From (YYYY-MM-DD)</label>
 												<div class="controls">
-													<div class="input-group">
 														<input type="text"
 															class="date-picker form-control validate[required,custom[date]]"
-															id="availFromDate" name="availFromDate" style="position: relative; z-index: 1100;" /> <div
-															for="availFromDate" class="input-group-addon" ><span
-															class="glyphicon glyphicon-calendar"></span> </div>
-													</div>
+															id="availFromDate" name="availFromDate" style="position: relative; z-index: 1100;" /> 
 												</div>
 											</div>
 				
 											<div class="control-group">
 												<label class="control-label" for="availToDate">Available To (YYYY-MM-DD)</label>
 												<div class="controls">
-													<div class="input-group">
 														<input type="text"
 															class="date-picker form-control validate[required,custom[date]]"
-															id="availToDate" name="availToDate" style="position: relative; z-index: 1100;"/> <div
-															for="availToDate" class="input-group-addon" ><span
-															class="glyphicon glyphicon-calendar"></span> </div>
-													</div>
+															id="availToDate" name="availToDate" style="position: relative; z-index: 1100;"/> 
 												</div>
 											</div>
 										</div>

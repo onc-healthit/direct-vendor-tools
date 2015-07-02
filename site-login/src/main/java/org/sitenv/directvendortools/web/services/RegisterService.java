@@ -76,7 +76,7 @@ public class RegisterService {
 	@POST
 	@Path(ApplicationConstants.UPDATE_DIRECT_SYSTEM)
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Response UpdateDirectSystem(
+	public Response updateDirectSystem(
 			@DefaultValue(ApplicationConstants.TRUE) @QueryParam(ApplicationConstants.IS_JSON) final boolean isJSon,
 			final String inputData)
 	{
