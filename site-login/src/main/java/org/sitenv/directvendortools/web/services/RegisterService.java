@@ -1,7 +1,5 @@
 package org.sitenv.directvendortools.web.services;
 
-import java.beans.PropertyVetoException;
-import java.sql.SQLException;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -104,25 +102,17 @@ public class RegisterService {
 			    {
 			    	registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(new ResponseTO(false), isJSon);
 			    }
-			    
-			    
-		
 		}catch (Exception e)
 		{
 			registerSystemUpdateOutput = ApplicationUtil.getFormattedOutput(e, isJSon);
 		}
-		
 		outMessage = new StringBuilder(registerSystemUpdateOutput);
 		return Response
 				.status(Response.Status.OK)
 				.type(isJSon ? MediaType.APPLICATION_JSON
 						: MediaType.APPLICATION_XML)
 				.entity(outMessage.toString()).build();
-
 	}
-	
-	
-	
 	
 	@GET
 	@Path(ApplicationConstants.READ_ALL_DIRECT_SYSTEM)
@@ -150,7 +140,6 @@ public class RegisterService {
 				.type(isJSon ? MediaType.APPLICATION_JSON
 						: MediaType.APPLICATION_XML)
 				.entity(outMessage.toString()).build();
-
 	}
 
 }

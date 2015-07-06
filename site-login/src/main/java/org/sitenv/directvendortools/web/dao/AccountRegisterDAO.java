@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
-import org.postgresql.jdbc2.optional.ConnectionPool;
 import org.sitenv.directvendortools.web.dto.AccountRegisterTO;
 import org.sitenv.directvendortools.web.util.ApplicationQueries;
 import org.sitenv.directvendortools.web.util.ApplicationUtil;

@@ -21,7 +21,7 @@ public class ResponseTO
 	
 	private UserLoginTO userLoginTo;
 	
-	private boolean isEmailAvailable = true;
+	private boolean booleanOutput = true;
 	
 	private String userAuthenticated;
 	
@@ -55,9 +55,9 @@ public class ResponseTO
 	}
 	
 	
-	public ResponseTO (boolean isEmailAvailable)
+	public ResponseTO (boolean booleanOutput)
 	{
-		this.isEmailAvailable = isEmailAvailable;
+		this.booleanOutput = booleanOutput;
 	}
 
 	public ResponseTO()
@@ -129,12 +129,12 @@ public class ResponseTO
 		this.insertQueryStatus = insertQueryStatus;
 	}
 
-	public boolean isEmailAvailable() {
-		return isEmailAvailable;
+	public boolean isBooleanOutput() {
+		return booleanOutput;
 	}
 
-	public void setEmailAvailable(boolean isEmailAvailable) {
-		this.isEmailAvailable = isEmailAvailable;
+	public void setBooleanOutput(boolean booleanOutput) {
+		this.booleanOutput = booleanOutput;
 	}
 
 	public UserLoginTO getUserLoginTo() {

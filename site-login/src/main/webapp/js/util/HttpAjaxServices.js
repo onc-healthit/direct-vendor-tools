@@ -2,15 +2,16 @@ function HttpAjaxServices()
 {
 	var currentObject = this;
 	
-	
-	
 	this.REGISTER_ACCOUNT = APP_CONTEXT+"rs/accountRegisterService/registerAccount?isJSon=true";
 	this.CHECK_EMAIL = APP_CONTEXT+"rs/accountRegisterService/checkEmailAvailability?isJSon=true";
 	this.LOGIN_AUTH = APP_CONTEXT+"rs/loginService/validateLogin?isJSon=true";
 	this.REGISTER_DIRECT_SYSTEM = APP_CONTEXT+"rs/registerService/registerDirectSystem?isJSon=true";
 	this.UPDATE_DIRECT_SYSTEM = APP_CONTEXT+"rs/registerService/updateDirectSystem?isJSon=true";
 	this.READ_ALL_DIRECT_SYSTEM = APP_CONTEXT+"rs/registerService/readAllDirectSystem?isJSon=true";
-	this.UPLOAD_FILE = APP_CONTEXT + "rs/file/upload?folderName="+MODEL.userEmail;
+	this.READ_ALL_CERTS = APP_CONTEXT + "rs/fileService/readAllCerts?directEndPoint=";
+	this.DOWNLOAD_CERT = APP_CONTEXT+"rs/fileService/downloadCert";
+	this.DELETE_CERT = APP_CONTEXT+"rs/fileService/deleteCert?filePath=";
+	
 	
 	this.registerAccount = function(accountRegisterTO,callback,freezeScreen,screenFreezeMessage)
 	{
@@ -154,7 +155,69 @@ function HttpAjaxServices()
 		});
 	};
 	
+	
+	this.readAllCerts = function(callback,freezeScreen,directEndPoint)
+	{
+		var utility = new Utility();
+		if(freezeScreen)
+		{
+			if(utility.isEmptyString(screenFreezeMessage))
+			   screenFreezeMessage =  "Processing. Please wait...";
+			   UTILITY.screenFreeze(screenFreezeMessage);
+		}
+		$.ajax({type:"GET",
+			url: currentObject.READ_ALL_CERTS + directEndPoint,
+			cache: false,
+			datatype : CONSTANTS.DATA_TYP_JSON,
+			contentType: CONSTANTS.CONTENT_TYP_JSON,
+			success:function (successJson, textStatus, oHTTP){
+			if(parseInt(successJson.returnCode)!=0)
+			{
+				alert(successJson.error.errorMessage,"Error");
+				return;
+			}
+			else
+				callback.fire(successJson); 
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown)
+			{
+				alert("Error Calling Service","Error");
+			}
+		});
+	};
+	
+	this.deleteCerts = function(callback,freezeScreen,filePath)
+	{
+		var utility = new Utility();
+		if(freezeScreen)
+		{
+			if(utility.isEmptyString(screenFreezeMessage))
+			   screenFreezeMessage =  "Processing. Please wait...";
+			   UTILITY.screenFreeze(screenFreezeMessage);
+		}
+		$.ajax({type:"GET",
+			url: currentObject.DELETE_CERT+filePath,
+			cache: false,
+			datatype : CONSTANTS.DATA_TYP_JSON,
+			contentType: CONSTANTS.CONTENT_TYP_JSON,
+			success:function (successJson, textStatus, oHTTP){
+			if(parseInt(successJson.returnCode)!=0)
+			{
+				alert(successJson.error.errorMessage,"Error");
+				return;
+			}
+			else
+				callback.fire(successJson); 
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown)
+			{
+				alert("Error Calling Service","Error");
+			}
+		});
+	};
+	
+	this.downloadFile = function(dataArray)
+	{
+		$.download(currentObject.DOWNLOAD_CERT,'GET',dataArray);
+	};
 }
-
-
-
