@@ -11,6 +11,7 @@
 		$("#submitButton").show();
 		cleanUp();
 		$("input:radio").attr("checked", false);
+		$("#directEmail").removeAttr("disabled");
 	}
 	
 	function cleanUp()
@@ -29,30 +30,19 @@
 	}
 	
 
-	$(document)
-			.ready(
-					
-					
-					function() {
-						
+	$(document).ready(function() {
 						$('.alert .close').click(function() {
-
 				  			   $(this).closest('.alert').hide();
-
-				  			});
-						
+				  		});
 						if (MODEL.userLoggedIn == 1) {
-							
 							$('#vendorReg').show();
 							$('#directSysPanleId').show();
 							registerService.readUserDirectSystems();
-							
 						} else {
 							$('#vendorReg').hide();
 							$('#registrationModal').modal('hide');
 							$('#directSysPanleId').hide();
 						}
-
 						$("#submitButton").click(function(e) {
 							var jform = $('#registerForm');
 							//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
@@ -62,7 +52,6 @@
 								$('#registerForm .formError').show(0);
 							}
 						});
-						
 						$("#updateServiceButton").click(function(e) {
 							var jform = $('#registerForm');
 							//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
@@ -173,7 +162,7 @@
 	</div>
 </div>
 
-<div id="registrationModal" class="modal fade">
+<div id="registrationModal" class="modal fade" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -293,7 +282,7 @@
 												<label class="control-label" for="availFromDate">Available From (YYYY-MM-DD)</label>
 												<div class="controls">
 														<input type="text"
-															class="date-picker form-control validate[required,custom[date]]"
+															class="date-picker form-control validate[required,custom[date],future[NOW],dateRange[grp1]]"
 															id="availFromDate" name="availFromDate" style="position: relative; z-index: 1100;" /> 
 												</div>
 											</div>
@@ -302,7 +291,7 @@
 												<label class="control-label" for="availToDate">Available To (YYYY-MM-DD)</label>
 												<div class="controls">
 														<input type="text"
-															class="date-picker form-control validate[required,custom[date]]"
+															class="date-picker form-control validate[required,custom[date],future[NOW],dateRange[grp1]]"
 															id="availToDate" name="availToDate" style="position: relative; z-index: 1100;"/> 
 												</div>
 											</div>
@@ -337,3 +326,81 @@
 		</div>
 	</div>
 </div>
+
+
+<div id="uploadModel" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h2 class="modal-title">Trust Anchors</h2>
+			</div>
+			<div class="modal-body">
+			
+			<div id="certUploadId">
+					<form id="anchoruploadform" method="POST"
+						enctype="multipart/form-data">
+						<div id="anchoruploaderrorlock" style="position: relative;">
+								<label for="anchoruploadfile">Select a Local Trust
+									Anchor Certificate (binary or PEM encoded): </label><br/><span
+									class="btn btn-success fileinput-button"
+									id="anchoruploadfile-btn"> <i
+									class="glyphicon glyphicon-plus"></i>&nbsp;<span>Select a Certificate...</span> <input id="anchoruploadfile" type="file"
+										name="anchoruploadfile"
+										class="validate[required, custom[derencncodedfileextension[der|crt|cer|pem|DER|CRT|CER|PEM]], custom[maxCertFileSize]]" />
+									</span>
+									<button id="anchoruploadsubmit" type="submit"
+										class="btn btn-primary primary" onclick="return false;">
+										<i class="glyphicon glyphicon-ok"></i> <span>Submit
+											Anchor</span>
+									</button>
+									<div id="anchoruploadfiles" class="files"></div>
+									<p id="progressText"></p>
+								</div>
+						<br>
+					</form>
+					<table class="table table-striped">
+					<thead>
+						<tr>
+							<th class="col-sm-2">CERT File Name</th>
+							<th class="col-sm-2">Uploaded Date</th>
+							<th class="col-sm-1">Delete</th>
+						</tr>
+					</thead>
+					<tbody id=certAnchorsTableBodyId>
+					</tbody>
+				</table>
+			</div> 
+			</div>
+			<div class="modal-footer" style="margin-top: 0px;">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="DeleteConfirm" class="modal fade">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Deleting Trust Anchor certificate</h4>
+			</div>
+			<div class="modal-body">
+				<h5>Are you sure you want to delete Trust Anchor Certificate ?</h5>
+				<div class="text-right">
+					<button type="submit" id="confirmYesId" class="btn btn-primary"
+										  onclick="registerService.deleteCert();">Yes</button>
+					<button type="submit" id="confirmNoId" class="btn btn-default"
+								 data-dismiss="modal">No</button>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+

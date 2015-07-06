@@ -25,8 +25,19 @@ public class ApplicationConstants {
 	public static final String REGISTER_DIRECT_SYSTEM ="registerDirectSystem";
 	public static final String UPDATE_DIRECT_SYSTEM ="updateDirectSystem";
 	public static final String READ_ALL_DIRECT_SYSTEM ="readAllDirectSystem";
-	public static final String FILE_UPLOAD_DIRECTORY = "C:/FileUploads/";	
+	public static final String FILE_UPLOAD_DIRECTORY = "C:/FileUploads/var/opt/sitenv/direct-vendor-tools-anchors/";	
 	public static final String EMAIL_REGISTERED_ERROR = "Email already Registered";
+	public static final String FILE_SERVICE = "fileService";
+	public static final String UPLOAD_CERT = "uploadCert";
+	public static final String READ_ALL_CERTS = "readAllCerts";
+	public static final String DELETE_CERT = "deleteCert";
+	public static final String DOWNLOAD_CERT = "downloadCert";
+	
+	
+	public static final String MIME_DER ="application/x-x509-ca-cert";
+	
+	
+	
 	
 	
 	public static final String DATE_FORMAT = "yyyy-MM-dd";

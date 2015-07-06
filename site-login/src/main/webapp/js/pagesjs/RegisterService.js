@@ -1,9 +1,12 @@
-var editingSystemID  = 0;
 function RegisterService()
 {
 	var currentObject = this;
-	var resultSet = [];
-	
+	this.resultSet = [];
+	this.allCerts = [];
+	this.editingSystemID = 0;
+	this.directEndPoint = "";
+	this.selectedFile = "";
+	this.UPLOAD_FILE = APP_CONTEXT + "rs/fileService/uploadCert?directEndPoint=";
 	this.registerService = function()
 	{
 		var callbackFunction = $.Callbacks('once');
@@ -26,7 +29,7 @@ function RegisterService()
 		registerServiceTO.directTrustMembership =  $("#registerForm input[type='radio']:checked").val();
 		registerServiceTO.availFromDate =  $("#availFromDate").val();
 		registerServiceTO.availToDate =  $("#availToDate").val();
-		registerServiceTO.id = editingSystemID;
+		registerServiceTO.id = currentObject.editingSystemID;
 		registerServiceTO.userEmailAddress = MODEL.userEmail;
 		return registerServiceTO;
 	};
@@ -41,7 +44,7 @@ function RegisterService()
 	
 	this.registerServiceSuccessHandler = function(successJson)
 	{
-		if(successJson.isEmailAvailable)
+		if(successJson.booleanOutput)
 		{
 			$("#vendorReg").show();
 			$('#registrationModal').modal('hide');
@@ -56,7 +59,7 @@ function RegisterService()
 	
 	this.updateServiceSuccessHandler = function(successJson)
 	{
-		if(successJson.isEmailAvailable)
+		if(successJson.booleanOutput)
 		{
 			$("#vendorReg").show();
 			$('#registrationModal').modal('hide');
@@ -67,7 +70,6 @@ function RegisterService()
 		{
 			$('#directEmailExistAlertID').show();
 		}
-	     
 	};
 	
 	this.readAllDirectSystems = function()
@@ -81,6 +83,7 @@ function RegisterService()
 	this.readAllDirectSystemsSuccessHandler = function(successJson)
 	{
 		var resultArray = successJson.resultSet.results;
+		currentObject.resultSet = resultArray;
 		var rows = "";
 		 $(resultArray).each(function(){
 		   rows += 	"<tr><td>"+this.cehrtLabel+"</td>"
@@ -89,11 +92,43 @@ function RegisterService()
 			+	"<td>"+this.pocFirstName + " " + this.pocLastName + " (" +this.pointOfContact +")</td>"
 			+	"<td>"+this.availFromDate + " to " +this.availToDate +"</td>"
 			+	"<td style='text-align: center;'>"+this.directTrustMembership+"</td>"
-			+   "<td style='text-align: center;'></td>"
+			+   "<td style='text-align: center;'>" +
+					"<a href='#'  style='text-decoration: none;' onclick = registerService.onInteropAttachClick(this)> " +
+							"<span class='glyphicon glyphicon-paperclip'></span> <span hidden='true'>t</span></a></td>"
 			+ "</tr>";
 		 });
 		 
 		 $("#tableBody").append(rows);
+	};
+	
+	this.onInteropAttachClick = function(object)
+	{
+		currentObject.directEndPoint = $(object).closest('tr').find('td:eq(2)').text();
+		currentObject.readAllInteropCerts(currentObject.directEndPoint);
+	};
+	
+	this.readAllInteropCerts = function(directEndPoint)
+	{
+		var callbackFunction = $.Callbacks('once');
+		callbackFunction.add(currentObject.interopCertsSuccessHandler);
+		var httpService = new HttpAjaxServices();
+		httpService.readAllCerts(callbackFunction, false,directEndPoint);
+	};
+	
+	this.interopCertsSuccessHandler = function(successJson)
+	{
+		$("#certTableBodyId").empty();
+		var resultArray = successJson.resultSet.results;
+		currentObject.allCerts = resultArray;
+		var rows = "";
+		 $(resultArray).each(function(){
+		   rows += 	"<tr><td><a href='#'  style='text-decoration: none;' onclick = registerService.downloadFile(this) >" +this.certFile + "</a></td>"
+		   +	"<td>"+currentObject.convertDateToLocal(this.uploadedTimeStamp) + "</td>"
+			+ "</tr>";
+		 });
+		 
+		 $("#certTableBodyId").append(rows);
+		 $('#interopCertModel').modal('show');
 	};
 	
 	this.readUserDirectSystems = function()
@@ -111,54 +146,221 @@ function RegisterService()
 		currentObject.resultSet = resultArray;
 		var rows = "";
 		 $(resultArray).each(function(){
-		   rows += 	"<tr><td><a onclick =onRowClick(this)> <span class='glyphicon glyphicon-edit'></span></a>&nbsp;&nbsp;"+this.cehrtLabel+"</td>"
+		   rows += 	"<tr><td><a href='#'  style='text-decoration: none;' onclick =registerService.onEditClick(this)> " +
+		   			"<span class='glyphicon glyphicon-edit'></span> <span hidden='true'>t</span></a>&nbsp;&nbsp;"+this.cehrtLabel+"</td>"
 			+	"<td>"+this.organizationName+"</td>"
 			+	"<td>"+this.directEmailAddress+"</td>"
 			+	"<td>"+this.pocFirstName + " " + this.pocLastName + " (" +this.pointOfContact +")</td>"
 			+	"<td>"+this.availFromDate + " to " +this.availToDate +"</td>"
 			+	"<td style='text-align: center;'>"+this.directTrustMembership+"</td>"
-			+   "<td style='text-align: center;'></td>"
+			+   "<td style='text-align: center;'><a href='#'  style='text-decoration: none;' onclick = registerService.onAttachClick(this)> " +
+					"<span class='glyphicon glyphicon-paperclip'></span><span hidden='true'>t</span></a></td>"
 			+ "</tr>";
 		 });
 		 
 		 $("#userDirectSysTableBody").append(rows);
 	};
 	
-};
-
-
-function onRowClick(object)
-{
-	cleanUp();
-	$("#updateServiceButton").show();
-	$("#submitButton").hide();
-	var selectedDirectEmail = $(object).closest('tr').find('td:eq(2)').text();
-	$(registerService.resultSet).each(function(){
-		if(this.directEmailAddress == selectedDirectEmail)
-		{
-			$("#cehrtLabel").val(this.cehrtLabel);
-			editingSystemID = this.id;
-			$("#orgName").val(this.organizationName);
-			$("#directEmail").val(this.directEmailAddress);
-			$("#pocEmail").val(this.pointOfContact);
-			$("#pocFirstName").val(this.pocFirstName);
-			$("#pocLastName").val(this.pocLastName);
-			var text = this.timezone;
-			$('#timezone').val(text);
-			if(this.directTrustMembership == 'Yes')
+	this.onAttachClick = function(object)
+	{
+		currentObject.directEndPoint = $(object).closest('tr').find('td:eq(2)').text();
+		currentObject.uploadBinding(currentObject.directEndPoint);
+		$('#anchoruploadfiles').empty();
+		$('#progressText').html("");
+		$('#anchoruploadform .formError').hide(0);
+		currentObject.readAllCerts(currentObject.directEndPoint);
+	};
+	
+	this.readAllCerts = function(directEndPoint)
+	{
+		var callbackFunction = $.Callbacks('once');
+		callbackFunction.add(currentObject.readallCertsSuccessHandler);
+		var httpService = new HttpAjaxServices();
+		httpService.readAllCerts(callbackFunction, false,directEndPoint);
+	};
+	
+	this.readallCertsSuccessHandler = function(successJson)
+	{
+		$("#certAnchorsTableBodyId").empty();
+		var resultArray = successJson.resultSet.results;
+		currentObject.allCerts = resultArray;
+		var rows = "";
+		 $(resultArray).each(function(){
+		   rows += 	"<tr><td><a href='#'  style='text-decoration: none;' onclick = registerService.downloadFile(this) >" +this.certFile + "</a></td>"
+		   +	"<td>"+currentObject.convertDateToLocal(this.uploadedTimeStamp)+"</td>"
+			+   "<td><a href='#'  style='text-decoration: none;' onclick = registerService.deleteConfirm(this)> " +
+					"<span class='glyphicon glyphicon-trash'></span><span hidden='true'>t</span></a></td>"
+			+ "</tr>";
+		 });
+		 
+		 $("#certAnchorsTableBodyId").append(rows);
+		 $('#uploadModel').modal('show');
+	};
+	
+	this.downloadFile = function(object)
+	{
+		var fileName = $(object).closest('tr').find('td:eq(0)').text();
+		var httpService = new HttpAjaxServices();
+		$(currentObject.allCerts).each(function(){
+			if(this.certFile == fileName)
 			{
-				$("#option_yes").attr('checked', 'checked');	
-			}else
-			{  
-				$("#option_no").attr('checked', 'checked');
+				var obj = {};
+				obj.key = "filePath";
+				obj.value = this.absolutePath;
+				var dataArray = [];
+				dataArray.push(obj);
+				httpService.downloadFile(dataArray);
+				return;
 			}
-			$("#availFromDate").val(this.availFromDate);
-			$("#availToDate").val(this.availToDate);
-			
-			
-		   return;
+		});
+		
+	};
+	
+	this.deleteConfirm = function(object)
+	{
+		$('#DeleteConfirm').modal('show');
+		currentObject.selectedFile = $(object).closest('tr').find('td:eq(0)').text();
+	};
+	
+	this.deleteCert = function()
+	{
+		$('#DeleteConfirm').modal('hide');
+		var fileName = currentObject.selectedFile;
+		var callbackFunction = $.Callbacks('once');
+		callbackFunction.add(currentObject.deleteCertsSuccessHandler);
+		var httpService = new HttpAjaxServices();
+		$(currentObject.allCerts).each(function(){
+		  if(this.certFile == fileName)
+		  {
+			 httpService.deleteCerts(callbackFunction, false, this.absolutePath);
+			 return;
+		  }
+		});
+	};
+	
+	this.deleteCertsSuccessHandler = function(successJson)
+	{
+		if(successJson.booleanOutput)
+		{
+			currentObject.readAllCerts(currentObject.directEndPoint);
 		}
-	});
-}
+	};
+	
+	this.onEditClick = function onEditClick(object)
+	{
+		cleanUp();
+		$("#updateServiceButton").show();
+		$("#submitButton").hide();
+		var selectedDirectEmail = $(object).closest('tr').find('td:eq(2)').text();
+		$(currentObject.resultSet).each(function(){
+			if(this.directEmailAddress == selectedDirectEmail)
+			{
+				$("#cehrtLabel").val(this.cehrtLabel);
+				currentObject.editingSystemID = this.id;
+				$("#orgName").val(this.organizationName);
+				$("#directEmail").val(this.directEmailAddress);
+				$("#directEmail").attr("disabled", "disabled");
+				$("#pocEmail").val(this.pointOfContact);
+				$("#pocFirstName").val(this.pocFirstName);
+				$("#pocLastName").val(this.pocLastName);
+				var text = this.timezone;
+				$('#timezone').val(text);
+				if(this.directTrustMembership == 'Yes')
+				{
+					$("#option_yes").attr('checked', 'checked');	
+				}else
+				{  
+					$("#option_no").attr('checked', 'checked');
+				}
+				$("#availFromDate").val(this.availFromDate);
+				$("#availToDate").val(this.availToDate);
+				
+				
+			   return;
+			}
+		});
+	};
+	
+	this.convertDateToLocal = function(date)
+	{
+        var givenDate = new Date(date);
+
+        if(givenDate == 'NaN') return;
+
+        var offset = -(givenDate.getTimezoneOffset() / 60);
+
+        var hours = givenDate.getHours();
+        hours += offset;
+        givenDate.setHours(hours);
+        // format the date 
+        return $.format.date(givenDate, 'MM/dd/yyyy hh:mm:ss a');
+
+	};
+	
+	this.uploadBinding = function(directEndPoint)
+	{
+		// Change this to the location of your server-side upload handler:
+		var URL = currentObject.UPLOAD_FILE + directEndPoint;
+		$('#anchoruploadprogress').hide();
+		$('#anchoruploadfile').fileupload(
+		{
+			url : URL,
+			dataType : 'json',
+			autoUpload : false,
+			type : 'POST',
+			contenttype : false,
+			replaceFileInput : false,
+			done : function(e, data) {
+			$('#progressText').html("Cert uploaded successfully");
+				$('#anchoruploadfiles').empty();
+				currentObject.readAllCerts(directEndPoint);
+			},
+			progressall : function(e, data) {
+					var progressval = parseInt(data.loaded / data.total* 100, 10);
+					if (progressval < 99) {
+						$('#anchoruploadwidget .blockMsg .progressorpanel .lbl').text('Uploading...');
+						$('#anchoruploadwidget .blockMsg .progressorpanel .progressor')
+						.text(floorFigure(data.loaded/ data.total* 100, 0).toString()+ "%");
+					} else {
+							$('.blockMsg .progressorpanel .lbl').text('Updating Bundle...');
+							$('.blockMsg .progressorpanel .progressor').text('');
+							}
+				}
+		}).on('fileuploadadd',function(e, data) {
+			 $('#anchoruploadsubmit').unbind("click");
+			 $('#anchoruploadfiles').empty();
+			 data.context = $('<div/>').appendTo('#anchoruploadfiles');
+			 $.each(data.files, function(index, file) {
+				var node = $('<p/>').append($('<span/>').text(file.name));
+								node.appendTo(data.context);
+			});
+		    
+			$('#anchoruploadform .formError').hide(0);
+				data.context = $('#anchoruploadsubmit').click(function(e) {
+				var jform = $('#anchoruploadform');
+				if (jform.validationEngine('validate')) {
+						$('#anchoruploadform .formError').hide(0);
+						data.submit();
+				} else {
+						$('#anchoruploadform .formError').show(0);
+						$('#anchoruploadform .anchoruploadfileformError').prependTo('#anchoruploaderrorlock');
+				}
+			});
+		}).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+			$('#anchoruploadfile').bind('fileuploaddrop', function(e, data) {
+					e.preventDefault();
+			}).bind('fileuploaddragover', function(e) {
+				e.preventDefault();
+		});
+		$('#anchoruploadfile-btn').bind('click', function(e, data) {
+			$('#anchoruploadform').trigger('reset');
+			$('#anchoruploadsubmit').unbind("click");
+			$('#anchoruploadfiles').empty();
+			$('#anchoruploadform .formError').hide(0);
+			$('#progressText').html("");
+		});
+	};
+	
+};
 
 

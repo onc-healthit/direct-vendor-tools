@@ -1184,7 +1184,7 @@
 			var pdate;
 
 			if (p.toLowerCase() == "now") {
-				pdate = new Date();
+				pdate = new Date((new Date()).setHours(0, 0, 0, 0));
 			} else if (undefined != fieldAlt.val()) {
 				if (fieldAlt.is(":disabled"))
 					return;

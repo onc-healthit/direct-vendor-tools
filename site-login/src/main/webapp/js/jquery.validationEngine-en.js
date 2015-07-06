@@ -55,7 +55,7 @@
                 },
                 "future": {
                     "regex": "none",
-                    "alertText": "* Date past "
+                    "alertText": "* Date should be greater than current Date "
                 },	
                 "maxCheckbox": {
                     "regex": "none",

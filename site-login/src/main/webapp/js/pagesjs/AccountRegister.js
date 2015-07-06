@@ -23,7 +23,7 @@ function AccountRegister()
 	
 	this.registerAccountSuccessHandler = function(successJson)
 	{
-		if(successJson.isEmailAvailable)
+		if(successJson.booleanOutput)
 		{
 			$('#emailRegAlertID').show();
 			document.getElementById("signupForm").reset();

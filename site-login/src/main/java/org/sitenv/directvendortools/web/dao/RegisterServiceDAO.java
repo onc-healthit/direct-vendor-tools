@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
-import org.postgresql.jdbc2.optional.ConnectionPool;
 import org.sitenv.directvendortools.web.dto.DirectSystemTO;
 import org.sitenv.directvendortools.web.util.ApplicationConstants;
 import org.sitenv.directvendortools.web.util.ApplicationQueries;
