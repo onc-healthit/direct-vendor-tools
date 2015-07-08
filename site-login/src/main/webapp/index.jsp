@@ -151,9 +151,9 @@
 			<div id="navbar" class="navbar-collapse collapse in"
 				aria-expanded="true">
 				<ul class="nav navbar-nav">
-				 <li  id="interopLIId"><a href="javascript:setInteroperabilityServicesPage()" style="text-decoration: none;">Direct
+				 <li  id="interopLIId"><a href="javascript:setInteroperabilityServicesPage()" style="text-decoration: none;" >Direct
 							Services</a></li>
-				<li id="vendorRegLIId"><a href="javascript:setRegisterServicePage()" style="text-decoration: none;">Vendor Registration</a></li>
+				<li id="vendorRegLIId"><a href="javascript:setRegisterServicePage()" style="text-decoration: none;" >Vendor Registration</a></li>
 					<li>
 						<a href="http://sitenv.org/" style="text-decoration: none;">Home</a></li>
 					
@@ -161,12 +161,12 @@
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right" id="rightNavbarID">
-					<li id="signupID"><a href="javascript:openSignUpPage()" style="text-decoration: none;">Sign Up </a></li>
-					<li id="loginID"><a href="javascript:openLoginPage()" style="text-decoration: none;">Login</a></li>
+					<li id="signupID"><a href="javascript:openSignUpPage()" style="text-decoration: none;" >Sign Up </a></li>
+					<li id="loginID"><a href="javascript:openLoginPage()" style="text-decoration: none;" >Login</a></li>
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right" id="logoutId" hidden="true">
-					<li id="logoutLI"><a href="#" onclick="onlogout()" style="text-decoration: none;">Logout</a></li>
+					<li id="logoutLI"><a href="#" onclick="onlogout()" style="text-decoration: none;" >Logout</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -184,8 +184,8 @@
 					</p>
 					<p>
 						<a href="http://www.hhs.gov/Privacy.html" >Privacy
-							Policy</a> | <a href="http://www.hhs.gov/Disclaimer.html"
-							>Disclaimer</a> | <a href="#" id="contactUs"
+							Policy</a> | <a href="http://www.hhs.gov/Disclaimer.html" 
+							>Disclaimer</a> | <a href="#" id="contactUs" 
 							>Contact US </a>
 					</p>
 				</div>
