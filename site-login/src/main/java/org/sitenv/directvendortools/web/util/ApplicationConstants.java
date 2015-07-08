@@ -25,7 +25,7 @@ public class ApplicationConstants {
 	public static final String REGISTER_DIRECT_SYSTEM ="registerDirectSystem";
 	public static final String UPDATE_DIRECT_SYSTEM ="updateDirectSystem";
 	public static final String READ_ALL_DIRECT_SYSTEM ="readAllDirectSystem";
-	public static final String FILE_UPLOAD_DIRECTORY = "C:/FileUploads/var/opt/sitenv/direct-vendor-tools-anchors/";	
+	public static final String FILE_UPLOAD_DIRECTORY = "/var/opt/sitenv/direct-vendor-tools-anchors/";	
 	public static final String EMAIL_REGISTERED_ERROR = "Email already Registered";
 	public static final String FILE_SERVICE = "fileService";
 	public static final String UPLOAD_CERT = "uploadCert";

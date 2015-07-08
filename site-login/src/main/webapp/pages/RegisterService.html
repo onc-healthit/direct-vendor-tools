@@ -67,23 +67,24 @@
 
 
 <div class="container" style="padding-top: 30px;">
-
-<h1 style="text-align: center;"><b> Vendor Registration </b></h1>
-<hr>
-
-
-	<div>
-		<p>Welcome to the Vendor Registration page. This page provides the
-			capability for Vendors to register their Direct systems that can be
-			used for interoperability testing by implementers (providers,
-			hospitals etc) to verify interoperability with their Direct
-			implementation. To see which vendors are available for interoperability 
-			testing please click on Direct Services. Vendors who would like to register 
-			their Direct system should first Sign Up and create an account, and 
-			login to register their Direct system.</p>
-		<p>NOTE: Implementers do not need to Sign Up or Login to test their Direct implementation</p>
-		<p>For any issues or questions related to Direct Services or Vendor Registration please contact <a>  xvendor.exchange@hhs.gov</a> or 
-		   file a ticket at <a href="https://jira.oncprojectracking.org/browse/MCVE/" target="_blank">https://jira.oncprojectracking.org/browse/MCVE</a>
+	<div class="jumbotron">
+		<h1 style="text-align: center;"><b> Vendor Registration </b></h1>
+		<hr>
+	
+	
+		<div>
+			<p>Welcome to the Vendor Registration page. This page provides the
+				capability for Vendors to register their Direct systems that can be
+				used for interoperability testing by implementers (providers,
+				hospitals etc) to verify interoperability with their Direct
+				implementation. To see which vendors are available for interoperability 
+				testing please click on Direct Services. Vendors who would like to register 
+				their Direct system should first Sign Up and create an account, and 
+				login to register their Direct system.</p>
+			<p>NOTE: Implementers do not need to Sign Up or Login to test their Direct implementation</p>
+			<p>For any issues or questions related to Direct Services or Vendor Registration please contact <a href="mailto:xvendor.exchange@hhs.gov" tabindex="1"> xvendor.exchange@hhs.gov</a> or 
+			   file a ticket at <a href="https://jira.oncprojectracking.org/browse/MCVE/" target="_blank">https://jira.oncprojectracking.org/browse/MCVE</a>
+		</div>
 	</div>
 	<div id="vendorReg" hidden="true" class="text-center">
 		<br/>
@@ -116,7 +117,7 @@
 	
 	<div id="directSysPanleId" class="panel panel-default" hidden="true">
 		<div class="panel-heading">
-			<h3 class="panel-title">Registered Direct Systems</h3>
+			<h2 class="panel-title">Registered Direct Systems</h2>
 		</div>
 
 		<div class="panel-body">
@@ -270,7 +271,7 @@
 									<div class="form-group">
 									
 										<fieldset>
-										<legend class="col-lg-5 control-label" style="font-size: inherit; border-bottom: none;">Direct Trust
+										<legend class="col-lg-5 control-label" style="font-size: inherit; border-bottom: none; font-weight:bold;">Direct Trust
 											Membership</legend>
 										<div class="col-lg-7">
 											<div class="radio">
@@ -285,12 +286,12 @@
 									</div>
 				
 									<div class="form-group">
-										<div class="col-lg-5 control-label">Availability
+										<div class="col-lg-5 control-label" style="font-weight:bold;">Availability
 											(Availability indicates the dates during which system is
 											available for interoperability testing during weekdays).</div>
 										<div class="col-lg-7">
 											<div class="control-group">
-												<label class="control-label" for="availFromDate">Available From (YYYY-MM-DD)</label>
+												<label class="control-label" for="availFromDate" >Available From (YYYY-MM-DD)</label>
 												<div class="controls">
 														<input type="text"
 															class="date-picker form-control validate[required,custom[date],future[NOW],dateRange[grp1]]"

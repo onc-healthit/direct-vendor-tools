@@ -17,6 +17,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
 <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-theme.css" />
 <link rel="stylesheet" href="dist/css/formValidation.min.css" />
 <link rel="stylesheet" href="css/custom.css" />
 <link rel="stylesheet" href="css/validationEngine.jquery.css" />
