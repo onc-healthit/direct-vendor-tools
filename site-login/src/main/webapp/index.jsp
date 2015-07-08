@@ -192,8 +192,8 @@
 		</div>
 	</footer>
 
-	<div id="loginModel" class="modal fade"></div>
+	<div id="loginModel" class="modal fade" tabindex="-1"></div>
 	
-	<div id="signupModel" class="modal fade"></div>
+	<div id="signupModel" class="modal fade" tabindex="-1"></div>
 </body>
 </html>

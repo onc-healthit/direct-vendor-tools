@@ -65,14 +65,25 @@
 </script>
 
 
+
 <div class="container" style="padding-top: 30px;">
+
+<h1 style="text-align: center;"><b> Vendor Registration </b></h1>
+<hr>
+
+
 	<div>
 		<p>Welcome to the Vendor Registration page. This page provides the
 			capability for Vendors to register their Direct systems that can be
 			used for interoperability testing by implementers (providers,
 			hospitals etc) to verify interoperability with their Direct
-			implementation. To see which vendors are available for
-			interoperability testing please click on Direct Services..</p>
+			implementation. To see which vendors are available for interoperability 
+			testing please click on Direct Services. Vendors who would like to register 
+			their Direct system should first Sign Up and create an account, and 
+			login to register their Direct system.</p>
+		<p>NOTE: Implementers do not need to Sign Up or Login to test their Direct implementation</p>
+		<p>For any issues or questions related to Direct Services or Vendor Registration please contact <a>  xvendor.exchange@hhs.gov</a> or 
+		   file a ticket at <a href="https://jira.oncprojectracking.org/browse/MCVE/" target="_blank">https://jira.oncprojectracking.org/browse/MCVE</a>
 	</div>
 	<div id="vendorReg" hidden="true" class="text-center">
 		<br/>
@@ -112,10 +123,10 @@
 		     <table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-sm-2">CEHRT Label</th>
+						<th class="col-sm-2">Certified EHR Technology</th>
 						<th class="col-sm-2">Organization</th>
 						<th class="col-sm-2">Direct Endpoint</th>
-						<th class="col-sm-2">POC</th>
+						<th class="col-sm-2">Point of Contact</th>
 						<th class="col-sm-2">Availability Dates</th>
 						<th class="col-sm-2">Direct Trust Member</th>
 						<th class="col-sm-2">Trust Anchor</th>
@@ -133,7 +144,7 @@
 
 
 
-<div id="aggrementModel" class="modal fade">
+<div id="aggrementModel" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -162,7 +173,7 @@
 	</div>
 </div>
 
-<div id="registrationModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+<div id="registrationModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -171,14 +182,15 @@
 				<h2 class="modal-title">Direct System Registration</h2>
 			</div>
 			<div class="modal-body">
-						
 				
-							
-				
+							<div>
+								<h4 style="text-align: center">* All fields are required</h4>
+							</div>
 							<div id="registerDiv" style="padding-top: 20px;" hidden="true">
+							
 								<form id="registerForm" class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-5 control-label" for="cehrtLabel">CEHRT Label </label>
+										<label class="col-lg-5 control-label" for="cehrtLabel">Certified EHR Technology </label>
 										<div class="col-lg-7">
 											<input type="text"
 												class="form-control validate[required,maxSize[30]]"
@@ -207,8 +219,7 @@
 				
 									<div class="form-group">
 										<label class="col-lg-5 control-label" for="pocEmail">Point of Contact
-											Email (This will also be used as your User Name for SITE Interop
-											Portal)</label>
+											Email (This will be used by implementers to contact if there are questions on the Direct System)</label>
 										<div class="col-lg-7">
 											<input type="text"
 												class="form-control validate[required,custom[email],custom[notEqual]]"
@@ -328,7 +339,7 @@
 </div>
 
 
-<div id="uploadModel" class="modal fade">
+<div id="uploadModel" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -342,8 +353,7 @@
 					<form id="anchoruploadform" method="POST"
 						enctype="multipart/form-data">
 						<div id="anchoruploaderrorlock" style="position: relative;">
-								<label for="anchoruploadfile">Select a Local Trust
-									Anchor Certificate (binary or PEM encoded): </label><br/><span
+								<label for="anchoruploadfile">Select one or more Trust Anchor Certificates required to interoperate with the Direct System </label><br/><span
 									class="btn btn-success fileinput-button"
 									id="anchoruploadfile-btn"> <i
 									class="glyphicon glyphicon-plus"></i>&nbsp;<span>Select a Certificate...</span> <input id="anchoruploadfile" type="file"
@@ -380,7 +390,7 @@
 	</div>
 </div>
 
-<div id="DeleteConfirm" class="modal fade">
+<div id="DeleteConfirm" class="modal fade" tabindex="-1">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-header">

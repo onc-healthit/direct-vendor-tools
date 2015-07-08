@@ -58,8 +58,8 @@ public class FileProcess {
 				certAnchorTO.setCertFile(listOfFiles[i].getName());
 				certAnchorTO.setAbsolutePath(listOfFiles[i].getAbsolutePath());
 				uploadedTimestamp = Files.readAttributes(listOfFiles[i].toPath(), 
-							BasicFileAttributes.class).creationTime().toString().replace("T", " ");
-				certAnchorTO.setUploadedTimeStamp(uploadedTimestamp.replace("Z", ""));
+							BasicFileAttributes.class).creationTime().toString();
+				certAnchorTO.setUploadedTimeStamp(uploadedTimestamp);
 				allCerts.add(certAnchorTO);
 			}
 			resultSet.getResults().addAll(allCerts);
