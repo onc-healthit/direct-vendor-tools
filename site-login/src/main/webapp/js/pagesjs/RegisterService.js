@@ -287,11 +287,6 @@ function RegisterService()
 
         if(givenDate == 'NaN') return;
 
-        var offset = -(givenDate.getTimezoneOffset() / 60);
-
-        var hours = givenDate.getHours();
-        hours += offset;
-        givenDate.setHours(hours);
         // format the date 
         return $.format.date(givenDate, 'MM/dd/yyyy hh:mm:ss a');
 
@@ -311,8 +306,10 @@ function RegisterService()
 			contenttype : false,
 			replaceFileInput : false,
 			done : function(e, data) {
-			$('#progressText').html("Cert uploaded successfully");
+				
+				$('#anchoruploadsubmit').unbind("click");
 				$('#anchoruploadfiles').empty();
+				$('#progressText').html("Cert uploaded successfully");
 				currentObject.readAllCerts(directEndPoint);
 			},
 			progressall : function(e, data) {
