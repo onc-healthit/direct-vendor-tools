@@ -606,3 +606,78 @@ div.thumbnail.active {
 	}
 }
 
+
+a.ext-icon {
+  background: url('../images/extlink.png') right center no-repeat;
+  padding: 0 2px 0 1px;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+
+.hiddenText {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.external-page {
+  position: absolute;
+  top: 1px;
+  right: 5px;
+}
+
+.embedded {
+	position:relative;
+	right: 5px;
+  	z-index: 100;
+  	float: right;
+  	margin-top: -35px;
+}
+
+.thumbnail-ext {	
+  position: absolute;
+  right: 20px;
+  z-index: 100;
+}
+
+.thumbnail-ext-sandbox {
+	position: absolute;
+  right: 20px;
+  z-index: 100;
+  top: -15px;
+}
+
+.embedded + .btn {
+	border-top: none;
+}
+
+.inline-ext {
+	left: 3px;
+	position: relative;
+}
+
+.btn-group-vertical > .btn:last-of-type {
+  	border-bottom-left-radius: 4px !important;
+  	border-bottom-right-radius: 4px !important;
+  	
+}
+
+.dropdown-menu > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: nowrap;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+}

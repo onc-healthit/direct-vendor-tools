@@ -208,7 +208,7 @@
 	                        return true;
 	                    }       
 	            	},
-	            	"alertText" : "* The selected certificate file must be a binary or Base64 encoded file file (.cer, .crt, .der, or .pem)."
+	            	"alertText" : "* The selected certificate file must be a binary or Base64 encoded file (.cer, .crt, .der, or .pem)."
 	            },
 	            "maxCertFileSize":{
 	            	"func": function(field, rules, i, options) {
