@@ -1,3 +1,5 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
 	var registerService = new RegisterService();
 	var httpAjaxService = new HttpAjaxServices();
@@ -31,40 +33,47 @@
 	
 
 	$(document).ready(function() {
-						$('.alert .close').click(function() {
-				  			   $(this).closest('.alert').hide();
-				  		});
-						if (MODEL.userLoggedIn == 1) {
-							$('#vendorReg').show();
-							$('#directSysPanleId').show();
-							registerService.readUserDirectSystems();
-						} else {
-							$('#vendorReg').hide();
-							$('#registrationModal').modal('hide');
-							$('#directSysPanleId').hide();
-						}
-						$("#submitButton").click(function(e) {
-							var jform = $('#registerForm');
-							//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
-							if (jform.validationEngine('validate')) {
-								registerService.registerService();
-							} else {
-								$('#registerForm .formError').show(0);
-							}
-						});
-						$("#updateServiceButton").click(function(e) {
-							var jform = $('#registerForm');
-							//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
-							if (jform.validationEngine('validate')) {
-								registerService.updateService();
-							} else {
-								$('#registerForm .formError').show(0);
-							}
-						});
-					});
+		$('.alert .close').click(function() {
+		    $(this).closest('.alert').hide();
+		});
+		
+		$("#developerInstId").click(function() {
+			$("#developerRegInstructions").modal('show');
+		});
+		
+		if (MODEL.userLoggedIn == 1) {
+			$('#vendorReg').show();
+		    $('#directSysPanleId').show();
+			registerService.readUserDirectSystems();
+		} else {
+			$('#vendorReg').hide();
+		    $('#registrationModal').modal('hide');
+			$('#directSysPanleId').hide();
+		}
+		
+		$("#submitButton").click(function(e) {
+		   var jform = $('#registerForm');
+		   //jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
+		   if (jform.validationEngine('validate')) {
+			   registerService.registerService();
+		   } else {
+			   $('#registerForm .formError').show(0);
+			}
+		});
+		
+		$("#updateServiceButton").click(function(e) {
+			var jform = $('#registerForm');
+			//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
+			if (jform.validationEngine('validate')) {
+				 registerService.updateService();
+			} else {
+				 $('#registerForm .formError').show(0);
+			}
+		});
+	});
+
 </script>
-
-
+</head>
 
 <div class="container" style="padding-top: 30px;">
 	<div class="jumbotron">
@@ -78,6 +87,7 @@
 			<p>Welcome to the Developer Registration page. This page offers health IT developers the ability to register their Direct services so that implementers (providers, hospitals, etc.) can find them and use them for interoperability testing. To see which health IT developer systems are available for interoperability testing, please click on the Direct Services tab. Developers that would like to share their Direct system should first create an account using the Sign Up link and then login to register their Direct service.</p>
 			<p>NOTE: Implementers DO NOT need to register or login to test their Direct implementations.</p>
 			<p>For any issues or questions related to health IT developer registration please contact <a href="mailto:xvendor.exchange@hhs.gov">xvendor.exchange@hhs.gov</a></span></p>
+		    <p>Developers can <a id="developerInstId" href="#">Click here for Instructions</a> on how to use the Direct Transport Standard Testing Services to register their Direct systems.</p>
 		</div>
 	<div id="vendorReg" hidden="true" class="text-center">
 		<br/>
@@ -139,15 +149,59 @@
 
 
 <div id="aggrementModel" class="modal fade" tabindex="-1">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h2 class="modal-title">Agreement</h2>
+				<h2 class="modal-title">Participation Agreement</h2>
 			</div>
 			<div class="modal-body">
-				<p>As a Participant of ONC SITE Direct Transport Standard Testing Services, Parties involved in DIRECT Testing shall not reveal Confidential Information, and no information shared during the process of testing shall be considered confidential. Parties shall use test data only. Parties shall not use live or real data that is actual data about living, identifiable individuals. Parties shall adhere to all Federal Regulations including, but not limited to the Health Insurance Portability and Accountability Act of 1996 (HIPAA).</p>
+			
+				<p>“By registering a Direct Service on ONC’s Standards Implementation and Testing Environment (SITE), 
+					you confirm that you have read, understand, and agree that your organization(s) will adhere to the following <em>Principles of Participation:”</em></p>
+				<p>&nbsp;<strong>(i) Certification and Authorization</strong></p>
+				<ul style="margin-left: 0px;list-style-type: none;">
+				 <li>(a)(1)&nbsp;&nbsp;&nbsp;&nbsp; Must maintain EHR technology and certification to 45 CFR 170.314(b)(1) 
+				 	 Transitions of care &ndash; receive, display, and incorporate transition of care/referral summaries (summary care records) 
+				 	 and all applicable requirements, under the ONC HIT Certification Program*<br /> <br /> *For more information on the ONC HIT Certification 
+				 	 Program, please reference <a href="http://www.healthit.gov/certification">http://www.healthit.gov/certification</a>&nbsp;</li>
+				<li>&nbsp;(a)(2)&nbsp;&nbsp;&nbsp; Must maintain authorization by continuing to operate in accordance with all requirements of &ldquo;Test 
+					Instructions for SITE Direct Transport Standard Testing Services&rdquo;</li>
+				</ul>
+				
+				<p><strong>(ii) Information</strong></p>
+					<ul style="margin-left: 0px;list-style-type: none;">
+						<li>(b)(1)&nbsp;&nbsp;&nbsp; Must provide the following information on Developer&rsquo;s EHR:
+						 	<ul style="margin-left: 0px;list-style-type: none;">
+						 		<li>&nbsp;&nbsp;&nbsp;EHR Name and Version</li>
+						 		<li>&nbsp;&nbsp;&nbsp;Direct address</li>
+						 		<li>&nbsp;&nbsp;&nbsp;Trust anchor</li>
+						 		<li>&nbsp;&nbsp;&nbsp;Digital certificate associated with the Direct address</li>
+						 	</ul></li>
+					<li>(b)(2)&nbsp;&nbsp; Must provide and maintain current Developer contact information</li>
+					</ul>
+				
+				<p><strong>(iii) Confidentiality</strong></p>
+					<ul style="margin-left: 0px;list-style-type: none;">
+					<li><p>(c)(1)&nbsp;&nbsp;&nbsp;&nbsp; Must agree to the following confidentiality statement:</p>
+					<p><em>As a Participant of ONC SITE </em><em>Direct Transport Standard Testing Services, p</em><em>arties shall not reveal Confidential Information, 
+							and no information shared during the process of testing</em><em> shall be considered confidential. Parties shall use test data only. 
+							Parties shall not use live or real data that is actual data about living, identifiable individuals. Parties shall adhere to all Federal 
+							Regulations including, but not limited to the Health Insurance Portability and Accountability Act of 1996 (HIPAA). </em></p></li>
+					</ul>
+				<p><strong>(iv) Performance </strong></p>
+					<ul style="margin-left: 0px;list-style-type: none;">
+						<li>(d)(1)&nbsp;&nbsp;&nbsp; Must demonstrate and maintain ability to execute &ldquo;Developer Test Instruction&rdquo; as described in &ldquo;SITE 
+							Direct Transport Standard Testing Services Test Instructions&rdquo;</li>
+						<li>(d) (2)&nbsp;&nbsp; Must demonstrate and maintain EHR&rsquo;s ability to send Direct Messages as specified at 45 CFR 170.202(a) and 
+							included in the &ldquo;SITE Direct Transport Standard Testing Services Test Instructions&rdquo;</li>
+					</ul>
+				
+				<p><strong>(v) Schedule </strong><strong>&nbsp;</strong></p>
+					<ul style="margin-left: 0px;list-style-type: none;">
+						<li>(e)(1)&nbsp;&nbsp;&nbsp; Must provide and maintain schedule availability.</li>
+					</ul>
 			</div>
 			<div class="modal-footer" style="margin-top: 0px;">
 				<button type="button" class="btn btn-primary" data-dismiss="modal"
@@ -396,6 +450,59 @@
 	</div>
 </div>
 
+<div id="developerRegInstructions" class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h3 class="modal-title"> SITE Direct Transport Standard Testing Services Developer Registration Instructions</h3>
+			</div>
+			<div class="modal-body">
+			     <p>The Office of National Coordinator for Health Information Technology (ONC) Standards Implementation and Testing Environment, Direct Transport Standard
+    				Testing Services (http://sitenv.org/direct-vendor-tools) is a platform for providers and implementers to identify and contact registered health IT
+    				developers for Direct Transport Standard testing services.</p>
+				 <p>This document describes instructions for health IT developers to complete the registration process on SITE to provide Direct Transport Standard testing
+    				services.</p>
+				 <p>1. <strong>Create a Developer account </strong></p>
+                  <ul style="margin-left: 0px;list-style-type: none;">
+    				  <li>a. Select “Sign Up” from the Developer Registration page</li>
+                      <li>b. Complete all fields in the “Sign Up” form </li>
+    				  <li>c. Select “Sign Up”</li>
+                      <li>d. Select “Close” once “Emailed Registered Successfully” notification is displayed</li>
+                  </ul>
+				  <p><strong>2. Register a New Direct Service</strong></p>
+				  <ul style="margin-left: 0px;list-style-type: none;">
+    				  <li>a. Login developer account</li>
+     				  <li>b. Select “Register Your Direct Service” and select “Accept” to accept the participant agreement to proceed</li>
+    				  <li>c. Complete all fields in the “Direct System Registration” form. Click “Register Service “ to complete your registration</li>
+    			  </ul>
+    			  <p><strong>3. Upload Trust Anchor *Required*</strong></p>
+    			  <ul style="margin-left: 0px;list-style-type: none;">
+    				  <li>a. Locate the entry in the “Registered Direct Services” list</li>
+    				  <li>b. Select the Trust Anchor “attachment icon” on the right of the entry</li>
+    				  <li>c. Select “Select a Certificate” on the Trust Anchors box, browse to file and select open</li>
+    				  <li>d. Once trust anchor has been selected, select “Submit Anchor” and close</li>
+    			 </ul>
+				 <p><strong>4. Update Developer Information </strong></p>
+				 <ul style="margin-left: 0px;list-style-type: none;">
+    				 <li>a. Login developer account</li>
+    				 <li>b. Select the icon located at the beginning of the entry that you would like to update</li>
+    				 <li>c. Update the fields in the “Direct System Registration” window and select “Update Service” to complete</li>
+    			</ul>
+				<p><strong>Questions or concerns regarding:</strong></p>
+				<ul style="margin-left: 0px;">
+   					<li>SITE Direct Transport Standard Testing Services should be submitted to <a href="https://jira.oncprojectracking.org/browse/MCVE">ONC</a></li>
+   					<li>Developers interested in providing testing services should be submitted to <a href="mailto:xvendor.exchange@hhs.gov">xvendor.exchange@hhs.gov</a></li>
+    				<li>ONC Health IT Certification Program should be submitted to <a href="mailto:ONC.Certification@hhs.gov">ONC.Certification@hhs.gov</a></li>
+    			</ul>
+			</div>
+			<div class="modal-footer" style="margin-top: 0px;">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 
