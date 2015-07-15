@@ -165,9 +165,10 @@ function RegisterService()
 	{
 		currentObject.directEndPoint = $(object).closest('tr').find('td:eq(2)').text();
 		currentObject.uploadBinding(currentObject.directEndPoint);
-		$('#anchoruploadfiles').empty();
+		$("#anchoruploadform").parsley().reset();
 		$('#progressText').html("");
-		$('#anchoruploadform .formError').hide(0);
+		$('#anchoruploadform').trigger('reset');
+		$('#anchoruploadfiles').empty();
 		currentObject.readAllCerts(currentObject.directEndPoint);
 	};
 	
@@ -296,7 +297,7 @@ function RegisterService()
 	{
 		// Change this to the location of your server-side upload handler:
 		var URL = currentObject.UPLOAD_FILE + directEndPoint;
-		$('#anchoruploadprogress').hide();
+		//$('#anchoruploadprogress').hide();
 		$('#anchoruploadfile').fileupload(
 		{
 			url : URL,
@@ -307,40 +308,29 @@ function RegisterService()
 			replaceFileInput : false,
 			done : function(e, data) {
 				
-				$('#anchoruploadsubmit').unbind("click");
+				$('#anchoruploadform').trigger('reset');
 				$('#anchoruploadfiles').empty();
 				$('#progressText').html("Cert uploaded successfully");
+				$('#anchoruploadsubmit').unbind("click");
 				currentObject.readAllCerts(directEndPoint);
 			},
 			progressall : function(e, data) {
-					var progressval = parseInt(data.loaded / data.total* 100, 10);
-					if (progressval < 99) {
-						$('#anchoruploadwidget .blockMsg .progressorpanel .lbl').text('Uploading...');
-						$('#anchoruploadwidget .blockMsg .progressorpanel .progressor')
-						.text(floorFigure(data.loaded/ data.total* 100, 0).toString()+ "%");
-					} else {
-							$('.blockMsg .progressorpanel .lbl').text('Updating Bundle...');
-							$('.blockMsg .progressorpanel .progressor').text('');
-							}
-				}
+			
+			}
 		}).on('fileuploadadd',function(e, data) {
 			 $('#anchoruploadsubmit').unbind("click");
 			 $('#anchoruploadfiles').empty();
+			 
 			 data.context = $('<div/>').appendTo('#anchoruploadfiles');
 			 $.each(data.files, function(index, file) {
 				var node = $('<p/>').append($('<span/>').text(file.name));
 								node.appendTo(data.context);
 			});
 		    
-			$('#anchoruploadform .formError').hide(0);
-				data.context = $('#anchoruploadsubmit').click(function(e) {
-				var jform = $('#anchoruploadform');
-				if (jform.validationEngine('validate')) {
-						$('#anchoruploadform .formError').hide(0);
-						data.submit();
-				} else {
-						$('#anchoruploadform .formError').show(0);
-						$('#anchoruploadform .anchoruploadfileformError').prependTo('#anchoruploaderrorlock');
+			 $('#anchoruploadsubmit').click(function(e) {
+				 if($("#anchoruploadform").parsley().validate()){
+					   $('#anchoruploadprogress').show();
+					   data.submit();
 				}
 			});
 		}).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
@@ -350,11 +340,9 @@ function RegisterService()
 				e.preventDefault();
 		});
 		$('#anchoruploadfile-btn').bind('click', function(e, data) {
-			$('#anchoruploadform').trigger('reset');
-			$('#anchoruploadsubmit').unbind("click");
-			$('#anchoruploadfiles').empty();
-			$('#anchoruploadform .formError').hide(0);
 			$('#progressText').html("");
+			$('#anchoruploadform').trigger('reset');
+			$('#anchoruploadfiles').empty();
 		});
 	};
 	
