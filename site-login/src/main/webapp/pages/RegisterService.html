@@ -30,6 +30,17 @@
 		$("#registerForm").parsley().reset();
 	}
 	
+	function loadInstructionPage()
+	{
+		$.get('pages/Instructions.html',loadInstructionPageContent);
+	}
+		
+	function loadInstructionPageContent(data)
+	{
+		$("#instructionModel").html(data);
+		$("#instructionModel").modal('show');
+	}
+	
 
 	$(document).ready(function() {
 		$('.alert .close').click(function() {
@@ -38,6 +49,10 @@
 		
 		$("#developerInstId").click(function() {
 			$("#developerRegInstructions").modal('show');
+		});
+		
+		$("#instructionsId").click(function() {
+			loadInstructionPage();
 		});
 		
 		if (MODEL.userLoggedIn == 1) {
@@ -110,7 +125,9 @@
 			<p>Welcome to the Developer Registration page. This page offers health IT developers the ability to register their Direct services so that implementers (providers, hospitals, etc.) can find them and use them for interoperability testing. To see which health IT developer systems are available for interoperability testing, please click on the Direct Services tab. Developers that would like to share their Direct system should first create an account using the Sign Up link and then login to register their Direct service.</p>
 			<p>NOTE: Implementers DO NOT need to register or login to test their Direct implementations.</p>
 			<p>For any issues or questions related to health IT developer registration please contact <a href="mailto:xvendor.exchange@hhs.gov">xvendor.exchange@hhs.gov</a></span></p>
-		    <p>Developers can <a id="developerInstId" href="#">Click here for Instructions</a> on how to use the Direct Transport Standard Testing Services to register their Direct systems.</p>
+		    <p>Developer Registration Instructions can be accessed <a id="developerInstId" href="#">here</a></p>
+		    
+		    <p>Direct Transport Standard Testing Services Test Instructions can be accessed <a id="instructionsId" href="#">here</a></p>
 		</div>
 	<div id="vendorReg" hidden="true" class="text-center">
 		<br/>
@@ -540,6 +557,10 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div id="instructionModel" class="modal fade" tabindex="-1">
+	
 </div>
 
 
