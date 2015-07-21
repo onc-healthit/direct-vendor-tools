@@ -6,10 +6,21 @@
 	$(document).ready(function() {
 		registerService.readAllDirectSystems();
 		$("#instructionsId").click(function() {
-			$("#instructionModel").modal('show');
+			loadInstructionPage();
 		});
 
 	});
+	
+	function loadInstructionPage()
+	{
+		$.get('pages/Instructions.html',loadInstructionPageContent);
+	}
+		
+	function loadInstructionPageContent(data)
+	{
+		$("#instructionModel").html(data);
+		$("#instructionModel").modal('show');
+	}
 </script>
 </head>
 
@@ -59,89 +70,7 @@
 </div>
 
 <div id="instructionModel" class="modal fade" tabindex="-1">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-				<h3 class="modal-title">SITE Direct Transport Standard Testing Services Test Instructions</h3>
-			</div>
-			<div class="modal-body">
-			    <h4>Test Description</h4>
-				<p>This test provides capability for implementers and providers to conduct one or more successful electronic exchange tests with a 
-					registered health IT developer’s Test EHR.  The testing process will approximate a “real-life” environment as much as possible.  
-					Electronic exchange will be accomplished by utilizing the required transport standard §170.202(a) Direct Messaging. </p>
-					
-			    <p>The Provider supplies the test data for this test.</p>
-			    
-			    <h4>Provider Test Instruction </h4>
-			    <p>This Provider test instruction is organized into six sections:</p>
-			    <ul style="margin-left: 0px;">
-			       <li><u>Schedule and Set Up Test with Registered Developer</u> – Provider utilizes information from  “SITE” to schedule a testing time 
-			       	   with Registered Developer, and supplies the Provider’s EHR Trust Anchor and Digital Certificate (communications conducted directly between 
-			       	   the Provider and Developer, not through  “SITE”)</li>
-			       <li><u>Receive Test EHR Information</u> – Provider downloads the following Test EHR information from “SITE”
-			          <ul style="margin-left: 0px;">
-			          	<li>Direct Address</li>
-			          	<li>Trust Anchor</li>
-			          	<li>Digital certificate associated with the Direct address</li>
-			          </ul>
-			       </li>
-			       
-			       <li><u>Install Test EHR Trust Anchor and Digital Certificate</u> – Provider utilizes information from “SITE” to install the Test EHR’s 
-			       	   Trust Anchor and Digital Certificate</li>
-				   <li><u>Create Summary Care Record</u> – Using test data only (that is, no real, live patient data), Provider creates a Consolidated CDA conformant 
-				   	   summary care record </li>
-				   <li><u>Transmit Direct Message</u> – Provider sends a Direct Message with the Consolidated CDA conformant summary care record to Test EHR</li>
-				   
-				   <li><u>Receive Email Notification</u> – Provider waits to receive an email notification from the Registered Developer indicating 
-				   		if a message was successfully received by the Test EHR or if the test was a failure within one day of the completion of the test.</li>
-			    </ul>
-			    
-			    
-			    <h4>Developer Test Instruction</h4> 
-                <p>This Developer test instruction is organized into seven sections:</p>
-                <ul style="margin-left: 0px;">
-                    <li><u>Register</u> – Developer registers to  “SITE”, enters contact information, and provides Test EHR system information including:
-                        <ul style="margin-left: 0px;">
-                           <li>Product Name(s) and Version Number(s) for technology certified to §170.314(b)(1)</li>
-                           <li>Direct Address</li>
-                           <li>Trust Anchor</li>
-                           <li>System availability and additional information that can be used by Provider to schedule a test</li>
-                           <li>Digital certificate associated with the Direct address </li>
-                         </ul></li> 
-                    <li><u>Agree to Principles of Participation</u> – Developer utilizes the “Developer Registration Services” on SITE to agree to principles of 
-                    	participation or submits signed form to xvendor.exchange@hhs.gov</li>
-                    <li><u>Receive Provider EHR Information</u> – Registered Developer is contacted directly by Provider who supplies the following information about 
-                    	the Provider EHR:
-                        <ul style="margin-left: 0px;">
-							<li>Direct Address</li>
-							<li>Trust Anchor</li>
-							<li>Provider Contact Information</li>
-					   </ul>
-                    <li><u>Install Provider EHR Trust Anchor and Digital Certificate</u> – Utilizing information supplied by Provider, Registered  Developer 
-                    	installs the Provider EHR’s Trust Anchor and Digital Certificate</li>
-					<li><u>Schedule and Set Up Test with Provider</u> – Registered Developer schedules a testing time with Provider. Testing shall begin within 
-						five days (of scheduled availability) of establishing mutual trust</li>
-					<li><u>Receive Summary Care Record</u> – Registered Developer receives Consolidated CDA conformant summary care record via Direct Message from Provider</li>
-					<li><u>Create and Send Email Notification</u> – Registered Developer creates and sends an email notification to the Provider indicating if the 
-						Provider’s Direct Message was successfully received by the Test EHR or if the test was a failure within one day of the completion of the test</li>
-				</ul>
-				
-				<h4>Test Data</h4>
-				<p>The Provider supplies the data for this test.</p>
-				<p><i>As a Participant of ONC SITE Direct Transport Standard Testing Services, Parties involved in DIRECT Testing shall not reveal Confidential Information, 
-				   and no information shared during the process of testing shall be considered confidential. Parties shall use test data only. 
-				   Parties shall not use live or real data that is actual data about living, identifiable individuals. 
-				   Parties shall adhere to all Federal Regulations including, but not limited to the Health Insurance Portability and Accountability Act of 1996 
-				   (HIPAA).</i></p>
-			</div>
-			
-			<div class="modal-footer" style="margin-top: 0px;">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
+	
 </div>
 
 <div id="interopCertModel" class="modal fade" tabindex="-1">
