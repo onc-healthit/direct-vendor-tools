@@ -29,6 +29,7 @@ function RegisterService()
 		registerServiceTO.directTrustMembership =  $("#registerForm input[type='radio']:checked").val();
 		registerServiceTO.availFromDate =  $("#availFromDate").val();
 		registerServiceTO.availToDate =  $("#availToDate").val();
+		registerServiceTO.notes =  $("#notes").val();
 		registerServiceTO.id = currentObject.editingSystemID;
 		registerServiceTO.userEmailAddress = MODEL.userEmail;
 		return registerServiceTO;
@@ -92,6 +93,7 @@ function RegisterService()
 			+	"<td>"+this.pocFirstName + " " + this.pocLastName + " (" +this.pointOfContact +")</td>"
 			+	"<td>"+this.availFromDate + " to " +this.availToDate +"</td>"
 			+	"<td style='text-align: center;'>"+this.directTrustMembership+"</td>"
+			+	"<td>"+currentObject.checkNotes(this.notes)+"</td>"
 			+   "<td style='text-align: center;'>" +
 					"<a href='#'  style='text-decoration: none;' onclick = registerService.onInteropAttachClick(this)> " +
 							"<span class='glyphicon glyphicon-paperclip'></span> <span hidden='true'>t</span></a></td>"
@@ -99,6 +101,32 @@ function RegisterService()
 		 });
 		 
 		 $("#tableBody").append(rows);
+	};
+	
+	this.checkNotes = function(notes)
+	{
+		if(typeof notes != 'undefined' && notes.length >=20)
+		{
+			return "<a href='#' onclick = registerService.openNotes(this)>" + notes.substring(0,19)+ "..</a>";
+		}else 
+		{
+		   return typeof notes != 'undefined'? notes : "";	
+		}
+	};
+	
+	
+	this.openNotes = function(object)
+	{
+		var selectedDirectEmail = $(object).closest('tr').find('td:eq(2)').text();
+		$(currentObject.resultSet).each(function(){
+			if(this.directEmailAddress == selectedDirectEmail)
+			{
+				
+				$("#notesText").html(this.notes);
+				$('#notesModal').modal('show');
+				return;
+			}
+		});
 	};
 	
 	this.onInteropAttachClick = function(object)
@@ -153,6 +181,7 @@ function RegisterService()
 			+	"<td>"+this.pocFirstName + " " + this.pocLastName + " (" +this.pointOfContact +")</td>"
 			+	"<td>"+this.availFromDate + " to " +this.availToDate +"</td>"
 			+	"<td style='text-align: center;'>"+this.directTrustMembership+"</td>"
+			+	"<td>"+currentObject.checkNotes(this.notes)+"</td>"
 			+   "<td style='text-align: center;'><a href='#'  style='text-decoration: none;' onclick = registerService.onAttachClick(this)> " +
 					"<span class='glyphicon glyphicon-paperclip'></span><span hidden='true'>t</span></a></td>"
 			+ "</tr>";
@@ -247,9 +276,41 @@ function RegisterService()
 		}
 	};
 	
+	this.checkAttribute = function(object)
+	{
+		var attr = object.attr('data-parsley-currentdateval');
+
+		if (typeof attr !== typeof undefined && attr !== false) {
+		    return true;
+		}else 
+			return false;
+	};
+	
+	this.addAttr = function()
+	{
+		if(!registerService.checkAttribute($('#availFromDate')))
+		{
+			$('#availFromDate').attr('data-parsley-currentdateval', '');
+		}
+		
+		if(!registerService.checkAttribute($('#availToDate')))
+		{
+			$('#availToDate').attr('data-parsley-currentdateval','');
+		}
+	};
+	
 	this.onEditClick = function onEditClick(object)
 	{
 		cleanUp();
+		if(currentObject.checkAttribute($('#availFromDate')))
+		{
+			$('#availFromDate').removeAttr('data-parsley-currentdateval');
+		}
+		
+		if(currentObject.checkAttribute($('#availToDate')))
+		{
+			$('#availToDate').removeAttr('data-parsley-currentdateval');
+		}
 		$("#updateServiceButton").show();
 		$("#submitButton").hide();
 		var selectedDirectEmail = $(object).closest('tr').find('td:eq(2)').text();
@@ -275,7 +336,7 @@ function RegisterService()
 				}
 				$("#availFromDate").val(this.availFromDate);
 				$("#availToDate").val(this.availToDate);
-				
+				$("#notes").html(this.notes);
 				
 			   return;
 			}

@@ -32,7 +32,7 @@ public static int registerService(final DirectSystemTO directSystemTO) throws SQ
 		ps.setDate(9, ApplicationUtil.convertStringToDate(directSystemTO.getAvailFromDate(),ApplicationConstants.DATE_FORMAT));
 		ps.setDate(10, ApplicationUtil.convertStringToDate(directSystemTO.getAvailToDate(),ApplicationConstants.DATE_FORMAT));
 		ps.setString(11, directSystemTO.getUserEmailAddress().toUpperCase());
-		
+		ps.setString(12, directSystemTO.getNotes());
 		final int  registerServiceStatus = ps.executeUpdate();
 		ApplicationUtil.close(ps);
 		ApplicationUtil.close(connection);
@@ -54,7 +54,9 @@ public static int updateRegisterService(final DirectSystemTO directSystemTO) thr
 	ps.setDate(9, ApplicationUtil.convertStringToDate(directSystemTO.getAvailFromDate(),ApplicationConstants.DATE_FORMAT));
 	ps.setDate(10, ApplicationUtil.convertStringToDate(directSystemTO.getAvailToDate(),ApplicationConstants.DATE_FORMAT));
 	ps.setString(11, directSystemTO.getUserEmailAddress().toUpperCase());
-	ps.setInt(12, directSystemTO.getId());
+	ps.setString(12, directSystemTO.getNotes());
+	ps.setInt(13, directSystemTO.getId());
+	
 	
 	final int  registerServiceStatus = ps.executeUpdate();
 	ApplicationUtil.close(ps);
@@ -88,6 +90,7 @@ public static List<DirectSystemTO> readAllDirectSystems(String userEmail) throws
 		directSystemTo.setTimezone(rs.getString(ApplicationConstants.TIMEZONE));
 		directSystemTo.setAvailFromDate(rs.getString(ApplicationConstants.AVAIL_FROM_DATE));
 		directSystemTo.setAvailToDate(rs.getString(ApplicationConstants.AVAIL_TO_DATE));
+		directSystemTo.setNotes(rs.getString(ApplicationConstants.NOTES));
 		directSystemToList.add(directSystemTo);
 	}
 	ApplicationUtil.close(rs);

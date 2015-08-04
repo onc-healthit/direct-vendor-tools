@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.sitenv.directvendortools.web.dao.RegisterServiceDAO;
 import org.sitenv.directvendortools.web.dto.DirectSystemTO;
 import org.sitenv.directvendortools.web.dto.ResultSetTO;
@@ -14,6 +15,7 @@ public class RegisterServiceProcess {
 	
 	public static int registerService(final DirectSystemTO directSystemTO)throws SQLException,NamingException,PropertyVetoException
 	{
+		directSystemTO.setNotes(StringEscapeUtils.escapeHtml4(directSystemTO.getNotes()));
 		return RegisterServiceDAO.registerService(directSystemTO);
 	}
 	
@@ -38,6 +40,7 @@ public class RegisterServiceProcess {
 	
 	public static int updateDirectorySystem(final DirectSystemTO directSystemTO)throws SQLException,NamingException,PropertyVetoException
 	{
+		directSystemTO.setNotes(StringEscapeUtils.escapeHtml4(directSystemTO.getNotes()));
 		return RegisterServiceDAO.updateRegisterService(directSystemTO);
 	}
 
