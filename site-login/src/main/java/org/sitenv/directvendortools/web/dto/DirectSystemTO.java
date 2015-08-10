@@ -15,6 +15,7 @@ public class DirectSystemTO {
 	private String availFromDate;
 	private String availToDate;
 	private String userEmailAddress;
+	private String notes;
 	
 	public int getId() {
 		return id;
@@ -88,5 +89,11 @@ public class DirectSystemTO {
 	}
 	public void setAvailToDate(String availToDate) {
 		this.availToDate = availToDate;
+	}
+	public String getNotes() {
+		return notes;
+	}
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 }

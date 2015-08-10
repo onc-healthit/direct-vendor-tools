@@ -13,12 +13,12 @@ public class ApplicationQueries {
 	
 	
 	public static String REGISTER_SERVICE_QUERY = "Insert into REGISTER_SERVICE (cehrtLabel , organizationName, directEmailAddress, pointOfContact,pocFirstName,"
-			+ "pocLastName,timezone,directTrustMembership,availFromDate,availToDate,useremailaddress)" +
-            	"values (?,?,?,?,?,?,?,?,?,?,?)";
+			+ "pocLastName,timezone,directTrustMembership,availFromDate,availToDate,useremailaddress,notes)" +
+            	"values (?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	public static String UPDATE_REGISTER_SERVICE_QUERY = "Update REGISTER_SERVICE  set cehrtLabel = ? , organizationName = ?, "
 			+ "directEmailAddress = ?, pointOfContact = ?,pocFirstName = ?,"
-			+ "pocLastName = ?,timezone = ?,directTrustMembership = ?,availFromDate = ?,availToDate =?,useremailaddress = ?" 
+			+ "pocLastName = ?,timezone = ?,directTrustMembership = ?,availFromDate = ?,availToDate =?,useremailaddress = ?,notes=?" 
             + "where ID = ?";
 	
 	public static String DIRECT_SYS_EMAIL_CHECK_QUERY= "Select count(*) from register_service where directemailaddress = ?";

@@ -12,4 +12,5 @@ function RegisterServiceTO()
 	this.availFromDate;
 	this.availToDate;
 	this.userEmailAddress;
+	this.notes;
 }

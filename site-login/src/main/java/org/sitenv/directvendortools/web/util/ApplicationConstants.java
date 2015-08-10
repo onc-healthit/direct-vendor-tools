@@ -55,5 +55,6 @@ public class ApplicationConstants {
 	public static final String DIRECT_TRUST_MEM ="directTrustMembership";
 	public static final String AVAIL_FROM_DATE ="availFromDate";
 	public static final String AVAIL_TO_DATE ="availToDate";
+	public static final String NOTES ="notes";
 	
 }
