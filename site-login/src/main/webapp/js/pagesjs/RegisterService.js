@@ -155,6 +155,15 @@ function RegisterService()
 			+ "</tr>";
 		 });
 		 
+		 if(resultArray.length == 0)
+		 {
+			 $("#noCertsMessage").show();
+		 }
+		 else
+		 {
+			 $("#noCertsMessage").hide();
+		 }
+			 
 		 $("#certTableBodyId").append(rows);
 		 $('#interopCertModel').modal('show');
 	};

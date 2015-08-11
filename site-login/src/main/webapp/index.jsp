@@ -218,7 +218,7 @@
 				<ul class="nav navbar-nav">
 				<li>
 						<a href="http://sitenv.org/" style="text-decoration: none;">Home</a></li>
-				<li  id="interopLIId"><a href="javascript:setInteroperabilityServicesPage()" style="text-decoration: none;" >Developer Provided Testing Services</a></li>
+				<li  id="interopLIId"><a href="javascript:setInteroperabilityServicesPage()" style="text-decoration: none;" >Testing Services</a></li>
 				<li id="vendorRegLIId"><a href="javascript:setRegisterServicePage()" style="text-decoration: none;" >Developer Registration</a></li>
 					
 					
