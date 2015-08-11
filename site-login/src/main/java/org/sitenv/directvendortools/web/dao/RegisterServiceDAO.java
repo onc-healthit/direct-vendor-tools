@@ -67,8 +67,8 @@ public static int updateRegisterService(final DirectSystemTO directSystemTO) thr
 public static List<DirectSystemTO> readAllDirectSystems(String userEmail) throws SQLException,NamingException,PropertyVetoException{
 	
 	final Connection connection = getDbConnection();
-	final PreparedStatement ps= ApplicationUtil.isEmpty(userEmail) ? connection.prepareStatement(ApplicationQueries.READ_DIRECT_SYSTEMS) : 
-		connection.prepareStatement(prepareQuery(userEmail));
+	final PreparedStatement ps= ApplicationUtil.isEmpty(userEmail) ? connection.prepareStatement(ApplicationQueries.READ_DIRECT_SYSTEMS+ " order by cehrtLabel") 
+			: connection.prepareStatement(prepareQuery(userEmail));
 	if(!ApplicationUtil.isEmpty(userEmail))
 	{
 	   ps.setString(1, userEmail.toUpperCase());		
@@ -116,7 +116,7 @@ public static boolean isDirectSysEmailAvailable(String directSysEmail) throws SQ
 
 public static String prepareQuery(String userEmail)
 {
-	return ApplicationQueries.READ_DIRECT_SYSTEMS.concat(" where useremailaddress = ? ");
+	return ApplicationQueries.READ_DIRECT_SYSTEMS.concat(" where useremailaddress = ? order by cehrtLabel");
 }
 
 
