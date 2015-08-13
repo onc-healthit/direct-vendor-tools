@@ -255,6 +255,18 @@ function RegisterService()
 		
 	};
 	
+	this.downloadTestInstructions = function()
+	{
+		var httpService = new HttpAjaxServices(); 
+		httpService.downloadTestInstructions();
+	};
+	
+	this.downloadRegistrationInstructions = function()
+	{
+		var httpService = new HttpAjaxServices(); 
+		httpService.downloadRegistrationInstructions();
+	};
+	
 	this.deleteConfirm = function(object)
 	{
 		$('#DeleteConfirm').modal('show');
@@ -326,15 +338,15 @@ function RegisterService()
 		$(currentObject.resultSet).each(function(){
 			if(this.directEmailAddress == selectedDirectEmail)
 			{
-				$("#cehrtLabel").val(this.cehrtLabel);
+				$("#cehrtLabel").val(currentObject.htmlDecode(this.cehrtLabel));
 				currentObject.editingSystemID = this.id;
-				$("#orgName").val(this.organizationName);
-				$("#directEmail").val(this.directEmailAddress);
+				$("#orgName").val(currentObject.htmlDecode(this.organizationName));
+				$("#directEmail").val(currentObject.htmlDecode(this.directEmailAddress));
 				$("#directEmail").attr("disabled", "disabled");
-				$("#pocEmail").val(this.pointOfContact);
-				$("#pocFirstName").val(this.pocFirstName);
-				$("#pocLastName").val(this.pocLastName);
-				var text = this.timezone;
+				$("#pocEmail").val(currentObject.htmlDecode(this.pointOfContact));
+				$("#pocFirstName").val(currentObject.htmlDecode(this.pocFirstName));
+				$("#pocLastName").val(currentObject.htmlDecode(this.pocLastName));
+				var text = currentObject.htmlDecode(this.timezone);
 				$('#timezone').val(text);
 				if(this.directTrustMembership == 'Yes')
 				{
@@ -343,13 +355,18 @@ function RegisterService()
 				{  
 					$("#option_no").attr('checked', 'checked');
 				}
-				$("#availFromDate").val(this.availFromDate);
-				$("#availToDate").val(this.availToDate);
-				$("#notes").html(this.notes);
+				$("#availFromDate").val(currentObject.htmlDecode(this.availFromDate));
+				$("#availToDate").val(currentObject.htmlDecode(this.availToDate));
+				$("#notes").val(currentObject.htmlDecode(this.notes));
 				
 			   return;
 			}
 		});
+	};
+	
+	this.htmlDecode = function(value)
+	{
+		return $('<div/>').html(value).text();
 	};
 	
 	this.convertDateToLocal = function(date)

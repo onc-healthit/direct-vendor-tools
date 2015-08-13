@@ -11,6 +11,8 @@ function HttpAjaxServices()
 	this.READ_ALL_CERTS = APP_CONTEXT + "rs/fileService/readAllCerts?directEndPoint=";
 	this.DOWNLOAD_CERT = APP_CONTEXT+"rs/fileService/downloadCert";
 	this.DELETE_CERT = APP_CONTEXT+"rs/fileService/deleteCert?filePath=";
+	this.DOWNLOAD_TEST_INSTRUCTIONS = APP_CONTEXT+"rs/fileService/downloadTestInstructions";
+	this.DOWNLOAD_REG_INSTRUCTIONS = APP_CONTEXT+"rs/fileService/downloadRegistrationInstructions";
 	
 	
 	this.registerAccount = function(accountRegisterTO,callback,freezeScreen,screenFreezeMessage)
@@ -219,5 +221,15 @@ function HttpAjaxServices()
 	this.downloadFile = function(dataArray)
 	{
 		$.download(currentObject.DOWNLOAD_CERT,'GET',dataArray);
+	};
+	
+	this.downloadTestInstructions = function()
+	{
+		$.download(currentObject.DOWNLOAD_TEST_INSTRUCTIONS,'GET');
+	};
+	
+	this.downloadRegistrationInstructions = function()
+	{
+		$.download(currentObject.DOWNLOAD_REG_INSTRUCTIONS,'GET');
 	};
 }
