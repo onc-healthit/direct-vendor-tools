@@ -9,6 +9,7 @@
 	}
 
 	function enableRegister() {
+		registerService.addAttr();
 		$("#updateServiceButton").hide();
 		$("#submitButton").show();
 		cleanUp();
@@ -27,8 +28,7 @@
 		$('#updateSystemAlertID').hide();
 		$('#DirectSystemRegAlertID').hide();
 		$('#directEmailExistAlertID').hide();
-		$('#registerForm').validationEngine('hideAll');
-		$('#registerForm .formError').hide(0);
+		$("#registerForm").parsley().reset();
 	}
 	
 	function loadInstructionPage()
@@ -48,13 +48,13 @@
 		    $(this).closest('.alert').hide();
 		});
 		
-		$("#developerInstId").click(function() {
+		/* $("#developerInstId").click(function() {
 			$("#developerRegInstructions").modal('show');
 		});
 		
 		$("#instructionsId").click(function() {
 			loadInstructionPage();
-		});
+		}); */
 		
 		if (MODEL.userLoggedIn == 1) {
 			$('#vendorReg').show();
@@ -66,24 +66,48 @@
 			$('#directSysPanleId').hide();
 		}
 		
+		$("#registerForm").parsley({
+		 	trigger: 'change',
+	        successClass: "has-success",
+	        errorClass: "alert alert-danger",
+	        classHandler: function (el) {
+	        	return el.$element.closest("div").children(".infoArea");
+	        },
+			errorsContainer: function (el) {
+				return el.$element.closest("div").children(".infoArea");
+			},
+			errorsWrapper: '<ul></ul>',
+			errorElem: '<li></li>'
+		});
+		
+		$("#anchoruploadform").parsley({
+		 	trigger: 'change',
+	        successClass: "has-success",
+	        errorClass: "alert alert-danger",
+	        classHandler: function (el) {
+	        	return el.$element.closest("div").children(".infoArea");
+	        },
+			errorsContainer: function (el) {
+				return el.$element.closest("div").children(".infoArea");
+			},
+			errorsWrapper: '<ul></ul>',
+			errorElem: '<li></li>'
+		});
+		
 		$("#submitButton").click(function(e) {
-		   var jform = $('#registerForm');
-		   //jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
-		   if (jform.validationEngine('validate')) {
-			   registerService.registerService();
-		   } else {
-			   $('#registerForm .formError').show(0);
+			if($("#registerForm").parsley().validate()){
+				registerService.registerService();
 			}
 		});
 		
 		$("#updateServiceButton").click(function(e) {
-			var jform = $('#registerForm');
-			//jform.validationEngine({promptPosition:"centerRight", validateNonVisibleFields: true, updatePromptsPosition:true});
-			if (jform.validationEngine('validate')) {
-				 registerService.updateService();
-			} else {
-				 $('#registerForm .formError').show(0);
+			if($("#registerForm").parsley().validate()){
+				registerService.updateService();
 			}
+		});
+		
+		$("#anchoruploadsubmit").click(function(e) {
+			$("#anchoruploadform").parsley().validate();
 		});
 	});
 
@@ -101,10 +125,10 @@
 	<div>
 			<p>Welcome to the Developer Registration page. This page offers health IT developers the ability to register their Direct services so that implementers (providers, hospitals, etc.) can find them and use them for interoperability testing. To see which health IT developer systems are available for interoperability testing, please click on the Direct Services tab. Developers that would like to share their Direct system should first create an account using the Sign Up link and then login to register their Direct service.</p>
 			<p>NOTE: Implementers DO NOT need to register or login to test their Direct implementations.</p>
-			<p>For any issues or questions related to health IT developer registration please contact <a href="mailto:xvendor.exchange@hhs.gov">xvendor.exchange@hhs.gov</a></span></p>
-		    <p>Developer Registration Instructions can be accessed <a id="developerInstId" href="#">here</a></p>
+			<p>If you have any questions or concerns, Please email <a href="mailto:TestingServices@sitenv.org">TestingServices@sitenv.org</a></p>
+		    <p><a id="developerInstId" href="javascript:registerService.downloadRegistrationInstructions()">Registration instructions</a> are available for developers.</p>
 		    
-		    <p>Direct Transport Standard Testing Services Test Instructions can be accessed <a id="instructionsId" href="#">here</a></p>
+		    <p>For test instructions, please download the <a id="instructionsId" href="javascript:registerService.downloadTestInstructions();">Direct Transport Standard Testing Services Test Instructions</a>.</p>
 		</div>
 	<div id="vendorReg" hidden="true" class="text-center">
 		<br/>
@@ -144,13 +168,14 @@
 		     <table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-sm-2">Certified EHR Technology</th>
-						<th class="col-sm-2">Organization</th>
-						<th class="col-sm-2">Direct Endpoint</th>
-						<th class="col-sm-2">Point of Contact</th>
-						<th class="col-sm-2">Availability Dates</th>
-						<th class="col-sm-2">Direct Trust Member</th>
-						<th class="col-sm-2">Trust Anchor</th>
+						<th style="width:13%">Certified EHR Technology</th>
+						<th style="width:13%">Organization</th>
+						<th style="width:13%">Direct Endpoint</th>
+						<th style="width:13%">Point of Contact</th>
+						<th style="width:13%">Availability Dates</th>
+						<th style="width:10%">Direct Trust Member</th>
+						<th style="width:15%">Notes</th>
+						<th style="width:10%">Trust Anchor</th>
 					</tr>
 				</thead>
 				<tbody id=userDirectSysTableBody>
@@ -184,7 +209,7 @@
 				 	 and all applicable requirements, under the ONC HIT Certification Program*<br /> <br /> *For more information on the ONC HIT Certification 
 				 	 Program, please reference <a href="http://www.healthit.gov/certification">http://www.healthit.gov/certification</a>&nbsp;</li>
 				<li>&nbsp;(a)(2)&nbsp;&nbsp;&nbsp; Must maintain authorization by continuing to operate in accordance with all requirements of &ldquo;Test 
-					Instructions for SITE Direct Transport Standard Testing Services&rdquo;</li>
+					Instructions for SITE Developer Provided Testing Services&rdquo;</li>
 				</ul>
 				
 				<p><strong>(ii) Information</strong></p>
@@ -194,7 +219,6 @@
 						 		<li>&nbsp;&nbsp;&nbsp;EHR Name and Version</li>
 						 		<li>&nbsp;&nbsp;&nbsp;Direct address</li>
 						 		<li>&nbsp;&nbsp;&nbsp;Trust anchor</li>
-						 		<li>&nbsp;&nbsp;&nbsp;Digital certificate associated with the Direct address</li>
 						 	</ul></li>
 					<li>(b)(2)&nbsp;&nbsp; Must provide and maintain current Developer contact information</li>
 					</ul>
@@ -202,7 +226,7 @@
 				<p><strong>(iii) Confidentiality</strong></p>
 					<ul style="margin-left: 0px;list-style-type: none;">
 					<li><p>(c)(1)&nbsp;&nbsp;&nbsp;&nbsp; Must agree to the following confidentiality statement:</p>
-					<p><em>As a Participant of ONC SITE </em><em>Direct Transport Standard Testing Services, p</em><em>arties shall not reveal Confidential Information, 
+					<p><em>As a Participant of ONC SITE </em><em>Developer Provided Testing Services, p</em><em>arties shall not reveal Confidential Information, 
 							and no information shared during the process of testing</em><em> shall be considered confidential. Parties shall use test data only. 
 							Parties shall not use live or real data that is actual data about living, identifiable individuals. Parties shall adhere to all Federal 
 							Regulations including, but not limited to the Health Insurance Portability and Accountability Act of 1996 (HIPAA). </em></p></li>
@@ -210,9 +234,9 @@
 				<p><strong>(iv) Performance </strong></p>
 					<ul style="margin-left: 0px;list-style-type: none;">
 						<li>(d)(1)&nbsp;&nbsp;&nbsp; Must demonstrate and maintain ability to execute &ldquo;Developer Test Instruction&rdquo; as described in &ldquo;SITE 
-							Direct Transport Standard Testing Services Test Instructions&rdquo;</li>
+							Developer Provided Testing Services Test Instructions&rdquo;</li>
 						<li>(d) (2)&nbsp;&nbsp; Must demonstrate and maintain EHR&rsquo;s ability to send Direct Messages as specified at 45 CFR 170.202(a) and 
-							included in the &ldquo;SITE Direct Transport Standard Testing Services Test Instructions&rdquo;</li>
+							included in the &ldquo;SITE Developer Provided Testing Services Test Instructions&rdquo;</li>
 					</ul>
 				
 				<p><strong>(v) Schedule </strong><strong>&nbsp;</strong></p>
@@ -239,74 +263,77 @@
 			</div>
 			<div class="modal-body">
 				
-							<div>
-								<h4 style="text-align: center">* All fields are required</h4>
-							</div>
 							<div id="registerDiv" style="padding-top: 20px;" hidden="true">
 							
 								<form id="registerForm" class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-5 control-label" for="cehrtLabel">Certified EHR Technology </label>
+										<label class="col-lg-5 control-label" for="cehrtLabel">Certified EHR Technology * </label>
 										<div class="col-lg-7">
 											<input type="text"
-												class="form-control validate[required,maxSize[30]]"
+												class="form-control" data-parsley-required data-parsley-maxlength="30"
 												name="cehrtLabel" id="cehrtLabel" />
+											<div class="infoArea"></div>
 										</div>
 									</div>
 									
 				
 									<div class="form-group">
-										<label class="col-lg-5 control-label" for="orgName">Organization Name </label>
+										<label class="col-lg-5 control-label" for="orgName">Organization Name * </label>
 										<div class="col-lg-7">
 											<input type="text"
-												class="form-control validate[required,maxSize[30]]"
+												class="form-control" data-parsley-required data-parsley-maxlength="30"
 												name="orgName" id="orgName" />
+											<div class="infoArea"></div>
 										</div>
 									</div>
 				
 									<div class="form-group">
-										<label class="col-lg-5 control-label" for="directEmail">Direct Email Address</label>
+										<label class="col-lg-5 control-label" for="directEmail">Direct Email Address *</label>
 										<div class="col-lg-7">
 											<input type="text"
-												class="form-control validate[required,custom[email]]"
+												class="form-control" data-parsley-required data-parsley-type="email"
 												name="directEmail" id="directEmail" />
+											<div class="infoArea"></div>
 										</div>
 									</div>
 				
 									<div class="form-group">
 										<label class="col-lg-5 control-label" for="pocEmail">Point of Contact
-											Email (This will be used by implementers to contact if there are questions on the Direct System)</label>
+											Email * (This will be used by implementers to contact if there are questions on the Direct System)</label>
 										<div class="col-lg-7">
 											<input type="text"
-												class="form-control validate[required,custom[email],custom[notEqual]]"
+												class="form-control" data-parsley-required data-parsley-type="email" data-parsley-notequal="#directEmail"
 												name="pocEmail" id="pocEmail" />
+											<div class="infoArea"></div>
 										</div>
 									</div>
 				
 									<div class="form-group">
-										<label class="col-lg-5 control-label" for="pocFirstName">Point of Contact
-											First Name</label>
+										<label class="col-lg-5 control-label" for="pocFirstName">Point of Contact 
+											First Name *</label>
 										<div class="col-lg-7">
 											<input type="text"
-												class="form-control validate[required,maxSize[30]]"
+												class="form-control" data-parsley-required data-parsley-maxlength="30"
 												name="pocFirstName" id="pocFirstName" />
+											<div class="infoArea"></div>
 										</div>
 									</div>
 				
 									<div class="form-group">
 										<label class="col-lg-5 control-label" for="pocLastName">Point of Contact
-											Last Name</label>
+											Last Name *</label>
 										<div class="col-lg-7">
 											<input type="text"
-												class="form-control validate[required,maxSize[30]]"
+												class="form-control" data-parsley-required data-parsley-maxlength="30"
 												name="pocLastName" id="pocLastName" />
+											<div class="infoArea"></div>
 										</div>
 									</div>
 				
 									<div class="form-group">
-										<label class="col-lg-5 control-label" for="timezone">Timezone</label>
+										<label class="col-lg-5 control-label" for="timezone">Timezone *</label>
 										<div class="col-lg-7">
-											<select name="timezone" class="form-control validate[required]"
+											<select name="timezone" class="form-control" data-parsley-required
 												id="timezone" data-toggle="tooltip" data-placement="right"
 												data-original-title="This is the timezone which indicates availability of the POC from 9am to 5pm"
 												required data-fv-notempty-message="Timezone is required">
@@ -318,6 +345,7 @@
 												<option value="AKST">ALASKA TIME</option>
 												<option value="HST">HAWAII TIME</option>
 											</select>
+											<div class="infoArea"></div>
 										</div>
 									</div>
 				
@@ -327,14 +355,14 @@
 									
 										<fieldset>
 										<legend class="col-lg-5 control-label" style="font-size: inherit; border-bottom: none; font-weight:bold;">Direct Trust
-											Membership</legend>
+											Membership *</legend>
 										<div class="col-lg-7">
-											<div class="radio">
-												<label for="option_yes">
-												<input type="radio" name="optradio" id="option_yes" value="Yes" class="validate[required]">Yes</label>
-											</div>
-											<div class="radio">
-												<label for="option_no"><input type="radio" name="optradio" id="option_no" class="validate[required]" value="No">No</label>
+											<div>
+												<label for="option_yes" class="radio inline">
+												<input type="radio" name="optradio" id="option_yes" value="Yes" data-parsley-required>Yes</label>
+												<label for="option_no" class="radio inline">
+												<input type="radio" name="optradio" id="option_no" value="No">No</label>
+												<div class="infoArea"></div>
 											</div>
 										</div>
 										</fieldset>
@@ -346,22 +374,34 @@
 											available for interoperability testing during weekdays).</div>
 										<div class="col-lg-7">
 											<div class="control-group">
-												<label class="control-label" for="availFromDate" >Available From (YYYY-MM-DD)</label>
+												<label class="control-label" for="availFromDate" >Available From (YYYY-MM-DD) *</label>
 												<div class="controls">
 														<input type="text"
-															class="date-picker form-control validate[required,custom[date],future[NOW],dateRange[grp1]]"
-															id="availFromDate" name="availFromDate" style="position: relative; z-index: 1100;" /> 
+															class="date-picker form-control" data-parsley-required data-parsley-currentdateval
+															data-parsley-fromdaterangeval="#availToDate"
+															id="availFromDate" name="availFromDate" style="position: relative; z-index: 1100;" />
+														<div class="infoArea"></div> 
 												</div>
+												<div class="infoArea"></div>
 											</div>
 				
 											<div class="control-group">
-												<label class="control-label" for="availToDate">Available To (YYYY-MM-DD)</label>
+												<label class="control-label" for="availToDate">Available To (YYYY-MM-DD) *</label>
 												<div class="controls">
 														<input type="text"
-															class="date-picker form-control validate[required,custom[date],future[NOW],dateRange[grp1]]"
-															id="availToDate" name="availToDate" style="position: relative; z-index: 1100;"/> 
+															class="date-picker form-control" data-parsley-required data-parsley-currentdateval 
+										    	   			data-parsley-daterangeval="#availFromDate"
+															id="availToDate" name="availToDate" style="position: relative; z-index: 1100;"/>
+														<div class="infoArea"></div>
 												</div>
 											</div>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="col-lg-5 control-label" for="notes">Notes</label>
+										<div class="col-lg-7">
+											<textarea class="form-control" rows="3" id="notes" name="notes" maxlength="250"></textarea>
 										</div>
 									</div>
 				
@@ -406,25 +446,28 @@
 			<div class="modal-body">
 			
 			<div id="certUploadId">
-					<form id="anchoruploadform" method="POST"
-						enctype="multipart/form-data">
-						<div id="anchoruploaderrorlock" style="position: relative;">
-								<label for="anchoruploadfile">Select one or more Trust Anchor Certificates required to interoperate with the Direct System </label><br/><span
-									class="btn btn-success fileinput-button"
-									id="anchoruploadfile-btn"> <i
-									class="glyphicon glyphicon-plus"></i>&nbsp;<span>Select a Certificate...</span> <input id="anchoruploadfile" type="file"
-										name="anchoruploadfile"
-										class="validate[required, custom[derencncodedfileextension[der|crt|cer|pem|DER|CRT|CER|PEM]], custom[maxCertFileSize]]" />
-									</span>
-									<button id="anchoruploadsubmit" type="submit"
-										class="btn btn-primary primary" onclick="return false;">
-										<i class="glyphicon glyphicon-ok"></i> <span>Submit
-											Anchor</span>
-									</button>
-									<div id="anchoruploadfiles" class="files"></div>
-									<p id="progressText"></p>
-								</div>
-						<br>
+					<form id="anchoruploadform" method="POST" enctype="multipart/form-data">
+				 	   <div>
+					   		<label for="anchoruploadfile">Select one or more Trust Anchor Certificates required to interoperate with the Direct System </label><br/>
+					   		<span class="btn btn-success fileinput-button" id="anchoruploadfile-btn"> 
+						   		  <i class="glyphicon glyphicon-plus"></i>&nbsp;<span>Select a Certificate...</span> 
+						   		  <input id="anchoruploadfile" type="file" name="anchoruploadfile" data-parsley-required
+						   		  data-parsley-trigger="change" data-parsley-trustfiletypes data-parsley-anchormaxsize="3"/>
+						    </span>
+						    <button id="anchoruploadsubmit" type="submit"
+								    class="btn btn-primary primary" onclick="return false;">
+								    <i class="glyphicon glyphicon-ok"></i> <span>Submit Anchor</span>
+						    </button>
+					        <div id="anchoruploadfiles" class="files"></div>
+					        <p id="progressText"></p>
+					       <!--  <div class="progress" id="anchoruploadprogress">
+  							 	<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+    								0%
+  							 	</div>
+							</div> -->
+							<div class="infoArea"></div>
+							<br>
+					   </div>
 					</form>
 					<table class="table table-striped">
 					<thead>
@@ -447,15 +490,15 @@
 </div>
 
 <div id="DeleteConfirm" class="modal fade" tabindex="-1">
-	<div class="modal-dialog modal-sm">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Deleting Trust Anchor certificate</h4>
+				<h2 class="modal-title">Deleting Trust Anchor certificate</h2>
 			</div>
 			<div class="modal-body">
-				<h5>Are you sure you want to delete Trust Anchor Certificate ?</h5>
+				<div>Are you sure you want to delete Trust Anchor Certificate ?  </div>
 				<div class="text-right">
 					<button type="submit" id="confirmYesId" class="btn btn-primary"
 										  onclick="registerService.deleteCert();">Yes</button>
@@ -473,14 +516,14 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h3 class="modal-title"> SITE Direct Transport Standard Testing Services Developer Registration Instructions</h3>
+				<h2 class="modal-title"> SITE Developer Provided Testing Services Registration Instructions</h2>
 			</div>
 			<div class="modal-body">
-			     <p>The Office of National Coordinator for Health Information Technology (ONC) Standards Implementation and Testing Environment, Direct Transport Standard
-    				Testing Services (http://sitenv.org/direct-vendor-tools) is a platform for providers and implementers to identify and contact registered health IT
-    				developers for Direct Transport Standard testing services.</p>
-				 <p>This document describes instructions for health IT developers to complete the registration process on SITE to provide Direct Transport Standard testing
-    				services.</p>
+			     <p>The Office of National Coordinator for Health Information Technology (ONC) Standards Implementation and Testing Environment, Developer Provided Testing Services
+			      (http://sitenv.org/direct-vendor-tools) is a platform for providers and implementers to identify and contact registered health IT
+    				developers for Developer Provided Testing Services.</p>
+				 <p>This document describes instructions for health IT developers to complete the registration process on SITE to provide Developer Provided Testing Services.
+    				</p>
 				 <p>1. <strong>Create a Developer account </strong></p>
                   <ul style="margin-left: 0px;list-style-type: none;">
     				  <li>a. Select “Sign Up” from the Developer Registration page</li>
@@ -509,9 +552,8 @@
     			</ul>
 				<p><strong>Questions or concerns regarding:</strong></p>
 				<ul style="margin-left: 0px;">
-   					<li>SITE Direct Transport Standard Testing Services should be submitted to <a href="https://jira.oncprojectracking.org/browse/MCVE">ONC</a></li>
-   					<li>Developers interested in providing testing services should be submitted to <a href="mailto:xvendor.exchange@hhs.gov">xvendor.exchange@hhs.gov</a></li>
-    				<li>ONC Health IT Certification Program should be submitted to <a href="mailto:ONC.Certification@hhs.gov">ONC.Certification@hhs.gov</a></li>
+   					
+    				<li>If you have any questions, please email<a href="mailto:TestingServices@sitenv.org">TestingServices@sitenv.org</a></li>
     			</ul>
 			</div>
 			<div class="modal-footer" style="margin-top: 0px;">
@@ -521,9 +563,29 @@
 	</div>
 </div>
 
-<div id="instructionModel" class="modal fade" tabindex="-1">
-	
+<div id="instructionModel" class="modal fade" tabindex="-1"></div>
+
+<div id="notesModal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h2 class="modal-title"> Notes</h2>
+			</div>
+			<div class="modal-body">
+				
+				<div id="notesText" style="margin-bottom: -20px;word-wrap: break-word;"></div>	
+				<br>		
+			</div>
+			<div class="modal-footer" style="margin-top: 0px;">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
+	
+
 
 
 

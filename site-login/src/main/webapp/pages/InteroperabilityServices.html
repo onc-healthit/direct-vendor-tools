@@ -5,9 +5,9 @@
 
 	$(document).ready(function() {
 		registerService.readAllDirectSystems();
-		$("#instructionsId").click(function() {
+		/* $("#instructionsId").click(function() {
 			loadInstructionPage();
-		});
+		}); */
 
 	});
 	
@@ -26,40 +26,36 @@
 
 <div class="container" style="padding-top: 30px;">
 	<div class="jumbotron">
-		<h1 style="text-align: center;"> <b>Direct Transport Standard Testing Services</b> </h1>
+		<h1 style="text-align: center;"> <b>Developer Provided Testing Services</b> </h1>
 		<hr>
 	</div>
 	
 	<div>
-			<p>Welcome to the Direct Transport Standard Testing Services page. This page provides a list of registered health IT developers  who have agreed to offer their Direct Transport Standard testing services to providers and implementers. ONC will evaluate this approach to determine whether it could be expanded to include additional interoperability testing in the future.</p>
+			<p>Welcome to the Developer Provided Testing Services. This page provides a list of registered health IT developers who have agreed to offer their Developer Provided Testing Services to providers and implementers.</p>
 			<p>Health IT Developers interested in registering their ONC Certified Health IT systems, click on Developer Registration tab above. </p>
-			<p>Questions or concerns regarding:</p>
-			<ul>
-				<li> SITE Direct Transport Standard Testing Services  should be submitted  to <a href="https://jira.oncprojectracking.org/browse/MCVE">ONC</a>.</li>
-				<li>Developers interested in providing testing services should be submitted to <a href="mailto:xvendor.exchange@hhs.gov">xvendor.exchange@hhs.gov</a></li>
-				<li>ONC Health IT Certification Program should be submitted to <a href="mailto:ONC.Certification@hhs.gov">ONC.Certification@hhs.gov</a></li>
-			</ul>
-			<p>Implementers can  <a id="instructionsId" href="#">Click here for Instructions</a> on how to use the Direct Transport Standard Testing Services for interoperability testing. 
+			<p>If you have any questions or concerns, Please email <a href="mailto:TestingServices@sitenv.org" title="Email for questions or concerns">TestingServices@sitenv.org</a></p>
+			<p>Implementers can  download <a id="instructionsId" href="javascript:registerService.downloadTestInstructions();">instructions</a> on how to use the Direct Transport Standard Testing Services for interoperability testing. 
 			  </p>
 	</div>
 	
 	<!-- Step 2 -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h2 class="panel-title">Direct Transport Standard Testing Services</h2>
+			<h2 class="panel-title">Developer Provided Testing Services</h2>
 		</div>
 
 		<div class="panel-body">
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-sm-2">Certified EHR Technology</th>
-						<th class="col-sm-2">Organization</th>
-						<th class="col-sm-2">Direct Endpoint</th>
-						<th class="col-sm-2">Point of Contact</th>
-						<th class="col-sm-2">Availability Dates</th>
-						<th class="col-sm-2">Direct Trust Member</th>
-						<th class="col-sm-2">Trust Anchor</th>
+						<th style="width:13%">Certified EHR Technology</th>
+						<th style="width:13%">Organization</th>
+						<th style="width:13%">Direct Endpoint</th>
+						<th style="width:13%">Point of Contact</th>
+						<th style="width:13%">Availability Dates</th>
+						<th style="width:10%">Direct Trust Member</th>
+						<th style="width:15%">Notes</th>
+						<th style="width:10%">Trust Anchor</th>
 					</tr>
 				</thead>
 				<tbody id=tableBody>
@@ -82,6 +78,8 @@
 				<h2 class="modal-title">Trust Anchors</h2>
 			</div>
 			<div class="modal-body">
+			 <div id="noCertsMessage" hidden="true">Trust Anchor for Direct Trust members can be downloaded from 
+			 	<a href="http://www.directtrust.org/" target="_blank">directtrust.org</a></div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -91,6 +89,25 @@
 					</thead>
 					<tbody id=certTableBodyId></tbody>
 				</table>
+			</div>
+			<div class="modal-footer" style="margin-top: 0px;">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="notesModal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h2 class="modal-title"> Notes</h2>
+			</div>
+			<div class="modal-body">
+				<div id="notesText" style="margin-bottom: -20px;word-wrap: break-word;"></div>
+				<br>				
 			</div>
 			<div class="modal-footer" style="margin-top: 0px;">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

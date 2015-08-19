@@ -29,6 +29,7 @@ function RegisterService()
 		registerServiceTO.directTrustMembership =  $("#registerForm input[type='radio']:checked").val();
 		registerServiceTO.availFromDate =  $("#availFromDate").val();
 		registerServiceTO.availToDate =  $("#availToDate").val();
+		registerServiceTO.notes =  $("#notes").val();
 		registerServiceTO.id = currentObject.editingSystemID;
 		registerServiceTO.userEmailAddress = MODEL.userEmail;
 		return registerServiceTO;
@@ -92,6 +93,7 @@ function RegisterService()
 			+	"<td>"+this.pocFirstName + " " + this.pocLastName + " (" +this.pointOfContact +")</td>"
 			+	"<td>"+this.availFromDate + " to " +this.availToDate +"</td>"
 			+	"<td style='text-align: center;'>"+this.directTrustMembership+"</td>"
+			+	"<td>"+currentObject.checkNotes(this.notes)+"</td>"
 			+   "<td style='text-align: center;'>" +
 					"<a href='#'  style='text-decoration: none;' onclick = registerService.onInteropAttachClick(this)> " +
 							"<span class='glyphicon glyphicon-paperclip'></span> <span hidden='true'>t</span></a></td>"
@@ -99,6 +101,32 @@ function RegisterService()
 		 });
 		 
 		 $("#tableBody").append(rows);
+	};
+	
+	this.checkNotes = function(notes)
+	{
+		if(typeof notes != 'undefined' && notes.length >=20)
+		{
+			return "<a href='#' onclick = registerService.openNotes(this)>" + notes.substring(0,19)+ "..</a>";
+		}else 
+		{
+		   return typeof notes != 'undefined'? notes : "";	
+		}
+	};
+	
+	
+	this.openNotes = function(object)
+	{
+		var selectedDirectEmail = $(object).closest('tr').find('td:eq(2)').text();
+		$(currentObject.resultSet).each(function(){
+			if(this.directEmailAddress == selectedDirectEmail)
+			{
+				
+				$("#notesText").html(this.notes);
+				$('#notesModal').modal('show');
+				return;
+			}
+		});
 	};
 	
 	this.onInteropAttachClick = function(object)
@@ -127,6 +155,15 @@ function RegisterService()
 			+ "</tr>";
 		 });
 		 
+		 if(resultArray.length == 0)
+		 {
+			 $("#noCertsMessage").show();
+		 }
+		 else
+		 {
+			 $("#noCertsMessage").hide();
+		 }
+			 
 		 $("#certTableBodyId").append(rows);
 		 $('#interopCertModel').modal('show');
 	};
@@ -153,6 +190,7 @@ function RegisterService()
 			+	"<td>"+this.pocFirstName + " " + this.pocLastName + " (" +this.pointOfContact +")</td>"
 			+	"<td>"+this.availFromDate + " to " +this.availToDate +"</td>"
 			+	"<td style='text-align: center;'>"+this.directTrustMembership+"</td>"
+			+	"<td>"+currentObject.checkNotes(this.notes)+"</td>"
 			+   "<td style='text-align: center;'><a href='#'  style='text-decoration: none;' onclick = registerService.onAttachClick(this)> " +
 					"<span class='glyphicon glyphicon-paperclip'></span><span hidden='true'>t</span></a></td>"
 			+ "</tr>";
@@ -165,9 +203,10 @@ function RegisterService()
 	{
 		currentObject.directEndPoint = $(object).closest('tr').find('td:eq(2)').text();
 		currentObject.uploadBinding(currentObject.directEndPoint);
-		$('#anchoruploadfiles').empty();
+		$("#anchoruploadform").parsley().reset();
 		$('#progressText').html("");
-		$('#anchoruploadform .formError').hide(0);
+		$('#anchoruploadform').trigger('reset');
+		$('#anchoruploadfiles').empty();
 		currentObject.readAllCerts(currentObject.directEndPoint);
 	};
 	
@@ -216,6 +255,18 @@ function RegisterService()
 		
 	};
 	
+	this.downloadTestInstructions = function()
+	{
+		var httpService = new HttpAjaxServices(); 
+		httpService.downloadTestInstructions();
+	};
+	
+	this.downloadRegistrationInstructions = function()
+	{
+		var httpService = new HttpAjaxServices(); 
+		httpService.downloadRegistrationInstructions();
+	};
+	
 	this.deleteConfirm = function(object)
 	{
 		$('#DeleteConfirm').modal('show');
@@ -246,24 +297,56 @@ function RegisterService()
 		}
 	};
 	
+	this.checkAttribute = function(object)
+	{
+		var attr = object.attr('data-parsley-currentdateval');
+
+		if (typeof attr !== typeof undefined && attr !== false) {
+		    return true;
+		}else 
+			return false;
+	};
+	
+	this.addAttr = function()
+	{
+		if(!registerService.checkAttribute($('#availFromDate')))
+		{
+			$('#availFromDate').attr('data-parsley-currentdateval', '');
+		}
+		
+		if(!registerService.checkAttribute($('#availToDate')))
+		{
+			$('#availToDate').attr('data-parsley-currentdateval','');
+		}
+	};
+	
 	this.onEditClick = function onEditClick(object)
 	{
 		cleanUp();
+		if(currentObject.checkAttribute($('#availFromDate')))
+		{
+			$('#availFromDate').removeAttr('data-parsley-currentdateval');
+		}
+		
+		if(currentObject.checkAttribute($('#availToDate')))
+		{
+			$('#availToDate').removeAttr('data-parsley-currentdateval');
+		}
 		$("#updateServiceButton").show();
 		$("#submitButton").hide();
 		var selectedDirectEmail = $(object).closest('tr').find('td:eq(2)').text();
 		$(currentObject.resultSet).each(function(){
 			if(this.directEmailAddress == selectedDirectEmail)
 			{
-				$("#cehrtLabel").val(this.cehrtLabel);
+				$("#cehrtLabel").val(currentObject.htmlDecode(this.cehrtLabel));
 				currentObject.editingSystemID = this.id;
-				$("#orgName").val(this.organizationName);
-				$("#directEmail").val(this.directEmailAddress);
+				$("#orgName").val(currentObject.htmlDecode(this.organizationName));
+				$("#directEmail").val(currentObject.htmlDecode(this.directEmailAddress));
 				$("#directEmail").attr("disabled", "disabled");
-				$("#pocEmail").val(this.pointOfContact);
-				$("#pocFirstName").val(this.pocFirstName);
-				$("#pocLastName").val(this.pocLastName);
-				var text = this.timezone;
+				$("#pocEmail").val(currentObject.htmlDecode(this.pointOfContact));
+				$("#pocFirstName").val(currentObject.htmlDecode(this.pocFirstName));
+				$("#pocLastName").val(currentObject.htmlDecode(this.pocLastName));
+				var text = currentObject.htmlDecode(this.timezone);
 				$('#timezone').val(text);
 				if(this.directTrustMembership == 'Yes')
 				{
@@ -272,13 +355,18 @@ function RegisterService()
 				{  
 					$("#option_no").attr('checked', 'checked');
 				}
-				$("#availFromDate").val(this.availFromDate);
-				$("#availToDate").val(this.availToDate);
-				
+				$("#availFromDate").val(currentObject.htmlDecode(this.availFromDate));
+				$("#availToDate").val(currentObject.htmlDecode(this.availToDate));
+				$("#notes").val(currentObject.htmlDecode(this.notes));
 				
 			   return;
 			}
 		});
+	};
+	
+	this.htmlDecode = function(value)
+	{
+		return $('<div/>').html(value).text();
 	};
 	
 	this.convertDateToLocal = function(date)
@@ -296,7 +384,7 @@ function RegisterService()
 	{
 		// Change this to the location of your server-side upload handler:
 		var URL = currentObject.UPLOAD_FILE + directEndPoint;
-		$('#anchoruploadprogress').hide();
+		//$('#anchoruploadprogress').hide();
 		$('#anchoruploadfile').fileupload(
 		{
 			url : URL,
@@ -307,40 +395,29 @@ function RegisterService()
 			replaceFileInput : false,
 			done : function(e, data) {
 				
-				$('#anchoruploadsubmit').unbind("click");
+				$('#anchoruploadform').trigger('reset');
 				$('#anchoruploadfiles').empty();
 				$('#progressText').html("Cert uploaded successfully");
+				$('#anchoruploadsubmit').unbind("click");
 				currentObject.readAllCerts(directEndPoint);
 			},
 			progressall : function(e, data) {
-					var progressval = parseInt(data.loaded / data.total* 100, 10);
-					if (progressval < 99) {
-						$('#anchoruploadwidget .blockMsg .progressorpanel .lbl').text('Uploading...');
-						$('#anchoruploadwidget .blockMsg .progressorpanel .progressor')
-						.text(floorFigure(data.loaded/ data.total* 100, 0).toString()+ "%");
-					} else {
-							$('.blockMsg .progressorpanel .lbl').text('Updating Bundle...');
-							$('.blockMsg .progressorpanel .progressor').text('');
-							}
-				}
+			
+			}
 		}).on('fileuploadadd',function(e, data) {
 			 $('#anchoruploadsubmit').unbind("click");
 			 $('#anchoruploadfiles').empty();
+			 
 			 data.context = $('<div/>').appendTo('#anchoruploadfiles');
 			 $.each(data.files, function(index, file) {
 				var node = $('<p/>').append($('<span/>').text(file.name));
 								node.appendTo(data.context);
 			});
 		    
-			$('#anchoruploadform .formError').hide(0);
-				data.context = $('#anchoruploadsubmit').click(function(e) {
-				var jform = $('#anchoruploadform');
-				if (jform.validationEngine('validate')) {
-						$('#anchoruploadform .formError').hide(0);
-						data.submit();
-				} else {
-						$('#anchoruploadform .formError').show(0);
-						$('#anchoruploadform .anchoruploadfileformError').prependTo('#anchoruploaderrorlock');
+			 $('#anchoruploadsubmit').click(function(e) {
+				 if($("#anchoruploadform").parsley().validate()){
+					   $('#anchoruploadprogress').show();
+					   data.submit();
 				}
 			});
 		}).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
@@ -350,11 +427,9 @@ function RegisterService()
 				e.preventDefault();
 		});
 		$('#anchoruploadfile-btn').bind('click', function(e, data) {
-			$('#anchoruploadform').trigger('reset');
-			$('#anchoruploadsubmit').unbind("click");
-			$('#anchoruploadfiles').empty();
-			$('#anchoruploadform .formError').hide(0);
 			$('#progressText').html("");
+			$('#anchoruploadform').trigger('reset');
+			$('#anchoruploadfiles').empty();
 		});
 	};
 	
