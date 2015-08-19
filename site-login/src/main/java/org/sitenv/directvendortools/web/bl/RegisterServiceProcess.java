@@ -15,7 +15,7 @@ public class RegisterServiceProcess {
 	
 	public static int registerService(final DirectSystemTO directSystemTO)throws SQLException,NamingException,PropertyVetoException
 	{
-		directSystemTO.setNotes(StringEscapeUtils.escapeHtml4(directSystemTO.getNotes()));
+		htmlEncoding(directSystemTO);
 		return RegisterServiceDAO.registerService(directSystemTO);
 	}
 	
@@ -40,8 +40,22 @@ public class RegisterServiceProcess {
 	
 	public static int updateDirectorySystem(final DirectSystemTO directSystemTO)throws SQLException,NamingException,PropertyVetoException
 	{
-		directSystemTO.setNotes(StringEscapeUtils.escapeHtml4(directSystemTO.getNotes()));
+		htmlEncoding(directSystemTO);
 		return RegisterServiceDAO.updateRegisterService(directSystemTO);
+	}
+	
+	private static void htmlEncoding(final DirectSystemTO directSystemTO)
+	{
+		directSystemTO.setCehrtLabel(StringEscapeUtils.escapeHtml4(directSystemTO.getCehrtLabel()));
+		directSystemTO.setOrganizationName(StringEscapeUtils.escapeHtml4(directSystemTO.getOrganizationName()));
+		directSystemTO.setDirectEmailAddress(StringEscapeUtils.escapeHtml4(directSystemTO.getDirectEmailAddress()));
+		directSystemTO.setPointOfContact(StringEscapeUtils.escapeHtml4(directSystemTO.getPointOfContact()));
+		directSystemTO.setPocFirstName(StringEscapeUtils.escapeHtml4(directSystemTO.getPocFirstName()));
+		directSystemTO.setPocLastName(StringEscapeUtils.escapeHtml4(directSystemTO.getPocLastName()));
+		directSystemTO.setTimezone(StringEscapeUtils.escapeHtml4(directSystemTO.getTimezone()));
+		directSystemTO.setDirectTrustMembership(StringEscapeUtils.escapeHtml4(directSystemTO.getDirectTrustMembership()));
+		directSystemTO.setUserEmailAddress(StringEscapeUtils.escapeHtml4(directSystemTO.getUserEmailAddress()));
+		directSystemTO.setNotes(StringEscapeUtils.escapeHtml4(directSystemTO.getNotes()));
 	}
 
 

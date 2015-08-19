@@ -75,12 +75,12 @@
   	            	var date1 = new Date($( requirement ).val());
   	            	var toDate = new Date(date.getTime() + date.getTimezoneOffset()*60000);
   	            	var fromDate = new Date(date1.getTime() + date1.getTimezoneOffset()*60000);
-  	            	return toDate > fromDate;
+  	            	return toDate >= fromDate;
   				}else
   				{
   				    return true;	
   				}
-  			},32).addMessage('en','daterangeval','Available To Date should be greater than Available From Date.');
+  			},32).addMessage('en','daterangeval','Available To Date should be greater than or equal to Available From Date.');
   			
   			window.ParsleyValidator.addValidator('fromdaterangeval',function(value,requirement){
   				var requirementVal = $( requirement ).val();
@@ -90,12 +90,12 @@
   	            	var date1 = new Date($( requirement ).val());
   	            	var toDate = new Date(date1.getTime() + date.getTimezoneOffset()*60000);
   	            	var fromDate = new Date(date.getTime() + date1.getTimezoneOffset()*60000);
-  	            	return toDate > fromDate;
+  	            	return toDate >= fromDate;
   				}else
   				{
   				   return true;	
   				}
-  			},32).addMessage('en','fromdaterangeval','Available From Date should be lesser than Available To Date.');
+  			},32).addMessage('en','fromdaterangeval','Available From Date should be lesser than or equal to Available To Date.');
   			
   			window.ParsleyValidator.addValidator('trustfiletypes',function(value){
   				var ext=value.split('.').pop().toLowerCase();

@@ -117,6 +117,60 @@ public class FileService {
 	}
 	
 	@GET
+	@Path("downloadTestInstructions")
+	@Produces("application/pdf")
+	public Response downloadTestInstructions()
+	{
+		Response instructionFile = null;
+		try
+		{
+			ClassLoader classLoader = getClass().getClassLoader();
+			File file = new File(classLoader.getResource("docs/SITE_Direct_Test_Instructions.pdf").getFile());
+		
+			instructionFile = Response
+					.status(Response.Status.OK)
+					.type("application/pdf")
+					.header("Content-Disposition",
+							"attachment; filename=\""
+								+ file.getName())
+					.entity(file).build();
+			
+		}
+		catch (Exception exception)
+		{
+			ApplicationUtil.logError(exception);
+		}
+		return instructionFile;
+	}
+	
+	@GET
+	@Path("downloadRegistrationInstructions")
+	@Produces("application/pdf")
+	public Response downloadRegistrationInstructions()
+	{
+		Response RegInstructionFile = null;
+		try
+		{
+			ClassLoader classLoader = getClass().getClassLoader();
+			File file = new File(classLoader.getResource("docs/SITE_Developer_Registration_Instructions.pdf").getFile());
+		
+			RegInstructionFile = Response
+					.status(Response.Status.OK)
+					.type("application/pdf")
+					.header("Content-Disposition",
+							"attachment; filename=\""
+								+ file.getName())
+					.entity(file).build();
+			
+		}
+		catch (Exception exception)
+		{
+			ApplicationUtil.logError(exception);
+		}
+		return RegInstructionFile;
+	}
+	
+	@GET
 	@Path(ApplicationConstants.DELETE_CERT)
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response deletCert(@DefaultValue(ApplicationConstants.TRUE) @QueryParam(ApplicationConstants.IS_JSON) final boolean isJSon,
