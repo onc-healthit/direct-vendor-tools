@@ -202,6 +202,16 @@
   			MODEL.userEmail = "";
   			setRegisterServicePage();
   		}
+  		
+  		function openFAQPage(){
+  			$.get('pages/FAQ.html',showFAQPage);
+  		}
+  		
+  		function showFAQPage(data){
+  			$("#mainPageContent").html(data);
+  			$('ul.navbar-nav li').removeClass('active');
+  			$("#faqId").addClass('active');
+  		}
  
 	</script>
 </head>
@@ -227,7 +237,7 @@
 						<a href="http://sitenv.org/" style="text-decoration: none;">Home</a></li>
 				<li  id="interopLIId"><a href="javascript:setInteroperabilityServicesPage()" style="text-decoration: none;" >Testing Services</a></li>
 				<li id="vendorRegLIId"><a href="javascript:setRegisterServicePage()" style="text-decoration: none;" >Developer Registration</a></li>
-					
+				<li id="faqId"><a href="javascript:openFAQPage()" style="text-decoration: none;" >FAQ</a></li>
 					
 					
 				</ul>
