@@ -257,22 +257,20 @@
 	<div id="mainPageContent" aria-live="assertive"></div>
 	<footer class="panel-footer" style="padding-bottom: 0px;">
 		<div class="container" role="contentinfo">
-			<div class="row">
+			
 				<div>
-					<p>
-						This project was funded by a contract from the <a
-							href="http://www.healthit.gov" >Office of the
-							National Coordinator for Health Information Technology (ONC)</a>
-					</p>
-					<p>
-						<a href="http://www.hhs.gov/Privacy.html" >Privacy
-							Policy</a> | <a href="http://www.hhs.gov/Disclaimer.html" 
-							>Disclaimer</a> | <a href="#" id="contactUs" 
-							>Contact US </a>
-					</p>
+					<p>This project was funded by a contract from the <a href="http://www.healthit.gov">Office of the National Coordinator for Health Information Technology (ONC)</a></p>
 				</div>
+				
+				<div class="row">  
+				  <div class="col-md-8">		
+				  	<p>For any inquiries or questions, please send an email to <a href="mailto:TestingServices@sitenv.org">TestingServices@sitenv.org</a><p>
+				  </div>			
+				  <div class="col-md-4">
+				  	<p style="float:right;"><a href="http://www.hhs.gov/Privacy.html">Privacy Policy</a> | <a href="http://www.hhs.gov/Disclaimer.html">Disclaimer</a></p>
+			      </div>
+			    </div>
 			</div>
-		</div>
 	</footer>
 
 	<div id="loginModel" class="modal fade" tabindex="-1"></div>
